@@ -1,0 +1,36 @@
+{
+  "name": "ajaedale",
+  "version": "1.0.0",
+  "description": "개발자들의 웃음 저장소",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaleSeo/AjaeDale.git"
+  },
+  "keywords": ["korean", "developer", "humor", "jokes", "astro", "github-discussions"],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DaleSeo/AjaeDale/issues"
+  },
+  "homepage": "https://github.com/DaleSeo/AjaeDale#readme",
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/react": "^3.6.3",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "astro": "^5.0.0-beta.7",
+    "prettier": "^3.3.3",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
