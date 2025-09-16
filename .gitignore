@@ -19,6 +19,9 @@ bun-debug.log*
 dist/
 .astro/
 
+# Lighthouse CI
+.lighthouseci/
+
 # Runtime data
 *.pid
 *.seed
@@ -49,3 +52,6 @@ logs
 # Temporary folders
 tmp/
 temp/
+
+# Claude Code configuration
+CLAUDE.md
