@@ -7,13 +7,21 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "lighthouse": "bun run preview & bunx lhci autorun --config=./.github/lighthouse/lighthouserc.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DaleSeo/AjaeDale.git"
   },
-  "keywords": ["korean", "developer", "humor", "jokes", "astro", "github-discussions"],
+  "keywords": [
+    "korean",
+    "developer",
+    "humor",
+    "jokes",
+    "astro",
+    "github-discussions"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -23,10 +31,12 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^3.6.3",
+    "@lhci/cli": "^0.15.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "astro": "^5.0.0-beta.7",
     "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.2"
   },
   "dependencies": {
