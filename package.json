@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lighthouse": "bun run preview & bunx lhci autorun --config=./.github/lighthouse/lighthouserc.json"
+    "lighthouse": "bun run preview & bunx lhci autorun --config=./.github/lighthouse/lighthouserc.json",
+    "generate:gag": "bun run scripts/generate-gags.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,7 @@
     "developer",
     "humor",
     "jokes",
-    "astro",
-    "github-discussions"
+    "astro"
   ],
   "author": "",
   "license": "MIT",
@@ -30,17 +30,14 @@
   "homepage": "https://github.com/DaleSeo/AjaeDale#readme",
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/react": "^3.6.3",
     "@lhci/cli": "^0.15.1",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "astro": "^5.0.0-beta.7",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@ai-sdk/openai": "^2.0.32",
+    "ai": "^5.0.48"
   }
 }

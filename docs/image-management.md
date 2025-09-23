@@ -50,26 +50,28 @@ imageCaption: "하이드라인가?"
 
 ```astro
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
-const gags = await getCollection('gags');
+const gags = await getCollection("gags");
 ---
 
-{gags.map((gag) => (
-  <article>
-    <h2>{gag.data.title}</h2>
-    {gag.data.image && (
-      <Image
-        src={gag.data.image}
-        alt={gag.data.imageCaption || gag.data.title}
-        width={800}
-        height={600}
-        loading="lazy"
-      />
-    )}
-  </article>
-))}
+{
+  gags.map((gag) => (
+    <article>
+      <h2>{gag.data.title}</h2>
+      {gag.data.image && (
+        <Image
+          src={gag.data.image}
+          alt={gag.data.imageCaption || gag.data.title}
+          width={800}
+          height={600}
+          loading="lazy"
+        />
+      )}
+    </article>
+  ))
+}
 ```
 
 ## 🚀 장점
@@ -80,8 +82,9 @@ const gags = await getCollection('gags');
    - 레이지 로딩
 
 2. **타입 안전성**: 스키마로 이미지 검증
+
    ```typescript
-   image: image().optional()  // 이미지 파일 존재 여부 자동 체크
+   image: image().optional(); // 이미지 파일 존재 여부 자동 체크
    ```
 
 3. **버전 관리**: Git으로 이미지도 함께 관리
@@ -119,13 +122,16 @@ git commit -m "Configure Git LFS for images"
 ## 🔄 마이그레이션 계획
 
 ### Phase 1: 텍스트 개그
+
 - 현재 구조 유지
 - 이미지 없이 운영
 
 ### Phase 2: 이미지 추가
+
 - 선택적으로 이미지 추가
 - Astro Image 컴포넌트 활용
 
 ### Phase 3: 밈 템플릿
+
 - 자주 쓰는 템플릿 assets으로 관리
 - 재사용성 극대화

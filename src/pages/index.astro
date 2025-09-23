@@ -1,40 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from "astro:content";
 
-const allGags = await getCollection('gags', ({ data }) => {
-  return data.publishStatus === 'published';
+type GagEntry = CollectionEntry<"gags">;
+
+const allGags = await getCollection("gags", ({ data }: GagEntry) => {
+  return data.published === true;
 });
 
-const sortedGags = allGags.sort((a, b) =>
-  new Date(b.data.createdAt).getTime() - new Date(a.data.createdAt).getTime()
+const sortedGags = allGags.sort(
+  (a: GagEntry, b: GagEntry) =>
+    new Date(b.data.createdAt).getTime() - new Date(a.data.createdAt).getTime(),
 );
 
 const categoryEmojis: Record<string, string> = {
-  'developer-humor': '😂',
-  'si-hell': '🔥',
-  'job-hunting': '💼',
-  'code-review': '👀',
-  'debugging': '🐛',
-  'overtime': '🌙',
-  'tech-interview': '📝',
-  'ajae-gag': '🤓',
-  'seasonal': '🍂',
-  'economic': '💰',
-  'trending': '🔥'
+  joke: "😂",
+  pun: "🤓",
 };
 
 const categoryNames: Record<string, string> = {
-  'developer-humor': '개발자 유머',
-  'si-hell': 'SI 지옥',
-  'job-hunting': '취준생 썰',
-  'code-review': '코드 리뷰',
-  'debugging': '디버깅',
-  'overtime': '야근',
-  'tech-interview': '기술 면접',
-  'ajae-gag': '아재개그',
-  'seasonal': '계절개그',
-  'economic': '경제개그',
-  'trending': '시사개그'
+  joke: "농담",
+  pun: "말장난",
 };
 ---
 
@@ -44,7 +29,10 @@ const categoryNames: Record<string, string> = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>아재달레 - 개발자들의 웃음 저장소</title>
-    <meta name="description" content="한국 개발자들을 위한 IT 유머와 개그 모음" />
+    <meta
+      name="description"
+      content="한국 개발자들을 위한 IT 유머와 개그 모음"
+    />
   </head>
   <body>
     <header>
@@ -54,35 +42,38 @@ const categoryNames: Record<string, string> = {
 
     <main>
       <div class="gags-grid">
-        {sortedGags.map((gag) => (
-          <article class="gag-card">
-            <div class="gag-header">
-              <span class="category">
-                {categoryEmojis[gag.data.category]} {categoryNames[gag.data.category]}
-              </span>
-              {gag.data.featured && <span class="featured">⭐ 인기</span>}
-            </div>
-            <h2>{gag.data.title}</h2>
-            {gag.data.type === 'pun' ? (
-              <div class="pun-format">
-                <p class="question">Q: {gag.data.title}</p>
-                <p class="answer">A: {gag.data.body}</p>
+        {
+          sortedGags.map((gag: GagEntry) => (
+            <article class="gag-card">
+              <div class="gag-header">
+                <span class="category">
+                  {categoryEmojis[gag.data.category]}{" "}
+                  {categoryNames[gag.data.category]}
+                </span>
+                {gag.data.featured && <span class="featured">⭐ 인기</span>}
               </div>
-            ) : (
-              gag.data.body && <p class="gag-body">{gag.data.body}</p>
-            )}
-            <div class="gag-footer">
-              <div class="tags">
-                {gag.data.tags.map(tag => (
-                  <span class="tag">#{tag}</span>
-                ))}
+              <h2>{gag.data.title}</h2>
+              {gag.data.category === "pun" ? (
+                <div class="pun-format">
+                  <p class="question">Q: {gag.data.title}</p>
+                  <p class="answer">A: {gag.data.body}</p>
+                </div>
+              ) : (
+                gag.data.body && <p class="gag-body">{gag.data.body}</p>
+              )}
+              <div class="gag-footer">
+                <div class="tags">
+                  {gag.data.tags.map((tag: string) => (
+                    <span class="tag">#{tag}</span>
+                  ))}
+                </div>
+                <time datetime={gag.data.createdAt.toISOString()}>
+                  {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
+                </time>
               </div>
-              <time datetime={gag.data.createdAt.toISOString()}>
-                {new Date(gag.data.createdAt).toLocaleDateString('ko-KR')}
-              </time>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))
+        }
       </div>
     </main>
 
@@ -153,7 +144,9 @@ const categoryNames: Record<string, string> = {
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
   }
 
   .gag-card:hover {
@@ -216,7 +209,6 @@ const categoryNames: Record<string, string> = {
     border-radius: 8px;
     text-align: center;
   }
-
 
   .gag-footer {
     display: flex;
