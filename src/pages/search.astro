@@ -1,5 +1,9 @@
 ---
-// Pagefind는 빌드 타임에 HTML을 파싱하므로 서버 사이드 데이터 처리 불필요
+import { getCollection } from "astro:content";
+
+// 실제 개그 데이터 개수 가져오기
+const allGags = await getCollection("gags", ({ data }) => data.published);
+const totalGags = allGags.length;
 ---
 
 <html lang="ko">
@@ -40,7 +44,7 @@
       <!-- 검색 결과 영역 -->
       <section class="search-results">
         <div class="results-header">
-          <p id="resultsCount">49개의 개그</p>
+          <p id="resultsCount">{totalGags}개의 개그</p>
         </div>
 
         <div class="gags-grid" id="resultsContainer">
@@ -60,7 +64,7 @@
     </footer>
 
     <!-- Pagefind JavaScript API -->
-    <script is:inline>
+    <script is:inline define:vars={{ totalGags }}>
       // Pagefind 초기화 및 검색 로직
       let pagefind;
 
@@ -195,7 +199,7 @@
         if (isEmptyQuery || !searchInput.value.trim()) {
           // 검색어가 없는 경우 - 초기 상태
           noResults.style.display = "none";
-          resultsCount.textContent = "49개의 개그";
+          resultsCount.textContent = `${totalGags}개의 개그`;
           resultsContainer.style.display = "none";
         } else {
           // 검색 결과가 없는 경우
