@@ -1,0 +1,393 @@
+---
+// Pagefind는 빌드 타임에 HTML을 파싱하므로 서버 사이드 데이터 처리 불필요
+---
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>검색 - 아재달레</title>
+    <meta
+      name="description"
+      content="아재달레에서 원하는 개그를 검색해보세요"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>🔍 검색</h1>
+      <nav>
+        <a href="/">홈으로</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 검색 컨트롤 영역 -->
+      <section class="search-controls">
+        <div class="search-input-container">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="개그를 검색해보세요..."
+            class="search-input"
+          />
+          <button type="button" class="search-clear" id="clearButton">
+            ✕
+          </button>
+        </div>
+      </section>
+
+      <!-- 검색 결과 영역 -->
+      <section class="search-results">
+        <div class="results-header">
+          <p id="resultsCount">49개의 개그</p>
+        </div>
+
+        <div class="gags-grid" id="resultsContainer">
+          <!-- 검색 결과가 여기에 표시됩니다 -->
+        </div>
+
+        <!-- 검색 결과 없음 -->
+        <div class="no-results" id="noResults" style="display: none;">
+          <p>😅 검색 결과가 없습니다</p>
+          <p>다른 키워드로 다시 검색해보세요!</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made with ❤️ for Everyone</p>
+    </footer>
+
+    <!-- Pagefind JavaScript API -->
+    <script is:inline>
+      // Pagefind 초기화 및 검색 로직
+      let pagefind;
+
+      // URL 파라미터 관리
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      function setQueryParam(param, value) {
+        const url = new URL(window.location.href);
+        if (value) {
+          url.searchParams.set(param, value);
+        } else {
+          url.searchParams.delete(param);
+        }
+        window.history.replaceState({}, "", url);
+      }
+
+      async function initPagefind() {
+        try {
+          // Pagefind 스크립트가 존재하는지 먼저 확인
+          const response = await fetch("/pagefind/pagefind.js");
+          if (!response.ok) {
+            throw new Error("Pagefind script not found");
+          }
+
+          // Pagefind 모듈 동적 로드
+          pagefind = await import("/pagefind/pagefind.js");
+          console.log("Pagefind loaded successfully");
+
+          // 검색 입력 활성화
+          document.getElementById("searchInput").placeholder =
+            "개그를 검색해보세요...";
+          document.getElementById("searchInput").disabled = false;
+
+          // URL에 검색어가 있으면 복원
+          const savedQuery = getQueryParam("q");
+          if (savedQuery) {
+            searchInput.value = savedQuery;
+            performSearch();
+          }
+        } catch (error) {
+          console.error("Failed to load Pagefind:", error);
+          // Fallback: 검색 기능 비활성화 알림
+          document.getElementById("searchInput").placeholder =
+            "검색 기능을 사용할 수 없습니다. 사이트를 빌드해주세요.";
+          document.getElementById("searchInput").disabled = true;
+
+          // 임시 검색 결과 메시지 표시
+          document.getElementById("resultsCount").textContent =
+            "검색 기능이 비활성화되었습니다";
+          document.getElementById("noResults").style.display = "block";
+          document.getElementById("noResults").innerHTML = `
+            <p>🔧 검색 기능이 준비 중입니다</p>
+            <p>사이트를 빌드한 후에 검색을 사용할 수 있습니다.</p>
+          `;
+        }
+      }
+
+      // DOM 요소들
+      const searchInput = document.getElementById("searchInput");
+      const clearButton = document.getElementById("clearButton");
+      const resultsContainer = document.getElementById("resultsContainer");
+      const resultsCount = document.getElementById("resultsCount");
+      const noResults = document.getElementById("noResults");
+
+      // 디바운스 타이머
+      let searchTimeout;
+
+      // 검색 함수
+      async function performSearch() {
+        if (!pagefind) {
+          await initPagefind();
+          if (!pagefind) return;
+        }
+
+        const query = searchInput.value.trim();
+
+        // URL 파라미터 업데이트
+        setQueryParam("q", query);
+
+        if (!query) {
+          renderNoResults(true);
+          return;
+        }
+
+        try {
+          // Pagefind 검색 실행
+          const search = await pagefind.search(query);
+
+          if (search.results.length === 0) {
+            renderNoResults();
+            return;
+          }
+
+          // 검색 결과 데이터 로드
+          const results = await Promise.all(
+            search.results.map((result) => result.data()),
+          );
+
+          renderResults(results, query);
+        } catch (error) {
+          console.error("Search error:", error);
+          renderNoResults();
+        }
+      }
+
+      // 검색 결과 렌더링
+      function renderResults(results, query) {
+        resultsContainer.style.display = "flex";
+        resultsContainer.style.flexDirection = "column";
+        resultsContainer.style.gap = "0.5rem";
+        noResults.style.display = "none";
+        resultsCount.textContent = `"${query}"에 대한 ${results.length}개의 검색 결과`;
+
+        resultsContainer.innerHTML = results
+          .map(
+            (result) => `
+          <div class="search-item">
+            <a href="${result.url}">${result.meta.title || "제목 없음"}</a>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      // 결과 없음 렌더링
+      function renderNoResults(isEmptyQuery = false) {
+        resultsContainer.style.display = "none";
+
+        if (isEmptyQuery || !searchInput.value.trim()) {
+          // 검색어가 없는 경우 - 초기 상태
+          noResults.style.display = "none";
+          resultsCount.textContent = "49개의 개그";
+          resultsContainer.style.display = "none";
+        } else {
+          // 검색 결과가 없는 경우
+          noResults.style.display = "block";
+          resultsCount.textContent = "검색 결과 없음";
+        }
+      }
+
+      // 디바운스된 검색
+      function debouncedSearch() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(performSearch, 300);
+      }
+
+      // 이벤트 리스너들
+      searchInput.addEventListener("input", debouncedSearch);
+
+      clearButton.addEventListener("click", () => {
+        searchInput.value = "";
+        setQueryParam("q", "");
+        renderNoResults(true);
+      });
+
+      // 페이지 로드시 Pagefind 초기화
+      document.addEventListener("DOMContentLoaded", initPagefind);
+    </script>
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1e40af;
+    --color-bg: #ffffff;
+    --color-card: #f9fafb;
+    --color-border: #e5e7eb;
+    --color-text: #1f2937;
+    --color-text-muted: #6b7280;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  header h1 {
+    color: var(--color-primary);
+    font-size: 2rem;
+  }
+
+  nav a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+
+  nav a:hover {
+    background-color: var(--color-card);
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  /* 검색 컨트롤 스타일 */
+  .search-controls {
+    margin-bottom: 2rem;
+  }
+
+  .search-input-container {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-card);
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .search-clear:hover {
+    background-color: var(--color-border);
+  }
+
+  /* 검색 결과 스타일 */
+  .results-header {
+    margin-bottom: 1rem;
+  }
+
+  .results-header p {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .gags-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .search-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .search-item:last-child {
+    border-bottom: none;
+  }
+
+  .search-item a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 1.125rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .search-item a:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .no-results p:first-child {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 1rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .gags-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
