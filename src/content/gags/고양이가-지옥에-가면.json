@@ -1,9 +1,10 @@
 {
+  "slug": "cat-goes-to-hell-hello-kitty",
   "title": "고양이가 지옥에 가면?",
   "body": "헬로키티",
   "category": "pun",
   "tags": ["고양이", "지옥", "헬로키티"],
+  "published": true,
   "createdAt": "2025-09-23T00:17:31.630Z",
-  "updatedAt": "2025-09-23T00:17:31.630Z",
-  "published": true
+  "updatedAt": "2025-09-23T00:17:31.630Z"
 }

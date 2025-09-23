@@ -1,9 +1,10 @@
 {
+  "slug": "weird-people-place",
   "title": "이상한 사람들만 가는 곳은?",
   "body": "치과",
   "category": "pun",
   "tags": ["치과", "이상한", "치아"],
+  "published": true,
   "createdAt": "2025-09-23T00:17:31.635Z",
-  "updatedAt": "2025-09-23T00:17:31.635Z",
-  "published": true
+  "updatedAt": "2025-09-23T01:59:05.597Z"
 }

@@ -28,16 +28,20 @@ const categoryNames: Record<string, string> = {
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>아재달레 - 개발자들의 웃음 저장소</title>
-    <meta
-      name="description"
-      content="한국 개발자들을 위한 IT 유머와 개그 모음"
-    />
+    <title>아재달레 - 아재개그 저장소</title>
+    <meta name="description" content="아재개그와 유머 모음" />
   </head>
   <body>
     <header>
-      <h1>🇰🇷 아재달레</h1>
-      <p>개발자들의 웃음 저장소</p>
+      <div class="header-content">
+        <div>
+          <h1>🇰🇷 아재달레</h1>
+          <p>아재개그 저장소</p>
+        </div>
+        <nav>
+          <a href="/search" class="search-link">🔍 검색</a>
+        </nav>
+      </div>
     </header>
 
     <main>
@@ -45,32 +49,34 @@ const categoryNames: Record<string, string> = {
         {
           sortedGags.map((gag: GagEntry) => (
             <article class="gag-card">
-              <div class="gag-header">
-                <span class="category">
-                  {categoryEmojis[gag.data.category]}{" "}
-                  {categoryNames[gag.data.category]}
-                </span>
-                {gag.data.featured && <span class="featured">⭐ 인기</span>}
-              </div>
-              <h2>{gag.data.title}</h2>
-              {gag.data.category === "pun" ? (
-                <div class="pun-format">
-                  <p class="question">Q: {gag.data.title}</p>
-                  <p class="answer">A: {gag.data.body}</p>
+              <a href={`/gags/${gag.data.slug}`} class="gag-link">
+                <div class="gag-header">
+                  <span class="category">
+                    {categoryEmojis[gag.data.category]}{" "}
+                    {categoryNames[gag.data.category]}
+                  </span>
+                  {gag.data.featured && <span class="featured">⭐ 인기</span>}
                 </div>
-              ) : (
-                gag.data.body && <p class="gag-body">{gag.data.body}</p>
-              )}
-              <div class="gag-footer">
-                <div class="tags">
-                  {gag.data.tags.map((tag: string) => (
-                    <span class="tag">#{tag}</span>
-                  ))}
+                <h2>{gag.data.title}</h2>
+                {gag.data.category === "pun" ? (
+                  <div class="pun-format">
+                    <p class="question">Q: {gag.data.title}</p>
+                    <p class="answer">A: {gag.data.body}</p>
+                  </div>
+                ) : (
+                  gag.data.body && <p class="gag-body">{gag.data.body}</p>
+                )}
+                <div class="gag-footer">
+                  <div class="tags">
+                    {gag.data.tags.map((tag: string) => (
+                      <span class="tag">#{tag}</span>
+                    ))}
+                  </div>
+                  <time datetime={gag.data.createdAt.toISOString()}>
+                    {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
+                  </time>
                 </div>
-                <time datetime={gag.data.createdAt.toISOString()}>
-                  {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
-                </time>
-              </div>
+              </a>
             </article>
           ))
         }
@@ -78,7 +84,7 @@ const categoryNames: Record<string, string> = {
     </main>
 
     <footer>
-      <p>Made with ❤️ for Korean Developers</p>
+      <p>Made with ❤️ for Everyone</p>
     </footer>
   </body>
 </html>
@@ -111,9 +117,35 @@ const categoryNames: Record<string, string> = {
   }
 
   header {
-    text-align: center;
     padding: 3rem 1rem 2rem;
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header-content > div {
+    text-align: center;
+  }
+
+  .search-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .search-link:hover {
+    background-color: var(--color-primary);
+    color: white;
   }
 
   header h1 {
@@ -143,15 +175,27 @@ const categoryNames: Record<string, string> = {
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    padding: 1.5rem;
     transition:
       transform 0.2s,
       box-shadow 0.2s;
+    position: relative;
   }
 
   .gag-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+  }
+
+  .gag-link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .gag-link:hover {
+    color: inherit;
   }
 
   .gag-header {

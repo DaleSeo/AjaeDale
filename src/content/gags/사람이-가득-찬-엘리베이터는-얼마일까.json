@@ -1,9 +1,10 @@
 {
+  "slug": "full-elevator-weight",
   "title": "사람이 가득 찬 엘리베이터는 얼마일까?",
   "body": "만원",
   "category": "pun",
   "tags": ["엘리베이터", "만원"],
+  "published": true,
   "createdAt": "2025-09-23T00:17:31.632Z",
-  "updatedAt": "2025-09-23T00:17:31.632Z",
-  "published": true
+  "updatedAt": "2025-09-23T01:59:05.594Z"
 }

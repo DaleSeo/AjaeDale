@@ -1,43 +1,41 @@
 {
   "name": "ajaedale",
   "version": "1.0.0",
-  "description": "개발자들의 웃음 저장소",
+  "description": "아재개그 저장소",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lighthouse": "bun run preview & bunx lhci autorun --config=./.github/lighthouse/lighthouserc.json",
-    "generate:gag": "bun run scripts/generate-gags.js"
+    "serve": "bun run build && bun run preview",
+    "lighthouse": "bun run preview & bunx lhci autorun --config=./.github/lighthouse/lighthouserc.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DaleSeo/AjaeDale.git"
-  },
-  "keywords": [
-    "korean",
-    "developer",
-    "humor",
-    "jokes",
-    "astro"
-  ],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DaleSeo/AjaeDale/issues"
-  },
-  "homepage": "https://github.com/DaleSeo/AjaeDale#readme",
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@lhci/cli": "^0.15.1",
     "astro": "^5.0.0-beta.7",
+    "astro-pagefind": "^1.8.5",
+    "pagefind": "^1.4.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.2"
   },
-  "dependencies": {
-    "@ai-sdk/openai": "^2.0.32",
-    "ai": "^5.0.48"
+  "keywords": [
+    "korean",
+    "humor",
+    "jokes",
+    "comedy",
+    "astro"
+  ],
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/DaleSeo/AjaeDale#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaleSeo/AjaeDale.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DaleSeo/AjaeDale/issues"
   }
 }

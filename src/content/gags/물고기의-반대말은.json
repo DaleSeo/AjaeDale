@@ -1,9 +1,10 @@
 {
+  "slug": "fish-opposite-word",
   "title": "물고기의 반대말은?",
   "body": "불고기",
   "category": "pun",
   "tags": ["물고기", "불고기"],
+  "published": true,
   "createdAt": "2025-09-23T00:17:31.633Z",
-  "updatedAt": "2025-09-23T00:17:31.633Z",
-  "published": true
+  "updatedAt": "2025-09-23T01:59:05.593Z"
 }
