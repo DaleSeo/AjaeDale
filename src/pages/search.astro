@@ -102,6 +102,11 @@ const query = searchParams.get("q") || "";
     display: none !important;
   }
 
+  /* 검색 결과 내부 마진 제거 */
+  :global(.pagefind-ui__result-inner) {
+    margin-top: 0 !important;
+  }
+
   /* 검색 결과 스타일링 */
   :global(.pagefind-ui__result) {
     border-radius: 12px !important;
