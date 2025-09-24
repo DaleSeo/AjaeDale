@@ -2,8 +2,11 @@
   "slug": "pretty-empty-woman",
   "title": "얼굴은 예쁜데 속이 텅 빈 여자는?",
   "body": "마네킹",
-  "category": "pun",
-  "tags": ["얼굴", "마네킹", "여자"],
+  "tags": [
+    "얼굴",
+    "마네킹",
+    "여자"
+  ],
   "published": true,
   "createdAt": "2025-09-23T23:47:52.922Z",
   "updatedAt": "2025-09-23T23:47:52.922Z"

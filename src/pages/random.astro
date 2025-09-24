@@ -15,16 +15,6 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 }
 
 const randomGag = getRandomGag(allGags);
-
-const categoryEmojis: Record<string, string> = {
-  joke: "😂",
-  pun: "🤓",
-};
-
-const categoryNames: Record<string, string> = {
-  joke: "농담",
-  pun: "말장난",
-};
 ---
 
 <BaseLayout
@@ -39,23 +29,14 @@ const categoryNames: Record<string, string> = {
   <!-- 랜덤 개그 섹션 -->
   <section class="random-gag">
     <article class="featured-gag">
-      <div class="gag-header">
-        <span class="category">
-          {categoryEmojis[randomGag.data.category]}{" "}
-          {categoryNames[randomGag.data.category]}
-        </span>
-      </div>
-
       <h2>{randomGag.data.title}</h2>
 
       {
-        randomGag.data.category === "pun" ? (
+        randomGag.data.body && (
           <div class="pun-format">
             <p class="question">Q: {randomGag.data.title}</p>
             <p class="answer">A: {randomGag.data.body}</p>
           </div>
-        ) : (
-          randomGag.data.body && <p class="gag-body">{randomGag.data.body}</p>
         )
       }
 
@@ -132,11 +113,6 @@ const categoryNames: Record<string, string> = {
     justify-content: center;
   }
 
-  .category {
-    padding: 0.5rem 1rem;
-    background: var(--color-border);
-    border-radius: 20px;
-  }
 
   .random-gag .gag-body {
     font-size: 1.25rem;

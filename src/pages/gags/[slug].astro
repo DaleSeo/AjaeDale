@@ -23,16 +23,6 @@ interface Props {
 
 const { gag }: Props = Astro.props;
 
-const categoryEmojis: Record<string, string> = {
-  joke: "😂",
-  pun: "🤓",
-};
-
-const categoryNames: Record<string, string> = {
-  joke: "농담",
-  pun: "말장난",
-};
-
 // SEO를 위한 메타 데이터
 const siteTitle = `${gag.data.title} - 아재달레`;
 const pageDescription = gag.data.body
@@ -57,23 +47,17 @@ const pageDescription = gag.data.body
       {gag.data.title}
     </h1>
     <div class="gag-header">
-      <span class="category">
-        {categoryEmojis[gag.data.category]}
-        {categoryNames[gag.data.category]}
-      </span>
       {gag.data.featured && <span class="featured">⭐ 인기</span>}
     </div>
 
     <h1 class="gag-title">{gag.data.title}</h1>
 
     {
-      gag.data.category === "pun" ? (
+      gag.data.body && (
         <div class="pun-format">
           <p class="question">Q: {gag.data.title}</p>
           <p class="answer">A: {gag.data.body}</p>
         </div>
-      ) : (
-        gag.data.body && <p class="gag-body">{gag.data.body}</p>
       )
     }
 
@@ -167,9 +151,6 @@ const pageDescription = gag.data.body
     margin-bottom: 1rem;
   }
 
-  .gag-detail .category {
-    font-size: 1rem;
-  }
 
   .featured {
     font-size: 1rem;

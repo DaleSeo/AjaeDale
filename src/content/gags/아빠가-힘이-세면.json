@@ -2,8 +2,11 @@
   "slug": "dad-strong-tax",
   "title": "아빠가 힘이 세면?",
   "body": "부가세",
-  "category": "pun",
-  "tags": ["아빠", "부가세", "힘"],
+  "tags": [
+    "아빠",
+    "부가세",
+    "힘"
+  ],
   "published": true,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
