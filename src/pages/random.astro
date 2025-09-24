@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { tagToSlug } from "../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -34,7 +35,6 @@ const randomGag = getRandomGag(allGags);
       {
         randomGag.data.body && (
           <div class="pun-format">
-            <p class="question">Q: {randomGag.data.title}</p>
             <p class="answer">A: {randomGag.data.body}</p>
           </div>
         )
@@ -44,7 +44,9 @@ const randomGag = getRandomGag(allGags);
         <div class="tags">
           {
             randomGag.data.tags.map((tag: string) => (
-              <span class="tag">#{tag}</span>
+              <a href={`/tags/${tagToSlug(tag)}`} class="tag">
+                #{tag}
+              </a>
             ))
           }
         </div>
@@ -112,7 +114,6 @@ const randomGag = getRandomGag(allGags);
   .gag-header {
     justify-content: center;
   }
-
 
   .random-gag .gag-body {
     font-size: 1.25rem;

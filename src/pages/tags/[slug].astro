@@ -1,0 +1,325 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { tagToSlug } from "../../utils/tagUtils";
+
+type GagEntry = CollectionEntry<"gags">;
+
+export async function getStaticPaths() {
+  const allGags = await getCollection("gags", ({ data }: GagEntry) => {
+    return data.published === true;
+  });
+
+  // 모든 고유 태그 수집
+  const allTags = new Set<string>();
+  allGags.forEach((gag: GagEntry) => {
+    gag.data.tags.forEach((tag: string) => {
+      allTags.add(tag);
+    });
+  });
+
+  // 각 태그에 대한 페이지 생성
+  return Array.from(allTags).map((tag: string) => ({
+    params: {
+      slug: tagToSlug(tag),
+    },
+    props: {
+      tag,
+      gags: allGags.filter((gag: GagEntry) => gag.data.tags.includes(tag)),
+    },
+  }));
+}
+
+interface Props {
+  tag: string;
+  gags: GagEntry[];
+}
+
+const { tag, gags } = Astro.props;
+
+// SEO를 위한 메타 데이터
+const pageTitle = `#${tag} 태그의 개그`;
+const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재미있는 아재개그를 만나보세요.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  ogTitle={pageTitle}
+  ogDescription={pageDescription}
+  currentPage="tag"
+>
+  <div class="breadcrumb">
+    <a href="/">홈</a> > <a href="/search">검색</a> > <span>#{tag}</span>
+  </div>
+
+  <!-- 태그 헤더 -->
+  <section class="tag-header">
+    <h1>#{tag}</h1>
+    <p>이 태그가 포함된 개그 <strong>{gags.length}개</strong></p>
+  </section>
+
+  <!-- 개그 목록 -->
+  <section class="gags-grid" data-pagefind-body>
+    {
+      gags.map((gag) => (
+        <article class="gag-card">
+          <div class="gag-header">
+            {gag.data.featured && <span class="featured">⭐ 인기</span>}
+          </div>
+
+          <h2>
+            <a href={`/gags/${gag.data.slug}`} class="gag-title-link">
+              {gag.data.title}
+            </a>
+          </h2>
+
+          {gag.data.body && (
+            <div class="pun-format">
+              <p class="answer">A: {gag.data.body}</p>
+            </div>
+          )}
+
+          <div class="gag-footer">
+            <div class="tags">
+              {gag.data.tags.map((gagTag: string) => (
+                <a
+                  href={`/tags/${tagToSlug(gagTag)}`}
+                  class={`tag ${gagTag === tag ? "current-tag" : ""}`}
+                >
+                  #{gagTag}
+                </a>
+              ))}
+            </div>
+            <time datetime={gag.data.createdAt.toISOString()}>
+              {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
+            </time>
+          </div>
+        </article>
+      ))
+    }
+  </section>
+
+  <!-- 네비게이션 -->
+  <section class="navigation-section">
+    <a href="/search" class="back-link">← 모든 개그 검색하기</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    margin-bottom: 2rem;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  /* 태그 헤더 */
+  .tag-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    background: var(--color-card);
+    border-radius: 16px;
+    border: 2px solid var(--color-primary);
+  }
+
+  .tag-header h1 {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-header p {
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+  }
+
+  .tag-header strong {
+    color: var(--color-primary);
+  }
+
+  /* 개그 그리드 */
+  .gags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    align-items: start;
+  }
+
+  .gag-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    height: auto;
+    min-height: fit-content;
+  }
+
+  .gag-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .gag-header {
+    margin-bottom: 1rem;
+    min-height: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .featured {
+    font-size: 0.875rem;
+    color: #f59e0b;
+    font-weight: 600;
+  }
+
+  .gag-card h2 {
+    margin-bottom: 1rem;
+  }
+
+  .gag-title-link {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+
+  .gag-title-link:hover {
+    color: var(--color-primary);
+  }
+
+  .pun-format {
+    margin: 1rem 0;
+  }
+
+  .pun-format .question {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .gag-card .pun-format .answer {
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 0.75rem;
+    background: var(--color-primary) !important;
+    border-radius: 8px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-height: fit-content;
+    display: block;
+    color: white !important;
+    text-align: left !important;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .gag-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .tag.current-tag {
+    background: #059669;
+    font-weight: 600;
+  }
+
+  .tag.current-tag:hover {
+    background: #047857;
+  }
+
+  time {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  /* 네비게이션 */
+  .navigation-section {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .back-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.125rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .gags-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .gag-card {
+      padding: 1.25rem;
+    }
+
+    .tag-header {
+      margin: 0 1rem 2rem;
+      padding: 1.5rem 1rem;
+    }
+
+    .tag-header h1 {
+      font-size: 2rem;
+    }
+
+    .gag-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .breadcrumb {
+      margin: 0 1rem 2rem;
+    }
+  }
+</style>
