@@ -1,0 +1,159 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { tagToSlug } from "../../utils/tagUtils";
+
+type GagEntry = CollectionEntry<"gags">;
+
+const allGags = await getCollection("gags", ({ data }: GagEntry) => {
+  return data.published === true;
+});
+
+// 모든 태그와 개그 개수 계산
+const tagCounts = new Map<string, number>();
+allGags.forEach((gag: GagEntry) => {
+  gag.data.tags.forEach((tag: string) => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+// 태그를 개그 개수로 정렬 (많은 순서대로)
+const sortedTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .map(([tag, count]) => ({ tag, count }));
+
+const totalTags = sortedTags.length;
+---
+
+<BaseLayout
+  title="태그"
+  description="아재개그를 태그별로 찾아보세요"
+  currentPage="tags"
+>
+  <!-- 헤더 -->
+  <section class="tags-header">
+    <h1>🏷️ 모든 태그</h1>
+    <p>총 <strong>{totalTags}개</strong>의 태그로 개그를 분류했어요</p>
+  </section>
+
+  <!-- 태그 그리드 -->
+  <section class="tags-grid">
+    {
+      sortedTags.map(({ tag, count }) => (
+        <a href={`/tags/${tagToSlug(tag)}`} class="tag-card">
+          <div class="tag-name">#{tag}</div>
+          <div class="tag-count">{count}개</div>
+        </a>
+      ))
+    }
+  </section>
+
+  <!-- 네비게이션 -->
+  <section class="navigation-section">
+    <a href="/" class="back-link">← 홈으로 돌아가기</a>
+  </section>
+</BaseLayout>
+
+<style>
+  /* 헤더 */
+  .tags-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    background: var(--color-card);
+    border-radius: 16px;
+    border: 2px solid var(--color-primary);
+  }
+
+  .tags-header h1 {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tags-header p {
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+  }
+
+  .tags-header strong {
+    color: var(--color-primary);
+  }
+
+  /* 태그 그리드 */
+  .tags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .tag-card {
+    display: block;
+    text-decoration: none;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tag-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+  }
+
+  .tag-name {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag-count {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  /* 네비게이션 */
+  .navigation-section {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .back-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.125rem;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .tags-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tag-card {
+      padding: 1.25rem;
+    }
+
+    .tags-header {
+      margin: 0 1rem 2rem;
+      padding: 1.5rem 1rem;
+    }
+
+    .tags-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

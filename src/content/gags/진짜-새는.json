@@ -2,10 +2,7 @@
   "slug": "real-bird",
   "title": "진짜 새는?",
   "body": "참새",
-  "tags": [
-    "새",
-    "참새"
-  ],
+  "tags": ["새", "참새"],
   "published": true,
   "createdAt": "2025-09-23T00:17:31.633Z",
   "updatedAt": "2025-09-23T01:59:05.597Z"

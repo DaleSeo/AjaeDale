@@ -4,7 +4,7 @@ export interface Props {
   description?: string;
   ogTitle?: string;
   ogDescription?: string;
-  currentPage?: "home" | "random" | "search" | "gag";
+  currentPage?: "home" | "random" | "search" | "gag" | "tag" | "tags";
 }
 
 const {
@@ -56,6 +56,12 @@ const siteTitle = `${title} - 아재달레`;
             class={`nav-link ${currentPage === "random" ? "active" : ""}`}
           >
             🎲 랜덤
+          </a>
+          <a
+            href="/tags"
+            class={`nav-link ${currentPage === "tags" || currentPage === "tag" ? "active" : ""}`}
+          >
+            🏷️ 태그
           </a>
           <a
             href="/search"

@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { tagToSlug } from "../../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -55,7 +56,6 @@ const pageDescription = gag.data.body
     {
       gag.data.body && (
         <div class="pun-format">
-          <p class="question">Q: {gag.data.title}</p>
           <p class="answer">A: {gag.data.body}</p>
         </div>
       )
@@ -63,7 +63,13 @@ const pageDescription = gag.data.body
 
     <div class="gag-footer">
       <div class="tags">
-        {gag.data.tags.map((tag: string) => <span class="tag">#{tag}</span>)}
+        {
+          gag.data.tags.map((tag: string) => (
+            <a href={`/tags/${tagToSlug(tag)}`} class="tag">
+              #{tag}
+            </a>
+          ))
+        }
       </div>
       <time datetime={gag.data.createdAt.toISOString()}>
         {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
@@ -150,7 +156,6 @@ const pageDescription = gag.data.body
   .gag-detail .gag-header {
     margin-bottom: 1rem;
   }
-
 
   .featured {
     font-size: 1rem;

@@ -2,11 +2,7 @@
   "slug": "cow-singing",
   "title": "소가 노래를 부르면?",
   "body": "소송",
-  "tags": [
-    "소",
-    "소송",
-    "노래"
-  ],
+  "tags": ["소", "소송", "노래"],
   "published": true,
   "createdAt": "2025-09-23T00:17:31.632Z",
   "updatedAt": "2025-09-23T01:59:05.594Z"

@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { tagToSlug } from "../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -45,7 +46,6 @@ const totalGagsCount = allGags.length;
       {
         todaysGag.data.body && (
           <div class="pun-format">
-            <p class="question">Q: {todaysGag.data.title}</p>
             <p class="answer">A: {todaysGag.data.body}</p>
           </div>
         )
@@ -55,7 +55,9 @@ const totalGagsCount = allGags.length;
         <div class="tags">
           {
             todaysGag.data.tags.map((tag: string) => (
-              <span class="tag">#{tag}</span>
+              <a href={`/tags/${tagToSlug(tag)}`} class="tag">
+                #{tag}
+              </a>
             ))
           }
         </div>
