@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -39,113 +40,76 @@ const pageDescription = gag.data.body
   : gag.data.title;
 ---
 
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{siteTitle}</title>
-    <meta name="description" content={pageDescription} />
+<BaseLayout
+  title={gag.data.title}
+  description={pageDescription}
+  ogTitle={siteTitle}
+  ogDescription={pageDescription}
+  currentPage="gag"
+>
+  <div class="breadcrumb">
+    <a href="/">홈</a> > <span>개그</span>
+  </div>
 
-    <!-- Open Graph for social sharing -->
-    <meta property="og:title" content={siteTitle} />
-    <meta property="og:description" content={pageDescription} />
-    <meta property="og:type" content="article" />
-    <meta
-      property="og:url"
-      content={`https://www.ajaedale.com/gags/${gag.data.slug}`}
-    />
+  <!-- 개별 개그 카드 -->
+  <article class="gag-detail" data-pagefind-body>
+    <h1 data-pagefind-meta="title" style="display: none;">
+      {gag.data.title}
+    </h1>
+    <div class="gag-header">
+      <span class="category">
+        {categoryEmojis[gag.data.category]}
+        {categoryNames[gag.data.category]}
+      </span>
+      {gag.data.featured && <span class="featured">⭐ 인기</span>}
+    </div>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={siteTitle} />
-    <meta name="twitter:description" content={pageDescription} />
-  </head>
-  <body>
-    <header>
-      <div class="header-content">
-        <div>
-          <h1><a href="/">🇰🇷 아재달레</a></h1>
-          <p>아재개그 저장소</p>
+    <h1 class="gag-title">{gag.data.title}</h1>
+
+    {
+      gag.data.category === "pun" ? (
+        <div class="pun-format">
+          <p class="question">Q: {gag.data.title}</p>
+          <p class="answer">A: {gag.data.body}</p>
         </div>
-        <nav>
-          <a href="/search" class="search-link">🔍 검색</a>
-        </nav>
+      ) : (
+        gag.data.body && <p class="gag-body">{gag.data.body}</p>
+      )
+    }
+
+    <div class="gag-footer">
+      <div class="tags">
+        {gag.data.tags.map((tag: string) => <span class="tag">#{tag}</span>)}
       </div>
-    </header>
+      <time datetime={gag.data.createdAt.toISOString()}>
+        {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
+      </time>
+    </div>
 
-    <main>
-      <div class="breadcrumb">
-        <a href="/">홈</a> > <span>개그</span>
+    <!-- 공유 버튼들 -->
+    <div class="share-section">
+      <h3>이 개그 공유하기</h3>
+      <div class="share-buttons">
+        <button onclick="copyToClipboard()" class="share-btn copy-btn">
+          📋 링크 복사
+        </button>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(pageDescription)}&url=${encodeURIComponent(`https://www.ajaedale.com/gags/${gag.data.slug}`)}`}
+          target="_blank"
+          class="share-btn twitter-btn"
+        >
+          🐦 트위터
+        </a>
       </div>
+    </div>
 
-      <!-- 개별 개그 카드 -->
-      <article class="gag-detail" data-pagefind-body>
-        <h1 data-pagefind-meta="title" style="display: none;">
-          {gag.data.title}
-        </h1>
-        <div class="gag-header">
-          <span class="category">
-            {categoryEmojis[gag.data.category]}
-            {categoryNames[gag.data.category]}
-          </span>
-          {gag.data.featured && <span class="featured">⭐ 인기</span>}
-        </div>
+    <!-- 다른 개그 보기 -->
+    <div class="navigation-section">
+      <a href="/" class="back-link">← 모든 개그 보기</a>
+    </div>
+  </article>
 
-        <h1 class="gag-title">{gag.data.title}</h1>
-
-        {
-          gag.data.category === "pun" ? (
-            <div class="pun-format">
-              <p class="question">Q: {gag.data.title}</p>
-              <p class="answer">A: {gag.data.body}</p>
-            </div>
-          ) : (
-            gag.data.body && <p class="gag-body">{gag.data.body}</p>
-          )
-        }
-
-        <div class="gag-footer">
-          <div class="tags">
-            {
-              gag.data.tags.map((tag: string) => (
-                <span class="tag">#{tag}</span>
-              ))
-            }
-          </div>
-          <time datetime={gag.data.createdAt.toISOString()}>
-            {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
-          </time>
-        </div>
-
-        <!-- 공유 버튼들 -->
-        <div class="share-section">
-          <h3>이 개그 공유하기</h3>
-          <div class="share-buttons">
-            <button onclick="copyToClipboard()" class="share-btn copy-btn">
-              📋 링크 복사
-            </button>
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(pageDescription)}&url=${encodeURIComponent(`https://www.ajaedale.com/gags/${gag.data.slug}`)}`}
-              target="_blank"
-              class="share-btn twitter-btn"
-            >
-              🐦 트위터
-            </a>
-          </div>
-        </div>
-
-        <!-- 다른 개그 보기 -->
-        <div class="navigation-section">
-          <a href="/" class="back-link">← 모든 개그 보기</a>
-        </div>
-      </article>
-    </main>
-
-    <footer>
-      <p>Made with ❤️ for Everyone</p>
-    </footer>
-
+  <div slot="scripts">
     <!-- 링크 복사 스크립트 -->
     <script is:inline>
       async function copyToClipboard() {
@@ -168,84 +132,12 @@ const pageDescription = gag.data.body
         }
       }
     </script>
-  </body>
-</html>
+  </div>
+</BaseLayout>
 
 <style>
-  :root {
-    --color-primary: #2563eb;
-    --color-primary-dark: #1e40af;
-    --color-bg: #ffffff;
-    --color-card: #f9fafb;
-    --color-border: #e5e7eb;
-    --color-text: #1f2937;
-    --color-text-muted: #6b7280;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    line-height: 1.6;
-  }
-
-  header {
-    padding: 3rem 1rem 2rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .header-content > div {
-    text-align: center;
-  }
-
-  .header-content h1 a {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .header-content p {
-    color: var(--color-text-muted);
-    font-size: 1.125rem;
-  }
-
-  .search-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    border: 2px solid var(--color-primary);
-    border-radius: 8px;
-    transition: all 0.2s;
-  }
-
-  .search-link:hover {
-    background-color: var(--color-primary);
-    color: white;
-  }
-
   main {
     max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
   }
 
   .breadcrumb {
@@ -271,17 +163,12 @@ const pageDescription = gag.data.body
     box-shadow: var(--shadow-md);
   }
 
-  .gag-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .gag-detail .gag-header {
     margin-bottom: 1rem;
   }
 
-  .category {
+  .gag-detail .category {
     font-size: 1rem;
-    color: var(--color-text-muted);
-    font-weight: 500;
   }
 
   .featured {
@@ -297,57 +184,38 @@ const pageDescription = gag.data.body
     line-height: 1.3;
   }
 
-  .gag-body {
-    color: var(--color-text);
+  .gag-detail .gag-body {
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    white-space: pre-line;
     line-height: 1.6;
   }
 
-  .pun-format {
+  .gag-detail .pun-format {
     margin: 2rem 0;
   }
 
-  .pun-format .question {
-    color: var(--color-primary-dark);
+  .gag-detail .pun-format .question {
     font-size: 1.5rem;
-    font-weight: 600;
     margin-bottom: 1rem;
   }
 
-  .pun-format .answer {
+  .gag-detail .pun-format .answer {
     font-size: 2rem;
-    font-weight: 700;
     margin-bottom: 1.5rem;
     padding: 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
     border-radius: 12px;
-    text-align: center;
   }
 
-  .gag-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .gag-detail .gag-footer {
     margin-bottom: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
   }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
+  .gag-detail .tags {
     gap: 0.75rem;
   }
 
-  .tag {
-    font-size: 0.875rem;
+  .gag-detail .tag {
     padding: 0.5rem 1rem;
-    background: var(--color-primary);
-    color: white;
-    border-radius: 9999px;
     font-weight: 500;
   }
 
@@ -421,14 +289,6 @@ const pageDescription = gag.data.body
 
   .back-link:hover {
     text-decoration: underline;
-  }
-
-  footer {
-    text-align: center;
-    padding: 3rem 1rem;
-    margin-top: 3rem;
-    border-top: 1px solid var(--color-border);
-    color: var(--color-text-muted);
   }
 
   @media (max-width: 768px) {
