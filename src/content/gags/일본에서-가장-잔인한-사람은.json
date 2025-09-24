@@ -2,8 +2,11 @@
   "slug": "japan-cruelest-person",
   "title": "일본에서 가장 잔인한 사람은?",
   "body": "도끼로 이마까",
-  "category": "pun",
-  "tags": ["일본", "도끼", "이마"],
+  "tags": [
+    "일본",
+    "도끼",
+    "이마"
+  ],
   "published": true,
   "createdAt": "2025-09-23T23:47:52.922Z",
   "updatedAt": "2025-09-23T23:47:52.922Z"

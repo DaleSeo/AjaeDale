@@ -2,8 +2,10 @@
   "slug": "pushing-rotating-bed",
   "title": "침대를 밀고 돌리면?",
   "body": "배드민턴",
-  "category": "pun",
-  "tags": ["침대", "배드민턴"],
+  "tags": [
+    "침대",
+    "배드민턴"
+  ],
   "published": true,
   "createdAt": "2025-09-23T00:17:31.630Z",
   "updatedAt": "2025-09-23T01:59:05.597Z"

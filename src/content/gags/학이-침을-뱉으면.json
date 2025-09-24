@@ -2,8 +2,11 @@
   "slug": "crane-spits",
   "title": "학이 침을 뱉으면?",
   "body": "퇴학",
-  "category": "pun",
-  "tags": ["학", "침", "퇴학"],
+  "tags": [
+    "학",
+    "침",
+    "퇴학"
+  ],
   "published": true,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"

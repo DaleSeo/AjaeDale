@@ -21,16 +21,6 @@ function getTodaysGag(gags: GagEntry[]): GagEntry {
 
 const todaysGag = getTodaysGag(allGags);
 const totalGagsCount = allGags.length;
-
-const categoryEmojis: Record<string, string> = {
-  joke: "😂",
-  pun: "🤓",
-};
-
-const categoryNames: Record<string, string> = {
-  joke: "농담",
-  pun: "말장난",
-};
 ---
 
 <BaseLayout title="홈" currentPage="home">
@@ -50,23 +40,14 @@ const categoryNames: Record<string, string> = {
     </div>
 
     <article class="featured-gag">
-      <div class="gag-header">
-        <span class="category">
-          {categoryEmojis[todaysGag.data.category]}{" "}
-          {categoryNames[todaysGag.data.category]}
-        </span>
-      </div>
-
       <h3>{todaysGag.data.title}</h3>
 
       {
-        todaysGag.data.category === "pun" ? (
+        todaysGag.data.body && (
           <div class="pun-format">
             <p class="question">Q: {todaysGag.data.title}</p>
             <p class="answer">A: {todaysGag.data.body}</p>
           </div>
-        ) : (
-          todaysGag.data.body && <p class="gag-body">{todaysGag.data.body}</p>
         )
       }
 

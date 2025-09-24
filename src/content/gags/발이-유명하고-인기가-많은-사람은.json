@@ -2,8 +2,11 @@
   "slug": "famous-foot-person",
   "title": "발이 유명하고 인기가 많은 사람은?",
   "body": "바리스타",
-  "category": "pun",
-  "tags": ["발", "바리스타", "유명"],
+  "tags": [
+    "발",
+    "바리스타",
+    "유명"
+  ],
   "published": true,
   "createdAt": "2025-09-23T23:47:52.919Z",
   "updatedAt": "2025-09-23T23:47:52.919Z"

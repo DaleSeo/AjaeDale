@@ -2,8 +2,11 @@
   "slug": "water-plant-director",
   "title": "수자원 발전소 소장 이름은?",
   "body": "무라까와 쓰지마",
-  "category": "pun",
-  "tags": ["수자원", "발전소", "소장"],
+  "tags": [
+    "수자원",
+    "발전소",
+    "소장"
+  ],
   "published": true,
   "createdAt": "2025-09-23T23:47:52.922Z",
   "updatedAt": "2025-09-23T23:47:52.922Z"
