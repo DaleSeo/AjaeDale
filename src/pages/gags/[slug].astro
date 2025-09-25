@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import AnswerSpoiler from "../../components/AnswerSpoiler.astro";
 import { tagToSlug } from "../../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -38,10 +39,6 @@ const pageDescription = gag.data.body
   ogDescription={pageDescription}
   currentPage="gag"
 >
-  <div class="breadcrumb">
-    <a href="/">홈</a> > <span>개그</span>
-  </div>
-
   <!-- 개별 개그 카드 -->
   <article class="gag-detail" data-pagefind-body>
     <h1 data-pagefind-meta="title" style="display: none;">
@@ -55,9 +52,7 @@ const pageDescription = gag.data.body
 
     {
       gag.data.body && (
-        <div class="pun-format">
-          <p class="answer">A: {gag.data.body}</p>
-        </div>
+        <AnswerSpoiler answer={gag.data.body} id={`gag-${gag.data.slug}`} />
       )
     }
 
@@ -128,21 +123,6 @@ const pageDescription = gag.data.body
 <style>
   main {
     max-width: 800px;
-  }
-
-  .breadcrumb {
-    margin-bottom: 2rem;
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-  }
-
-  .breadcrumb a {
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .breadcrumb a:hover {
-    text-decoration: underline;
   }
 
   .gag-detail {
