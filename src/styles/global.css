@@ -1,0 +1,124 @@
+/* Global Styles - Import all design tokens and base styles */
+
+/* Import Design Tokens */
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+
+/* Import Component Styles */
+@import "./components/navigation.css";
+@import "./components/gag-card.css";
+@import "./components/layout.css";
+@import "./components/buttons.css";
+
+/* Import Utilities */
+@import "./utilities/utilities.css";
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus Styles */
+*:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Link Styles */
+a {
+  color: var(--color-link);
+  transition: var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+/* Form Elements */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Text Selection */
+::selection {
+  background-color: var(--color-primary-alpha-20);
+  color: var(--color-text);
+}
+
+/* Scrollbar Styling (WebKit) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Print Styles */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  .nav,
+  .footer {
+    display: none;
+  }
+}

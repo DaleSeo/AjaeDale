@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import AnswerSpoiler from "../../components/AnswerSpoiler.astro";
 import { tagToSlug } from "../../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -49,18 +50,14 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
   ogDescription={pageDescription}
   currentPage="tag"
 >
-  <div class="breadcrumb">
-    <a href="/">홈</a> > <a href="/search">검색</a> > <span>#{tag}</span>
-  </div>
-
   <!-- 태그 헤더 -->
-  <section class="tag-header">
+  <section class="tag-header" data-pagefind-ignore>
     <h1>#{tag}</h1>
     <p>이 태그가 포함된 개그 <strong>{gags.length}개</strong></p>
   </section>
 
   <!-- 개그 목록 -->
-  <section class="gags-grid" data-pagefind-body>
+  <section class="gags-grid" data-pagefind-ignore>
     {
       gags.map((gag) => (
         <article class="gag-card">
@@ -75,9 +72,7 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
           </h2>
 
           {gag.data.body && (
-            <div class="pun-format">
-              <p class="answer">A: {gag.data.body}</p>
-            </div>
+            <AnswerSpoiler answer={gag.data.body} id={`tag-${gag.data.slug}`} />
           )}
 
           <div class="gag-footer">
@@ -101,27 +96,12 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
   </section>
 
   <!-- 네비게이션 -->
-  <section class="navigation-section">
+  <section class="navigation-section" data-pagefind-ignore>
     <a href="/search" class="back-link">← 모든 개그 검색하기</a>
   </section>
 </BaseLayout>
 
 <style>
-  .breadcrumb {
-    margin-bottom: 2rem;
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-  }
-
-  .breadcrumb a {
-    color: var(--color-primary);
-    text-decoration: none;
-  }
-
-  .breadcrumb a:hover {
-    text-decoration: underline;
-  }
-
   /* 태그 헤더 */
   .tag-header {
     text-align: center;
@@ -316,10 +296,6 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
       flex-direction: column;
       align-items: flex-start;
       gap: 0.75rem;
-    }
-
-    .breadcrumb {
-      margin: 0 1rem 2rem;
     }
   }
 </style>

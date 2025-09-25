@@ -1,0 +1,303 @@
+---
+export interface Props {
+  answer: string;
+  id?: string;
+}
+
+const { answer, id } = Astro.props;
+const spoilerId =
+  id || `spoiler-${Math.random().toString(36).substring(2, 11)}`;
+---
+
+<div class="answer-spoiler" data-spoiler-id={spoilerId}>
+  <!-- 초기 상태: 블러된 답변과 힌트 버튼 -->
+  <div class="spoiler-content blurred" data-answer={answer}>
+    <p class="blurred-answer">{answer}</p>
+  </div>
+
+  <!-- 컨트롤 버튼 -->
+  <div class="spoiler-controls">
+    <button
+      type="button"
+      class="spoiler-btn hint-btn"
+      data-action="hint"
+      title="첫 글자 힌트 보기"
+    >
+      🎯 힌트 보기
+    </button>
+    <button
+      type="button"
+      class="spoiler-btn reveal-btn hidden"
+      data-action="reveal"
+      title="전체 답변 보기"
+    >
+      💡 답변 보기
+    </button>
+    <button
+      type="button"
+      class="spoiler-btn hide-btn hidden"
+      data-action="hide"
+      title="다시 숨기기"
+    >
+      🙈 숨기기
+    </button>
+  </div>
+
+  <!-- 힌트 표시 영역 -->
+  <div class="hint-display hidden">
+    <p class="hint-text">힌트: <span class="hint-answer"></span></p>
+  </div>
+
+  <!-- 타이핑 애니메이션 표시 영역 -->
+  <div class="typing-display hidden">
+    <p class="typing-answer">
+      <span class="typing-text"></span><span class="cursor">|</span>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const spoilers = document.querySelectorAll(".answer-spoiler");
+
+    spoilers.forEach((spoiler) => {
+      const spoilerContent = spoiler.querySelector(
+        ".spoiler-content",
+      ) as HTMLElement;
+      const hintBtn = spoiler.querySelector(".hint-btn") as HTMLButtonElement;
+      const revealBtn = spoiler.querySelector(
+        ".reveal-btn",
+      ) as HTMLButtonElement;
+      const hideBtn = spoiler.querySelector(".hide-btn") as HTMLButtonElement;
+      const hintDisplay = spoiler.querySelector(".hint-display") as HTMLElement;
+      const hintAnswer = spoiler.querySelector(".hint-answer") as HTMLElement;
+      const typingDisplay = spoiler.querySelector(
+        ".typing-display",
+      ) as HTMLElement;
+      const typingText = spoiler.querySelector(".typing-text") as HTMLElement;
+
+      const answer = (spoilerContent as HTMLElement)?.dataset?.answer || "";
+
+      // null 체크
+      if (
+        !spoilerContent ||
+        !hintBtn ||
+        !revealBtn ||
+        !hideBtn ||
+        !hintDisplay ||
+        !hintAnswer ||
+        !typingDisplay ||
+        !typingText
+      ) {
+        return;
+      }
+
+      // 힌트 버튼 클릭
+      hintBtn.addEventListener("click", () => {
+        showHint();
+      });
+
+      // 답변 보기 버튼 클릭
+      revealBtn.addEventListener("click", () => {
+        revealAnswer();
+      });
+
+      // 숨기기 버튼 클릭
+      hideBtn.addEventListener("click", () => {
+        hideAnswer();
+      });
+
+      // 힌트 표시 함수
+      function showHint() {
+        const firstChar = answer.charAt(0);
+        const hintText = firstChar + "●".repeat(answer.length - 1);
+
+        if (hintAnswer) hintAnswer.textContent = hintText;
+
+        // UI 업데이트
+        if (spoilerContent) spoilerContent.classList.add("hidden");
+        if (hintDisplay) hintDisplay.classList.remove("hidden");
+        if (hintBtn) hintBtn.classList.add("hidden");
+        if (revealBtn) revealBtn.classList.remove("hidden");
+        if (hideBtn) hideBtn.classList.remove("hidden");
+      }
+
+      // 답변 공개 함수 (타이핑 애니메이션)
+      function revealAnswer() {
+        // UI 업데이트
+        if (hintDisplay) hintDisplay.classList.add("hidden");
+        if (typingDisplay) typingDisplay.classList.remove("hidden");
+        if (revealBtn) revealBtn.classList.add("hidden");
+
+        // 타이핑 애니메이션
+        let index = 0;
+        if (typingText) typingText.textContent = "";
+
+        const typingInterval = setInterval(() => {
+          if (index < answer.length && typingText) {
+            typingText.textContent += answer.charAt(index);
+            index++;
+          } else {
+            clearInterval(typingInterval);
+            // 커서 깜빡임 중지
+            setTimeout(() => {
+              const cursor = spoiler.querySelector(".cursor") as HTMLElement;
+              if (cursor) cursor.style.display = "none";
+            }, 2000);
+          }
+        }, 100); // 100ms마다 한 글자씩
+      }
+
+      // 답변 숨기기 함수
+      function hideAnswer() {
+        // 모든 표시 영역 숨기기
+        if (hintDisplay) hintDisplay.classList.add("hidden");
+        if (typingDisplay) typingDisplay.classList.add("hidden");
+
+        // 초기 블러 상태로 복원
+        if (spoilerContent) spoilerContent.classList.remove("hidden");
+
+        // 버튼 상태 초기화
+        if (hintBtn) hintBtn.classList.remove("hidden");
+        if (revealBtn) revealBtn.classList.add("hidden");
+        if (hideBtn) hideBtn.classList.add("hidden");
+
+        // 커서 다시 표시
+        const cursor = spoiler.querySelector(".cursor") as HTMLElement;
+        if (cursor) cursor.style.display = "inline";
+      }
+    });
+  });
+</script>
+
+<style>
+  .answer-spoiler {
+    margin: var(--space-4) 0;
+  }
+
+  .spoiler-content {
+    position: relative;
+  }
+
+  .blurred-answer {
+    color: white;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    line-height: var(--line-height-snug);
+    filter: blur(8px);
+    user-select: none;
+    transition: filter 0.3s ease;
+  }
+
+  .spoiler-controls {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    margin: var(--space-3) 0;
+  }
+
+  .spoiler-btn {
+    padding: var(--space-2) var(--space-4);
+    border: 2px solid var(--color-primary);
+    background: white;
+    color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .spoiler-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .spoiler-btn:active {
+    transform: translateY(0);
+  }
+
+  .hint-display,
+  .typing-display {
+    text-align: center;
+    margin: var(--space-4) 0;
+  }
+
+  .hint-text,
+  .typing-answer {
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-card);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    display: inline-block;
+  }
+
+  .hint-answer {
+    font-family: monospace;
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+    margin-left: var(--space-2);
+  }
+
+  .typing-text {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+  }
+
+  .cursor {
+    animation: blink 1s infinite;
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* 반응형 디자인 */
+  @media (max-width: 768px) {
+    .spoiler-controls {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .spoiler-btn {
+      width: 100%;
+      max-width: 200px;
+      justify-content: center;
+    }
+
+    .blurred-answer,
+    .hint-text,
+    .typing-answer {
+      font-size: var(--font-size-base);
+    }
+
+    .hint-answer {
+      font-size: var(--font-size-lg);
+    }
+  }
+</style>
