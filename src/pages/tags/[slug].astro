@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import AnswerSpoiler from "../../components/AnswerSpoiler.astro";
+import GagCard from "../../components/GagCard.astro";
 import { tagToSlug } from "../../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -60,44 +60,17 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
   <section class="gags-grid" data-pagefind-ignore>
     {
       gags.map((gag) => (
-        <article class="gag-card">
-          <div class="gag-header">
-            {gag.data.featured && <span class="featured">⭐ 인기</span>}
-          </div>
-
-          <h2>
-            <a href={`/gags/${gag.data.slug}`} class="gag-title-link">
-              {gag.data.title}
-            </a>
-          </h2>
-
-          {gag.data.body && (
-            <AnswerSpoiler answer={gag.data.body} id={`tag-${gag.data.slug}`} />
-          )}
-
-          <div class="gag-footer">
-            <div class="tags">
-              {gag.data.tags.map((gagTag: string) => (
-                <a
-                  href={`/tags/${tagToSlug(gagTag)}`}
-                  class={`tag ${gagTag === tag ? "current-tag" : ""}`}
-                >
-                  #{gagTag}
-                </a>
-              ))}
-            </div>
-            <time datetime={gag.data.createdAt.toISOString()}>
-              {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
-            </time>
-          </div>
-        </article>
+        <GagCard
+          gag={gag}
+          variant="default"
+          titleLevel="h2"
+          showDate={true}
+          showTitleLink={true}
+          currentTag={tag}
+          spoilerId={`tag-${gag.data.slug}`}
+        />
       ))
     }
-  </section>
-
-  <!-- 네비게이션 -->
-  <section class="navigation-section" data-pagefind-ignore>
-    <a href="/search" class="back-link">← 모든 개그 검색하기</a>
   </section>
 </BaseLayout>
 
@@ -195,14 +168,14 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
     font-size: 1.125rem;
     font-weight: 600;
     padding: 0.75rem;
-    background: var(--color-primary) !important;
+    background: var(--color-primary);
     border-radius: 8px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     min-height: fit-content;
     display: block;
-    color: white !important;
-    text-align: left !important;
+    color: white;
+    text-align: left;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   }
 
@@ -252,25 +225,6 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
   time {
     font-size: 0.875rem;
     color: var(--color-text-muted);
-  }
-
-  /* 네비게이션 */
-  .navigation-section {
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .back-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.125rem;
-    transition: color 0.2s;
-  }
-
-  .back-link:hover {
-    color: var(--color-primary-dark);
-    text-decoration: underline;
   }
 
   @media (max-width: 768px) {

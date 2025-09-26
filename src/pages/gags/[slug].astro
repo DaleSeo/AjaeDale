@@ -1,8 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import AnswerSpoiler from "../../components/AnswerSpoiler.astro";
-import { tagToSlug } from "../../utils/tagUtils";
+import GagCard from "../../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -40,96 +39,28 @@ const pageDescription = gag.data.body
   currentPage="gag"
 >
   <!-- 개별 개그 카드 -->
-  <article class="gag-detail" data-pagefind-body>
+  <div data-pagefind-body>
     <h1 data-pagefind-meta="title" style="display: none;">
       {gag.data.title}
     </h1>
-    <div class="gag-header">
-      {gag.data.featured && <span class="featured">⭐ 인기</span>}
-    </div>
-
-    <h1 class="gag-title">{gag.data.title}</h1>
-
-    {
-      gag.data.body && (
-        <AnswerSpoiler answer={gag.data.body} id={`gag-${gag.data.slug}`} />
-      )
-    }
-
-    <div class="gag-footer">
-      <div class="tags">
-        {
-          gag.data.tags.map((tag: string) => (
-            <a href={`/tags/${tagToSlug(tag)}`} class="tag">
-              #{tag}
-            </a>
-          ))
-        }
-      </div>
-      <time datetime={gag.data.createdAt.toISOString()}>
-        {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
-      </time>
-    </div>
-
-    <!-- 공유 버튼들 -->
-    <div class="share-section">
-      <h3>이 개그 공유하기</h3>
-      <div class="share-buttons">
-        <button onclick="copyToClipboard()" class="share-btn copy-btn">
-          📋 링크 복사
-        </button>
-        <a
-          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(pageDescription)}&url=${encodeURIComponent(`https://www.ajaedale.com/gags/${gag.data.slug}`)}`}
-          target="_blank"
-          class="share-btn twitter-btn"
-        >
-          🐦 트위터
-        </a>
-      </div>
-    </div>
-
-    <!-- 다른 개그 보기 -->
-    <div class="navigation-section">
-      <a href="/" class="back-link">← 모든 개그 보기</a>
-    </div>
-  </article>
-
-  <div slot="scripts">
-    <!-- 링크 복사 스크립트 -->
-    <script is:inline>
-      async function copyToClipboard() {
-        const url = window.location.href;
-        const btn = document.querySelector(".copy-btn");
-        const originalText = btn.textContent;
-
-        try {
-          await navigator.clipboard.writeText(url);
-          btn.textContent = "✅ 복사됨!";
-          setTimeout(() => {
-            btn.textContent = originalText;
-          }, 2000);
-        } catch (err) {
-          console.error("Failed to copy:", err);
-          btn.textContent = "❌ 복사 실패";
-          setTimeout(() => {
-            btn.textContent = originalText;
-          }, 2000);
-        }
-      }
-    </script>
+    <GagCard
+      gag={gag}
+      variant="detail"
+      titleLevel="h1"
+      showDate={true}
+      spoilerId={`gag-${gag.data.slug}`}
+    />
   </div>
 </BaseLayout>
 
 <style>
-  main {
-    max-width: 800px;
-  }
-
   .gag-detail {
+    max-width: 600px;
+    margin: 0 auto;
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: 16px;
-    padding: 2.5rem;
+    padding: 2rem;
     box-shadow: var(--shadow-md);
   }
 
@@ -172,10 +103,6 @@ const pageDescription = gag.data.body
     border-radius: 12px;
   }
 
-  .gag-detail .gag-footer {
-    margin-bottom: 2rem;
-  }
-
   .gag-detail .tags {
     gap: 0.75rem;
   }
@@ -188,73 +115,6 @@ const pageDescription = gag.data.body
   time {
     font-size: 1rem;
     color: var(--color-text-muted);
-  }
-
-  .share-section {
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: #f8fafc;
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
-  }
-
-  .share-section h3 {
-    margin-bottom: 1rem;
-    color: var(--color-text);
-    font-size: 1.25rem;
-  }
-
-  .share-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .share-btn {
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .copy-btn {
-    background: var(--color-primary);
-    color: white;
-  }
-
-  .copy-btn:hover {
-    background: var(--color-primary-dark);
-  }
-
-  .twitter-btn {
-    background: #1da1f2;
-    color: white;
-  }
-
-  .twitter-btn:hover {
-    background: #1a91da;
-  }
-
-  .navigation-section {
-    margin-top: 2rem;
-  }
-
-  .back-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.125rem;
-  }
-
-  .back-link:hover {
-    text-decoration: underline;
   }
 
   @media (max-width: 768px) {
@@ -280,15 +140,6 @@ const pageDescription = gag.data.body
       flex-direction: column;
       align-items: flex-start;
       gap: 1rem;
-    }
-
-    .share-buttons {
-      flex-direction: column;
-    }
-
-    .share-btn {
-      width: 100%;
-      justify-content: center;
     }
   }
 </style>

@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from "astro:content";
+import AnswerSpoiler from "./AnswerSpoiler.astro";
+import { tagToSlug } from "../utils/tagUtils";
+
+type GagEntry = CollectionEntry<"gags">;
+
+interface Props {
+  gag: GagEntry;
+  variant?: "default" | "featured" | "detail";
+  titleLevel?: "h1" | "h2" | "h3";
+  showDate?: boolean;
+  showTitleLink?: boolean;
+  currentTag?: string;
+  spoilerId: string;
+}
+
+const {
+  gag,
+  variant = "default",
+  titleLevel = "h3",
+  showDate = false,
+  showTitleLink = false,
+  currentTag,
+  spoilerId,
+} = Astro.props;
+
+const TitleTag = titleLevel;
+---
+
+<article
+  class={`gag-card ${variant === "featured" ? "featured" : ""} ${variant === "detail" ? "gag-detail" : ""}`}
+>
+  {
+    variant !== "default" && (
+      <div class="gag-header">
+        {gag.data.featured && <span class="featured">⭐ 인기</span>}
+      </div>
+    )
+  }
+
+  <TitleTag class="gag-title">
+    {
+      showTitleLink ? (
+        <a href={`/gags/${gag.data.slug}`} class="gag-title-link">
+          {gag.data.title}
+        </a>
+      ) : (
+        gag.data.title
+      )
+    }
+  </TitleTag>
+
+  {gag.data.body && <AnswerSpoiler answer={gag.data.body} id={spoilerId} />}
+
+  <div class="gag-footer">
+    <div class="tags">
+      {
+        gag.data.tags.map((tag: string) => (
+          <a
+            href={`/tags/${tagToSlug(tag)}`}
+            class={`tag ${currentTag && tag === currentTag ? "current-tag" : ""}`}
+          >
+            #{tag}
+          </a>
+        ))
+      }
+    </div>
+    {
+      showDate && (
+        <time datetime={gag.data.createdAt.toISOString()}>
+          {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
+        </time>
+      )
+    }
+  </div>
+</article>

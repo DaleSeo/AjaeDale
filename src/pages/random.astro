@@ -1,8 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import AnswerSpoiler from "../components/AnswerSpoiler.astro";
-import { tagToSlug } from "../utils/tagUtils";
+import GagCard from "../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -31,30 +30,12 @@ const randomGag = getRandomGag(allGags);
 
   <!-- 랜덤 개그 섹션 -->
   <section class="page-section" data-pagefind-body>
-    <article class="gag-card featured">
-      <h3 class="gag-title">{randomGag.data.title}</h3>
-
-      {
-        randomGag.data.body && (
-          <AnswerSpoiler answer={randomGag.data.body} id="random-gag" />
-        )
-      }
-
-      <div class="gag-footer">
-        <div class="tags">
-          {
-            randomGag.data.tags.map((tag: string) => (
-              <a href={`/tags/${tagToSlug(tag)}`} class="tag">
-                #{tag}
-              </a>
-            ))
-          }
-        </div>
-        <a href={`/gags/${randomGag.data.slug}`} class="detail-link"
-          >자세히 보기 →</a
-        >
-      </div>
-    </article>
+    <GagCard
+      gag={randomGag}
+      variant="featured"
+      titleLevel="h3"
+      spoilerId="random-gag"
+    />
   </section>
 
   <!-- 액션 버튼들 -->

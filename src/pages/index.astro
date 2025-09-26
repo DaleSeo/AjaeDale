@@ -1,8 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import AnswerSpoiler from "../components/AnswerSpoiler.astro";
-import { tagToSlug } from "../utils/tagUtils";
+import GagCard from "../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -41,30 +40,12 @@ const totalGagsCount = allGags.length;
       </p>
     </div>
 
-    <article class="gag-card featured featured-gag">
-      <h3 class="gag-title">{todaysGag.data.title}</h3>
-
-      {
-        todaysGag.data.body && (
-          <AnswerSpoiler answer={todaysGag.data.body} id="todays-gag" />
-        )
-      }
-
-      <div class="gag-footer">
-        <div class="tags">
-          {
-            todaysGag.data.tags.map((tag: string) => (
-              <a href={`/tags/${tagToSlug(tag)}`} class="tag">
-                #{tag}
-              </a>
-            ))
-          }
-        </div>
-        <a href={`/gags/${todaysGag.data.slug}`} class="detail-link"
-          >자세히 보기 →</a
-        >
-      </div>
-    </article>
+    <GagCard
+      gag={todaysGag}
+      variant="featured"
+      titleLevel="h3"
+      spoilerId="todays-gag"
+    />
   </section>
 
   <!-- 더 많은 개그 보기 -->
