@@ -11,13 +11,11 @@ export interface Props {
 
 const {
   title,
-  description = "아재개그와 유머 모음",
+  description = "매일 한 개씩, 아재개그 복용",
   ogTitle,
   ogDescription,
   currentPage,
 } = Astro.props;
-
-const siteTitle = `${title} - 아재달레`;
 ---
 
 <html lang="ko">
@@ -25,18 +23,18 @@ const siteTitle = `${title} - 아재달레`;
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{siteTitle}</title>
+    <title>{title} | 아재달레</title>
     <meta name="description" content={description} />
 
     <!-- Open Graph for social sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
-    <meta property="og:title" content={ogTitle || siteTitle} />
-    <meta property="og:description" content={ogDescription || description} />
+    <meta property="og:title" content={ogTitle || title} />
+    <meta property="og:description" content="description" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={ogTitle || siteTitle} />
+    <meta name="twitter:title" content={ogTitle || title} />
     <meta name="twitter:description" content={ogDescription || description} />
   </head>
   <body>
@@ -46,7 +44,7 @@ const siteTitle = `${title} - 아재달레`;
           <h1 class="logo-title">
             <a href="/" class="logo-link">🤣 아재달레</a>
           </h1>
-          <span class="logo-tagline">아재개그 저장소</span>
+          <span class="logo-tagline">매일 한 개씩, 아재개그 복용</span>
         </div>
         <nav class="nav">
           <a

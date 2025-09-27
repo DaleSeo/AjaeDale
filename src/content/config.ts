@@ -2,7 +2,17 @@ import { defineCollection, z } from "astro:content";
 
 // 단순화된 개그 스키마
 const gagSchema = z.object({
-  slug: z.string(), // 영어 slug (SEO 친화적), 필수
+  slug: z.string().refine((slug) => {
+    const reservedPaths = [
+      "random",
+      "search",
+      "tags",
+      "index",
+      "about",
+      "gags",
+    ];
+    return !reservedPaths.includes(slug);
+  }, "Slug cannot be a reserved path"), // 영어 slug (SEO 친화적), 필수
 
   // 핵심 필드
   title: z.string(), // 개그 제목/질문
