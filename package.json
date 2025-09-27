@@ -1,7 +1,7 @@
 {
   "name": "ajaedale",
   "version": "1.0.0",
-  "description": "아재개그 저장소",
+  "description": "매일 한 개씩, 아재개그 복용",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
