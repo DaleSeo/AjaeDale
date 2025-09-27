@@ -155,6 +155,57 @@ const TAG_MAPPING: Record<string, string> = {
   바람: "wind",
   외국: "foreign",
   한식: "korean-food",
+
+  // 추가 매핑 (한글 URL 방지)
+  "119": "emergency",
+  "3월": "march",
+  결혼: "marriage",
+  과일: "fruit",
+  나라: "country",
+  높은곳: "high-place",
+  다섯: "five",
+  닭: "chicken",
+  도끼: "axe",
+  도로: "road-street",
+  도시: "city",
+  떡집: "rice-cake-shop",
+  만원: "ten-thousand-won",
+  말: "horse",
+  목마름: "thirsty",
+  미남: "handsome",
+  미안: "sorry",
+  바나나우유: "banana-milk",
+  백곱하기: "hundred-times",
+  사랑: "love",
+  사자성어: "four-character-idiom",
+  술: "alcohol",
+  스파게티: "spaghetti",
+  식물: "plant",
+  엘리베이터: "elevator",
+  영어: "english",
+  영화: "movie",
+  옷: "clothes",
+  외국인: "foreigner",
+  웃음: "laughter",
+  유명: "famous",
+  인물: "person",
+  인사: "greeting",
+  자유의여신상: "statue-of-liberty-full",
+  잔인: "cruel-general",
+  전주: "jeonju",
+  정치: "politics",
+  주식: "stock",
+  죽: "porridge",
+  지역: "region",
+  짧게: "short",
+  차도: "roadway",
+  참깨: "sesame",
+  천원: "thousand-won",
+  치아: "teeth",
+  파산: "bankruptcy",
+  할아버지: "grandfather",
+  호박: "pumpkin",
+  힘: "strength",
 };
 
 /**
@@ -166,14 +217,24 @@ export function tagToSlug(tag: string): string {
     return TAG_MAPPING[tag];
   }
 
-  // 매핑이 없는 경우 기본 변환 로직
-  return tag
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-") // 공백을 하이픈으로
-    .replace(/[^a-z0-9가-힣-]/g, "") // 알파벳, 숫자, 한글, 하이픈만 허용
-    .replace(/-+/g, "-") // 연속 하이픈 제거
-    .replace(/^-|-$/g, ""); // 앞뒤 하이픈 제거
+  // 매핑이 없는 경우 에러를 발생시켜 한글 URL 방지
+  console.error(`Warning: No English mapping found for Korean tag: "${tag}"`);
+  console.error(`Please add mapping in src/utils/tagUtils.ts`);
+
+  // 개발 환경에서는 에러를 발생시키고, 프로덕션에서는 기본 처리
+  if (import.meta.env.DEV) {
+    throw new Error(
+      `No English mapping for tag: "${tag}". Please add it to TAG_MAPPING in tagUtils.ts`,
+    );
+  }
+
+  // 프로덕션에서는 경고만 하고 영문/숫자만 있는 태그는 그대로 사용
+  if (/^[a-z0-9-]+$/i.test(tag)) {
+    return tag.toLowerCase().replace(/\s+/g, "-");
+  }
+
+  // 한글이 포함된 경우 에러
+  throw new Error(`Korean tag "${tag}" needs English mapping in tagUtils.ts`);
 }
 
 /**
