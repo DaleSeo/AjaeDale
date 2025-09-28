@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import SEO from "../components/SEO.astro";
 
 export interface Props {
   title: string;
@@ -24,18 +25,12 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | 아재달레</title>
-    <meta name="description" content={description} />
-
-    <!-- Open Graph for social sharing -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url.href} />
-    <meta property="og:title" content={ogTitle || title} />
-    <meta property="og:description" content="description" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={ogTitle || title} />
-    <meta name="twitter:description" content={ogDescription || description} />
+    <SEO
+      title={title}
+      description={description}
+      ogTitle={ogTitle}
+      ogDescription={ogDescription}
+    />
   </head>
   <body>
     <header class="header" data-pagefind-ignore>

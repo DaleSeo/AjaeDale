@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 import GagCard from "../../components/GagCard.astro";
 import { tagToSlug } from "../../utils/tagUtils";
 
@@ -43,7 +43,7 @@ const pageTitle = `#${tag} 태그의 개그`;
 const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재미있는 아재개그를 만나보세요.`;
 ---
 
-<BaseLayout
+<Layout
   title={pageTitle}
   description={pageDescription}
   ogTitle={pageTitle}
@@ -72,7 +72,7 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
       ))
     }
   </section>
-</BaseLayout>
+</Layout>
 
 <style>
   /* 태그 헤더 */

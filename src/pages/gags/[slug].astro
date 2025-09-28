@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 import GagCard from "../../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -31,7 +31,7 @@ const pageDescription = gag.data.body
   : gag.data.title;
 ---
 
-<BaseLayout
+<Layout
   title={gag.data.title}
   description={pageDescription}
   ogTitle={siteTitle}
@@ -51,7 +51,7 @@ const pageDescription = gag.data.body
       spoilerId={`gag-${gag.data.slug}`}
     />
   </div>
-</BaseLayout>
+</Layout>
 
 <style>
   .gag-detail {
