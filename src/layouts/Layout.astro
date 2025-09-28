@@ -10,13 +10,7 @@ export interface Props {
   currentPage?: "home" | "random" | "search" | "gag" | "tag" | "tags";
 }
 
-const {
-  title,
-  description = "매일 한 개씩, 아재개그 복용",
-  ogTitle,
-  ogDescription,
-  currentPage,
-} = Astro.props;
+const { title, description, ogTitle, ogDescription, currentPage } = Astro.props;
 ---
 
 <html lang="ko">
@@ -39,7 +33,7 @@ const {
           <h1 class="logo-title">
             <a href="/" class="logo-link">🤣 아재달레</a>
           </h1>
-          <span class="logo-tagline">매일 한 개씩, 아재개그 복용</span>
+          <span class="logo-tagline">아재개그로 웃어달레</span>
         </div>
         <nav class="nav">
           <a

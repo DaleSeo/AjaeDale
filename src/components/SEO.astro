@@ -1,12 +1,17 @@
 ---
 export interface Props {
   title: string;
-  description: string;
+  description?: string;
   ogTitle?: string;
   ogDescription?: string;
 }
 
-const { title, description, ogTitle, ogDescription } = Astro.props;
+const {
+  title,
+  description = "한국 아저씨들이 사랑하는 개그 총정리!   아재개그로 웃어달레 🤣",
+  ogTitle,
+  ogDescription,
+} = Astro.props;
 ---
 
 <meta name="description" content={description} />
