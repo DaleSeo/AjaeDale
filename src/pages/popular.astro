@@ -1,0 +1,168 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import GagCard from "../components/GagCard.astro";
+import {
+  sortGagsByPopularity,
+  filterGagsByMinLikes,
+} from "../utils/popularityUtils";
+import { enrichGagsWithLikes } from "../utils/discussionsApi";
+
+type GagEntry = CollectionEntry<"gags">;
+
+const allGags = await getCollection("gags", ({ data }: GagEntry) => {
+  return data.published === true;
+});
+
+// GitHub Discussions에서 likes 데이터를 가져와서 개그에 추가
+const gagsWithLikesData = await enrichGagsWithLikes(allGags);
+
+// likes 수에 따라 정렬
+const popularGags = sortGagsByPopularity(gagsWithLikesData);
+
+// 표시할 개그 선택: 항상 12개 고정
+const gagsWithLikes = filterGagsByMinLikes(popularGags, 1);
+const displayGags = popularGags.slice(0, 12);
+
+const totalPopularCount = gagsWithLikes.length;
+const totalGagsCount = allGags.length;
+---
+
+<Layout title="인기 개그" currentPage="popular">
+  <div class="popular-container">
+    <!-- 헤더 -->
+    <header class="page-header">
+      <h1>🔥 인기 개그</h1>
+      <p class="stats">
+        전체 {totalGagsCount}개 중 {totalPopularCount}개가 좋아요를 받았습니다
+      </p>
+    </header>
+
+    <!-- 인기 개그 섹션 -->
+    <section class="popular-section">
+      <h2>
+        {totalPopularCount > 0
+          ? "좋아요를 많이 받은 개그"
+          : "추천 개그"}
+      </h2>
+      {totalPopularCount === 0 && (
+        <p class="section-desc">
+          아직 좋아요가 없어서 무작위로 선정된 개그들을 보여드려요 ✨
+        </p>
+      )}
+      <div class="gag-grid">
+        {displayGags.map((gag, index) => (
+          <div class="gag-item">
+            <div class="rank-badge">#{index + 1}</div>
+            <GagCard
+              gag={gag}
+              variant={index < 3 ? "featured" : "default"}
+              spoilerId={`popular-gag-${index}`}
+              showLikes={true}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </div>
+</Layout>
+
+<style>
+  .popular-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .stats {
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  .popular-section,
+  .new-section {
+    margin-bottom: 4rem;
+  }
+
+  .popular-section h2,
+  .new-section h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .gag-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .gag-item {
+    position: relative;
+  }
+
+  .rank-badge {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.875rem;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .gag-item:nth-child(1) .rank-badge {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .gag-item:nth-child(2) .rank-badge {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  .gag-item:nth-child(3) .rank-badge {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  }
+
+  @media (max-width: 768px) {
+    .popular-container {
+      padding: 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .gag-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

@@ -1,13 +1,22 @@
 ---
 import "../styles/global.css";
 import SEO from "../components/SEO.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 export interface Props {
   title: string;
   description?: string;
   ogTitle?: string;
   ogDescription?: string;
-  currentPage?: "home" | "random" | "search" | "gag" | "tag" | "tags";
+  currentPage?:
+    | "home"
+    | "popular"
+    | "random"
+    | "search"
+    | "gag"
+    | "tag"
+    | "tags";
 }
 
 const { title, description, ogTitle, ogDescription, currentPage } = Astro.props;
@@ -27,51 +36,114 @@ const { title, description, ogTitle, ogDescription, currentPage } = Astro.props;
     />
   </head>
   <body>
-    <header class="header" data-pagefind-ignore>
-      <div class="header-content">
-        <div class="logo-section">
-          <h1 class="logo-title">
-            <a href="/" class="logo-link">🤣 아재달레</a>
-          </h1>
-          <span class="logo-tagline">아재개그로 웃어달레</span>
-        </div>
-        <nav class="nav">
-          <a
-            href="/"
-            class={`nav-link ${currentPage === "home" ? "active" : ""}`}
-          >
-            🏠 홈
-          </a>
-          <a
-            href="/random"
-            class={`nav-link ${currentPage === "random" ? "active" : ""}`}
-          >
-            🎲 랜덤
-          </a>
-          <a
-            href="/tags"
-            class={`nav-link ${currentPage === "tags" || currentPage === "tag" ? "active" : ""}`}
-          >
-            🏷️ 태그
-          </a>
-          <a
-            href="/search"
-            class={`nav-link ${currentPage === "search" ? "active" : ""}`}
-          >
-            🔍 검색
-          </a>
-        </nav>
-      </div>
-    </header>
+    <Header currentPage={currentPage} />
 
     <main class="main">
       <slot />
     </main>
 
-    <footer class="footer" data-pagefind-ignore>
-      <p>Made with ❤️ for Everyone</p>
-    </footer>
+    <Footer />
 
     <slot name="scripts" />
   </body>
 </html>
+
+<style>
+  .main {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+    min-height: 70vh;
+  }
+
+  /* Page Section Styles */
+  .page-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-title {
+    color: var(--color-text);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-6);
+    text-align: center;
+    line-height: var(--line-height-tight);
+  }
+
+  .section-description {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    text-align: center;
+    margin-bottom: var(--space-8);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* Grid Layouts */
+  .gag-grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .gag-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gag-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Stats and Action Sections */
+  .stats-section {
+    text-align: center;
+    padding: var(--space-12) 0;
+    background: var(--color-card);
+    border-radius: var(--radius-2xl);
+    margin-top: var(--space-8);
+  }
+
+  .stats-text {
+    font-size: var(--font-size-xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-8);
+  }
+
+  .stats-text strong {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .empty-state h3 {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .empty-state p {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-6);
+  }
+
+  /* Responsive Layout */
+  @media (max-width: 768px) {
+    .main {
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .stats-section {
+      margin: var(--space-8) var(--space-4) 0;
+      padding: var(--space-8) var(--space-4);
+    }
+  }
+</style>

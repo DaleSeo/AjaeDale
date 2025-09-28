@@ -1,7 +1,7 @@
 {
   "name": "ajaedale",
   "version": "1.0.0",
-  "description": "매일 한 개씩, 아재개그 복용",
+  "description": "아재달레 - 아재개그로 웃어달레",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
