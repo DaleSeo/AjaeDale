@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Layout from "../layouts/Layout.astro";
 import PagefindSearch from "astro-pagefind/components/Search";
 
 // URL에서 검색어 가져오기
@@ -7,7 +7,7 @@ const searchParams = Astro.url.searchParams;
 const query = searchParams.get("q") || "";
 ---
 
-<BaseLayout
+<Layout
   title="검색"
   description="아재달레에서 원하는 개그를 검색해보세요"
   currentPage="search"
@@ -31,7 +31,7 @@ const query = searchParams.get("q") || "";
       }}
     />
   </section>
-</BaseLayout>
+</Layout>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

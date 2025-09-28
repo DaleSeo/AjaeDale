@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Layout from "../layouts/Layout.astro";
 import GagCard from "../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -24,7 +24,7 @@ interface Props {
 const { gag }: Props = Astro.props;
 ---
 
-<BaseLayout title={gag.data.title} currentPage="gag">
+<Layout title={gag.data.title} currentPage="gag">
   <article class="gag-detail-page">
     <GagCard
       gag={gag}
@@ -56,7 +56,7 @@ const { gag }: Props = Astro.props;
         is:inline></script>
     </section>
   </article>
-</BaseLayout>
+</Layout>
 
 <style>
   .gag-detail-page {

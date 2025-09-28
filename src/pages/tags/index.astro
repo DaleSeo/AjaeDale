@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 import { tagToSlug } from "../../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -25,7 +25,7 @@ const sortedTags = Array.from(tagCounts.entries())
 const totalTags = sortedTags.length;
 ---
 
-<BaseLayout
+<Layout
   title="태그"
   description="아재개그를 태그별로 찾아보세요"
   currentPage="tags"
@@ -54,7 +54,7 @@ const totalTags = sortedTags.length;
       <a href="/" class="back-link">← 홈으로 돌아가기</a>
     </section>
   </div>
-</BaseLayout>
+</Layout>
 
 <style>
   /* 헤더 */

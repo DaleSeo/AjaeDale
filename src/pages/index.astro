@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Layout from "../layouts/Layout.astro";
 import GagCard from "../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -24,7 +24,7 @@ const todaysGag = getTodaysGag(allGags);
 const totalGagsCount = allGags.length;
 ---
 
-<BaseLayout title="홈" currentPage="home">
+<Layout title="홈" currentPage="home">
   <!-- 오늘의 개그 섹션 -->
   <section class="todays-gag">
     <div class="section-header">
@@ -59,4 +59,4 @@ const totalGagsCount = allGags.length;
       <a href="/search" class="action-button search"> 🔍 개그 검색하기 </a>
     </div>
   </section>
-</BaseLayout>
+</Layout>

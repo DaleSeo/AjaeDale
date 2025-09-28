@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Layout from "../layouts/Layout.astro";
 import GagCard from "../components/GagCard.astro";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -18,7 +18,7 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 const randomGag = getRandomGag(allGags);
 ---
 
-<BaseLayout
+<Layout
   title="랜덤 개그"
   description="랜덤으로 선택된 아재개그를 즐겨보세요"
   currentPage="random"
@@ -48,4 +48,4 @@ const randomGag = getRandomGag(allGags);
       🎲 다른 개그 보기
     </button>
   </div>
-</BaseLayout>
+</Layout>

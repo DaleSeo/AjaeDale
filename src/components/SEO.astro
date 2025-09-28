@@ -1,0 +1,32 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+}
+
+const { title, description, ogTitle, ogDescription } = Astro.props;
+---
+
+<meta name="description" content={description} />
+
+<!-- Open Graph for social sharing -->
+<meta property="og:site_name" content="아재달레" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url.href} />
+<meta property="og:title" content={ogTitle || title} />
+<meta property="og:description" content={ogDescription || description} />
+<meta
+  property="og:image"
+  content={new URL("/og-image.png", Astro.url.origin).href}
+/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={ogTitle || title} />
+<meta name="twitter:description" content={ogDescription || description} />
+<meta
+  name="twitter:image"
+  content={new URL("/og-image.png", Astro.url.origin).href}
+/>
