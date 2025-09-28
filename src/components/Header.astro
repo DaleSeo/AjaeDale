@@ -1,0 +1,173 @@
+---
+export interface Props {
+  currentPage?:
+    | "home"
+    | "popular"
+    | "random"
+    | "search"
+    | "gag"
+    | "tag"
+    | "tags";
+}
+
+const { currentPage } = Astro.props;
+---
+
+<header class="header" data-pagefind-ignore>
+  <div class="header-content">
+    <div class="logo-section">
+      <h1 class="logo-title">
+        <a href="/" class="logo-link">🤣 아재달레</a>
+      </h1>
+      <span class="logo-tagline">아재개그로 웃어달레</span>
+    </div>
+    <nav class="nav">
+      <a href="/" class={`nav-link ${currentPage === "home" ? "active" : ""}`}>
+        🏠 홈
+      </a>
+      <a
+        href="/popular"
+        class={`nav-link ${currentPage === "popular" ? "active" : ""}`}
+      >
+        🔥 인기
+      </a>
+      <a
+        href="/random"
+        class={`nav-link ${currentPage === "random" ? "active" : ""}`}
+      >
+        🎲 랜덤
+      </a>
+      <a
+        href="/tags"
+        class={`nav-link ${currentPage === "tags" || currentPage === "tag" ? "active" : ""}`}
+      >
+        🏷️ 태그
+      </a>
+      <a
+        href="/search"
+        class={`nav-link ${currentPage === "search" ? "active" : ""}`}
+      >
+        🔍 검색
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    padding: var(--space-6) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .logo-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition-base);
+  }
+
+  .logo-link:hover {
+    opacity: 0.9;
+  }
+
+  .logo-title {
+    color: var(--color-primary);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    line-height: var(--line-height-tight);
+  }
+
+  .logo-tagline {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .nav-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-3) var(--space-6);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-lg);
+    transition: var(--transition-smooth);
+    font-size: var(--font-size-base);
+  }
+
+  .nav-link:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .nav-link:active {
+    transform: translateY(0);
+  }
+
+  .nav-link.active {
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: var(--font-weight-bold);
+    cursor: default;
+    box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
+  }
+
+  .nav-link.active:hover {
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: var(--space-4);
+    }
+
+    .header-content {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .logo-section {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .logo-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .logo-tagline {
+      font-size: var(--font-size-sm);
+    }
+
+    .nav {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--font-size-sm);
+    }
+  }
+</style>

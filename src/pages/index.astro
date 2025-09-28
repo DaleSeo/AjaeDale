@@ -60,3 +60,49 @@ const totalGagsCount = allGags.length;
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Today's Gag Special Styling */
+  .todays-gag {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .section-header h2 {
+    color: var(--color-primary);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-tight);
+  }
+
+  .section-header p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+  }
+
+  .featured-gag {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .featured-gag .gag-title {
+    text-align: center;
+    margin-bottom: var(--space-4);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .featured-gag {
+      margin: 0 var(--space-4);
+    }
+
+    .section-header h2 {
+      font-size: var(--font-size-3xl);
+    }
+  }
+</style>
