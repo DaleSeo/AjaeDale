@@ -4,11 +4,11 @@ export interface GagWithLikes extends CollectionEntry<"gags"> {
   likes: number;
 }
 
-// GraphQL 쿼리 - 카테고리 필터링 제거하고 모든 discussions 가져오기
+// GraphQL 쿼리 - feedback 카테고리만 필터링
 const DISCUSSIONS_QUERY = `
   query GetDiscussions($owner: String!, $name: String!, $after: String) {
     repository(owner: $owner, name: $name) {
-      discussions(first: 100, after: $after) {
+      discussions(first: 100, after: $after, categoryId: "DIC_kwDONB5KYc4CjrpH") {
         nodes {
           title
           url
