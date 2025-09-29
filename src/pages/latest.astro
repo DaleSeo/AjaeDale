@@ -1,0 +1,212 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import GagCard from "../components/GagCard.astro";
+
+type GagEntry = CollectionEntry<"gags">;
+
+const allGags = await getCollection("gags", ({ data }: GagEntry) => {
+  return data.published === true;
+});
+
+// 최신순으로 정렬 (createdAt 기준)
+const sortedGags = allGags.sort((a: GagEntry, b: GagEntry) => {
+  return (
+    new Date(b.data.createdAt).getTime() - new Date(a.data.createdAt).getTime()
+  );
+});
+
+// 표시할 개수 제한 (12개)
+const displayGags = sortedGags.slice(0, 12);
+const totalGagsCount = allGags.length;
+
+// 상대적 시간 계산 함수
+function getRelativeTime(date: Date): string {
+  const now = new Date();
+  const diffInMs = now.getTime() - date.getTime();
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+  if (diffInDays === 0) {
+    return "오늘";
+  } else if (diffInDays === 1) {
+    return "1일 전";
+  } else if (diffInDays < 7) {
+    return `${diffInDays}일 전`;
+  } else if (diffInDays < 30) {
+    const weeks = Math.floor(diffInDays / 7);
+    return `${weeks}주 전`;
+  } else if (diffInDays < 365) {
+    const months = Math.floor(diffInDays / 30);
+    return `${months}개월 전`;
+  } else {
+    const years = Math.floor(diffInDays / 365);
+    return `${years}년 전`;
+  }
+}
+---
+
+<Layout title="최신 개그" currentPage="latest">
+  <div class="latest-container">
+    <!-- 헤더 -->
+    <header class="page-header">
+      <h1>🌟 최신 개그</h1>
+      <p class="stats">
+        전체 {totalGagsCount}개 중 가장 최근에 추가된 개그들입니다
+      </p>
+    </header>
+
+    <!-- 최신 개그 섹션 -->
+    <section class="latest-section">
+      <h2>가장 최근에 추가된 개그</h2>
+      <p class="section-desc">
+        방금 추가된 따끈따끈한 개그들을 가장 먼저 만나보세요! ✨
+      </p>
+      <div class="gag-grid">
+        {
+          displayGags.map((gag: GagEntry, index: number) => (
+            <div class="gag-item">
+              <div class="rank-badge">#{index + 1}</div>
+              <div class="time-badge">
+                {getRelativeTime(new Date(gag.data.createdAt))}
+              </div>
+              <GagCard
+                gag={gag}
+                variant={index < 3 ? "featured" : "default"}
+                spoilerId={`latest-gag-${index}`}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .latest-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .stats {
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  .latest-section {
+    margin-bottom: 4rem;
+  }
+
+  .latest-section h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .gag-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .gag-item {
+    position: relative;
+  }
+
+  .rank-badge {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.875rem;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .time-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    color: #333;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+  }
+
+  .gag-item:nth-child(1) .rank-badge {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .gag-item:nth-child(2) .rank-badge {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  .gag-item:nth-child(3) .rank-badge {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  }
+
+  .gag-item:nth-child(1) .time-badge {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  }
+
+  .gag-item:nth-child(2) .time-badge {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  }
+
+  .gag-item:nth-child(3) .time-badge {
+    background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+  }
+
+  @media (max-width: 768px) {
+    .latest-container {
+      padding: 1rem;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .gag-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .time-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+    }
+  }
+</style>
