@@ -27,6 +27,8 @@ const { gag }: Props = Astro.props;
 
 <Layout title={gag.data.title} currentPage="gag">
   <article class="gag-detail-page">
+    <h1 class="visually-hidden" data-pagefind-body>{gag.data.title}</h1>
+
     <GagCard
       gag={gag}
       variant="detail"
@@ -36,7 +38,7 @@ const { gag }: Props = Astro.props;
     />
 
     <!-- Giscus 댓글/좋아요 섹션 -->
-    <section class="giscus-section" data-pagefind-ignore>
+    <section class="giscus-section">
       <h2 class="giscus-title">💬 댓글 & 좋아요</h2>
       <script
         src="https://giscus.app/client.js"
@@ -77,6 +79,18 @@ const { gag }: Props = Astro.props;
     font-weight: 600;
     margin-bottom: 1rem;
     color: #374151;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 
   @media (max-width: 768px) {

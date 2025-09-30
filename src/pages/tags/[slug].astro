@@ -51,13 +51,13 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
   currentPage="tag"
 >
   <!-- 태그 헤더 -->
-  <section class="tag-header" data-pagefind-ignore>
+  <section class="tag-header">
     <h1>#{tag}</h1>
     <p>이 태그가 포함된 개그 <strong>{gags.length}개</strong></p>
   </section>
 
   <!-- 개그 목록 -->
-  <section class="gags-grid" data-pagefind-ignore>
+  <section class="gags-grid">
     {
       gags.map((gag) => (
         <GagCard
