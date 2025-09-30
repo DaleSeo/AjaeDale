@@ -47,10 +47,10 @@ const TitleTag = titleLevel;
     )
   }
 
-  <TitleTag class="gag-title">
+  <TitleTag class="gag-title" data-pagefind-meta="title">
     {
       showTitleLink ? (
-        <a href={`/${gag.data.slug}`} class="gag-title-link">
+        <a href={`/gags/${gag.data.slug}`} class="gag-title-link">
           {gag.data.title}
         </a>
       ) : (
@@ -65,7 +65,7 @@ const TitleTag = titleLevel;
     <div class="gag-actions">
       {
         variant !== "detail" && (
-          <a href={`/${gag.data.slug}`} class="comment-link">
+          <a href={`/gags/${gag.data.slug}`} class="comment-link">
             💬 댓글 & 좋아요
           </a>
         )

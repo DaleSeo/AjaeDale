@@ -23,26 +23,10 @@ interface Props {
 }
 
 const { gag }: Props = Astro.props;
-
-// SEO를 위한 메타 데이터
-const siteTitle = `${gag.data.title} - 아재달레`;
-const pageDescription = gag.data.body
-  ? `${gag.data.title} ${gag.data.body}`
-  : gag.data.title;
 ---
 
-<Layout
-  title={gag.data.title}
-  description={pageDescription}
-  ogTitle={siteTitle}
-  ogDescription={pageDescription}
-  currentPage="gag"
->
-  <!-- 개별 개그 카드 -->
-  <div data-pagefind-body>
-    <h1 data-pagefind-meta="title" style="display: none;">
-      {gag.data.title}
-    </h1>
+<Layout title={gag.data.title} currentPage="gag">
+  <article class="gag-detail-page">
     <GagCard
       gag={gag}
       variant="detail"
@@ -50,96 +34,54 @@ const pageDescription = gag.data.body
       showDate={true}
       spoilerId={`gag-${gag.data.slug}`}
     />
-  </div>
+
+    <!-- Giscus 댓글/좋아요 섹션 -->
+    <section class="giscus-section" data-pagefind-ignore>
+      <h2 class="giscus-title">💬 댓글 & 좋아요</h2>
+      <script
+        src="https://giscus.app/client.js"
+        data-repo="DaleSeo/AjaeDale"
+        data-repo-id="R_kgDOPvdn0g"
+        data-category="feedback"
+        data-category-id="DIC_kwDOPvdn0s4CvasI"
+        data-mapping="og:title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="1"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="ko"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async
+        is:inline></script>
+    </section>
+  </article>
 </Layout>
 
 <style>
-  .gag-detail {
-    max-width: 600px;
+  .gag-detail-page {
+    max-width: 800px;
     margin: 0 auto;
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
+    padding: 2rem 1rem;
   }
 
-  .gag-detail .gag-header {
-    margin-bottom: 1rem;
+  .giscus-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
   }
 
-  .featured {
-    font-size: 1rem;
-    color: #f59e0b;
-    font-weight: 600;
-  }
-
-  .gag-title {
-    color: var(--color-primary-dark);
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.3;
-  }
-
-  .gag-detail .gag-body {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-  }
-
-  .gag-detail .pun-format {
-    margin: 2rem 0;
-  }
-
-  .gag-detail .pun-format .question {
+  .giscus-title {
     font-size: 1.5rem;
+    font-weight: 600;
     margin-bottom: 1rem;
-  }
-
-  .gag-detail .pun-format .answer {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
-
-  .gag-detail .tags {
-    gap: 0.75rem;
-  }
-
-  .gag-detail .tag {
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-  }
-
-  time {
-    font-size: 1rem;
-    color: var(--color-text-muted);
+    color: #374151;
   }
 
   @media (max-width: 768px) {
-    .header-content {
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .gag-detail {
-      padding: 1.5rem;
-    }
-
-    .gag-title {
-      font-size: 1.75rem;
-    }
-
-    .pun-format .answer {
-      font-size: 1.5rem;
-      padding: 1rem;
-    }
-
-    .gag-footer {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
+    .gag-detail-page {
+      padding: 1rem 0.5rem;
     }
   }
 </style>

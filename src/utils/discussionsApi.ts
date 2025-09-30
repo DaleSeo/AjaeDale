@@ -8,7 +8,7 @@ export interface GagWithLikes extends CollectionEntry<"gags"> {
 const DISCUSSIONS_QUERY = `
   query GetDiscussions($owner: String!, $name: String!, $after: String) {
     repository(owner: $owner, name: $name) {
-      discussions(first: 100, after: $after, categoryId: "DIC_kwDONB5KYc4CjrpH") {
+      discussions(first: 100, after: $after, categoryId: "DIC_kwDOPvdn0s4CvasI") {
         nodes {
           title
           url
