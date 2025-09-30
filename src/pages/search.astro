@@ -1,0 +1,241 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="검색" currentPage="search">
+  <div class="search-container">
+    <div class="search-header">
+      <h1>🔍 개그 검색</h1>
+      <p>찾고 싶은 개그를 검색해보세요</p>
+    </div>
+
+    <div class="search-input-wrapper">
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="개그 검색..."
+        autofocus
+      />
+    </div>
+
+    <div id="search-results" class="search-results"></div>
+    <div id="no-results" class="no-results" style="display: none;">
+      검색 결과가 없습니다
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // URL에서 검색어 가져오기
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialQuery = urlParams.get("q") || "";
+
+  const searchInput = document.getElementById(
+    "search-input",
+  ) as HTMLInputElement;
+  const searchResults = document.getElementById("search-results");
+  const noResults = document.getElementById("no-results");
+
+  let pagefind: any;
+
+  // Pagefind 초기화
+  async function initPagefind() {
+    try {
+      // @ts-ignore - 동적 import를 사용하여 Vite 분석 우회
+      const pagefindPath = "/pagefind/pagefind.js";
+      pagefind = await import(/* @vite-ignore */ pagefindPath);
+    } catch (e) {
+      console.error("Pagefind not available. Run 'bun run build' first.");
+    }
+  }
+
+  // 검색 수행
+  async function performSearch(query: string) {
+    if (!query.trim()) {
+      if (searchResults) searchResults.innerHTML = "";
+      if (noResults) noResults.style.display = "none";
+      return;
+    }
+
+    // URL 업데이트
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set("q", query);
+    window.history.replaceState({}, "", newUrl);
+
+    if (!pagefind) {
+      await initPagefind();
+    }
+
+    const search = await pagefind.search(query);
+
+    if (!searchResults || !noResults) return;
+
+    if (search.results.length === 0) {
+      searchResults.innerHTML = "";
+      noResults.style.display = "block";
+      return;
+    }
+
+    noResults.style.display = "none";
+
+    // 결과 렌더링
+    const resultsHTML = await Promise.all(
+      search.results.map(async (result: any) => {
+        const data = await result.data();
+        // 디버깅: 어떤 데이터가 있는지 확인
+        console.log("Search result data:", data);
+
+        // content에서 실제 개그 제목 추출 (HTML 태그 제거)
+        const title = data.content || data.meta.title || "제목 없음";
+        const cleanTitle = title.replace(/<[^>]*>/g, "").trim();
+
+        return `
+          <a href="${data.url}" class="search-result-item">
+            <h3>${cleanTitle}</h3>
+          </a>
+        `;
+      }),
+    );
+
+    searchResults.innerHTML = resultsHTML.join("");
+  }
+
+  // Debounce 함수
+  function debounce(func: Function, wait: number) {
+    let timeout: ReturnType<typeof setTimeout>;
+    return function executedFunction(...args: any[]) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  // 이벤트 리스너
+  if (searchInput) {
+    // 초기 검색어가 있으면 검색 수행
+    if (initialQuery) {
+      searchInput.value = initialQuery;
+      performSearch(initialQuery);
+    }
+
+    const debouncedSearch = debounce((e: Event) => {
+      const target = e.target as HTMLInputElement;
+      performSearch(target.value);
+    }, 300);
+
+    searchInput.addEventListener("input", debouncedSearch);
+  }
+
+  // Pagefind 초기화
+  initPagefind();
+</script>
+
+<style>
+  .search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .search-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .search-header h1 {
+    color: var(--color-primary);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-2);
+  }
+
+  .search-header p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+  }
+
+  .search-input-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: var(--font-size-lg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    background: var(--color-card);
+    color: var(--color-text);
+    transition: var(--transition-base);
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
+  }
+
+  .search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .search-result-item {
+    display: block;
+    padding: 1.5rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search-result-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .search-result-item h3 {
+    color: var(--color-text);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-lg);
+  }
+
+  @media (max-width: 768px) {
+    .search-container {
+      padding: 1rem 0.5rem;
+    }
+
+    .search-header h1 {
+      font-size: var(--font-size-3xl);
+    }
+
+    .search-input {
+      font-size: var(--font-size-base);
+      padding: 0.875rem 1.25rem;
+    }
+
+    .search-result-item {
+      padding: 1.25rem;
+    }
+
+    .search-result-item h3 {
+      font-size: var(--font-size-lg);
+    }
+  }
+</style>

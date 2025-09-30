@@ -5,6 +5,7 @@ export interface Props {
     | "popular"
     | "latest"
     | "random"
+    | "search"
     | "gag"
     | "tag"
     | "tags";
@@ -13,7 +14,7 @@ export interface Props {
 const { currentPage } = Astro.props;
 ---
 
-<header class="header" data-pagefind-ignore>
+<header class="header">
   <div class="header-content">
     <div class="logo-section">
       <h1 class="logo-title">
@@ -48,6 +49,12 @@ const { currentPage } = Astro.props;
         class={`nav-link ${currentPage === "tags" || currentPage === "tag" ? "active" : ""}`}
       >
         🏷️ 태그
+      </a>
+      <a
+        href="/search"
+        class={`nav-link ${currentPage === "search" ? "active" : ""}`}
+      >
+        🔍 검색
       </a>
     </nav>
   </div>
