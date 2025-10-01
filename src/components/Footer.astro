@@ -1,23 +1,84 @@
 ---
-
+import GithubIcon from "../icons/Github.astro";
+import MailIcon from "../icons/Mail.astro";
+import HeartIcon from "../icons/Heart.astro";
+import CoffeeIcon from "../icons/Coffee.astro";
 ---
 
-<footer class="footer">
-  <p>Made with ❤️ for Everyone</p>
+<footer class="bg-muted/50 py-12 px-4">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="col-span-1 md:col-span-2">
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="text-2xl">🤣</div>
+          <h3 class="text-xl font-bold text-foreground">아재달레</h3>
+        </div>
+        <p class="text-muted-foreground mb-4 max-w-md">
+          한국 아저씨들의 아재개그를 사랑하는 모든 분들을 위한 공간입니다. 매일
+          새로운 웃음을 선사해드립니다.
+        </p>
+        <div class="flex items-center space-x-4">
+          <a
+            href="https://github.com/DaleSeo/AjaeDale"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2 hover:bg-accent rounded-md transition-colors"
+          >
+            <GithubIcon size={16} />
+          </a>
+          <a
+            href="https://www.buymeacoffee.com/daleseo"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2 hover:bg-accent rounded-md transition-colors"
+            title="Buy me a coffee"
+          >
+            <CoffeeIcon size={16} />
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-semibold text-foreground mb-4">메뉴</h4>
+        <ul class="space-y-2 text-muted-foreground">
+          <li>
+            <a href="/latest" class="hover:text-primary transition-colors">
+              최신 개그
+            </a>
+          </li>
+          <li>
+            <a href="/popular" class="hover:text-primary transition-colors">
+              인기 개그
+            </a>
+          </li>
+          <li>
+            <a href="/random" class="hover:text-primary transition-colors">
+              랜덤 개그
+            </a>
+          </li>
+          <li>
+            <a href="/saved" class="hover:text-primary transition-colors">
+              저장 목록
+            </a>
+          </li>
+          <li>
+            <a href="/submit" class="hover:text-primary transition-colors">
+              개그 제출
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-border mt-8 pt-8 text-center">
+      <p class="text-muted-foreground flex items-center justify-center">
+        Made with
+        <HeartIcon size={16} fill="currentColor" class="mx-1 text-red-500" />
+        for 한국 아재들
+      </p>
+      <p class="text-sm text-muted-foreground mt-2">
+        © 2025 아재달레. All rights reserved.
+      </p>
+    </div>
+  </div>
 </footer>
-
-<style>
-  .footer {
-    text-align: center;
-    padding: var(--space-12) var(--space-4);
-    margin-top: var(--space-12);
-    border-top: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    background-color: var(--color-bg-alt);
-  }
-
-  .footer p {
-    margin: 0;
-    font-size: var(--font-size-base);
-  }
-</style>

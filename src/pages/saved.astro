@@ -1,0 +1,274 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="저장한 개그 | 아재달레" currentPage="saved">
+  <section class="py-16 px-4">
+    <div class="container mx-auto">
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <h1 class="text-3xl font-bold text-foreground mb-2">
+            💾 저장한 아재개그
+          </h1>
+          <p class="text-muted-foreground">나만의 개그 컬렉션</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <a
+            href="/"
+            class="inline-flex items-center px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors"
+          >
+            <svg
+              class="h-4 w-4 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            돌아가기
+          </a>
+          <button
+            id="clear-all-btn"
+            class="hidden px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors"
+          >
+            모두 삭제
+          </button>
+        </div>
+      </div>
+
+      <div id="saved-container">
+        <!-- 저장된 개그들이 여기에 동적으로 표시됩니다 -->
+      </div>
+
+      <!-- 저장된 개그가 없을 때 표시할 템플릿 -->
+      <template id="empty-template">
+        <div class="card bg-card border border-border rounded-lg p-12">
+          <div class="text-center">
+            <p class="text-xl text-muted-foreground mb-4">
+              아직 저장한 개그가 없습니다
+            </p>
+            <a
+              href="/"
+              class="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              개그 둘러보기
+            </a>
+          </div>
+        </div>
+      </template>
+
+      <!-- 개그 카드 템플릿 -->
+      <template id="gag-card-template">
+        <div
+          class="card bg-card border border-border rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+        >
+          <div class="p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div class="gag-tags flex flex-wrap gap-2">
+                <!-- 태그들이 여기에 추가됩니다 -->
+              </div>
+              <div class="flex items-center space-x-2">
+                <button
+                  class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+                  aria-label="공유"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                  </svg>
+                </button>
+                <button
+                  class="delete-btn p-2 hover:bg-accent rounded-md transition-colors text-destructive"
+                  aria-label="삭제"
+                >
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <a href="#" class="gag-link">
+                <p class="gag-title text-lg font-semibold text-foreground mb-2">
+                  <!-- 제목 -->
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const STORAGE_KEY = "ajae-gag-saved";
+
+  // 저장된 개그 가져오기
+  function getSavedGags() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  }
+
+  // 개그 삭제
+  function removeGag(gagSlug: string) {
+    const saved = getSavedGags();
+    const filtered = saved.filter((gag: any) => gag.slug !== gagSlug);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    renderGags();
+  }
+
+  // 모든 개그 삭제
+  function clearAll() {
+    if (confirm("모든 저장된 개그를 삭제하시겠습니까?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      renderGags();
+    }
+  }
+
+  // 공유 기능
+  function shareGag(title: string, slug: string) {
+    const url = `${window.location.origin}/gags/${slug}`;
+    const content = `${title}\n${url}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: "아재개그",
+        text: title,
+        url: url,
+      });
+    } else {
+      navigator.clipboard.writeText(content).then(() => {
+        alert("클립보드에 복사되었습니다!");
+      });
+    }
+  }
+
+  // 개그 목록 렌더링
+  function renderGags() {
+    const savedGags = getSavedGags();
+    const container = document.getElementById("saved-container");
+    const clearAllBtn = document.getElementById("clear-all-btn");
+
+    if (!container) return;
+
+    // 모두 삭제 버튼 표시/숨김
+    if (clearAllBtn) {
+      clearAllBtn.classList.toggle("hidden", savedGags.length === 0);
+    }
+
+    // 컨테이너 초기화
+    container.innerHTML = "";
+
+    if (savedGags.length === 0) {
+      // 빈 상태 표시
+      const emptyTemplate = document.getElementById(
+        "empty-template",
+      ) as HTMLTemplateElement;
+      if (emptyTemplate) {
+        const emptyContent = emptyTemplate.content.cloneNode(true);
+        container.appendChild(emptyContent);
+      }
+    } else {
+      // 개그 카드들을 그리드로 표시
+      const grid = document.createElement("div");
+      grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+
+      const cardTemplate = document.getElementById(
+        "gag-card-template",
+      ) as HTMLTemplateElement;
+
+      savedGags.forEach((gag: any) => {
+        if (cardTemplate) {
+          const card = cardTemplate.content.cloneNode(true) as DocumentFragment;
+
+          // 데이터 채우기
+          const titleEl = card.querySelector(".gag-title");
+          const linkEl = card.querySelector(".gag-link");
+          const tagsEl = card.querySelector(".gag-tags");
+          const shareBtn = card.querySelector(".share-btn");
+          const deleteBtn = card.querySelector(".delete-btn");
+
+          if (titleEl) titleEl.textContent = `Q. ${gag.title}`;
+          if (linkEl) linkEl.setAttribute("href", `/gags/${gag.slug}`);
+
+          // 태그 추가
+          if (tagsEl && gag.tags && gag.tags.length > 0) {
+            gag.tags.forEach((tag: string) => {
+              const tagLink = document.createElement("a");
+              tagLink.href = `/tags/${tag}`;
+              tagLink.className =
+                "inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors";
+              tagLink.textContent = `#${tag}`;
+              tagsEl.appendChild(tagLink);
+            });
+          }
+
+          // 이벤트 리스너 추가
+          if (shareBtn) {
+            shareBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              shareGag(gag.title, gag.slug);
+            });
+          }
+          if (deleteBtn) {
+            deleteBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              removeGag(gag.slug);
+            });
+          }
+
+          grid.appendChild(card);
+        }
+      });
+
+      container.appendChild(grid);
+    }
+  }
+
+  // 초기 렌더링
+  document.addEventListener("DOMContentLoaded", () => {
+    renderGags();
+
+    // 모두 삭제 버튼 이벤트
+    const clearAllBtn = document.getElementById("clear-all-btn");
+    if (clearAllBtn) {
+      clearAllBtn.addEventListener("click", clearAll);
+    }
+
+    // storage 이벤트 리스너 (다른 탭에서 변경 감지)
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_KEY) {
+        renderGags();
+      }
+    });
+  });
+</script>

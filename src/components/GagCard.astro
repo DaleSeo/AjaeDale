@@ -1,269 +1,256 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import AnswerSpoiler from "./AnswerSpoiler.astro";
-import { tagToSlug } from "../utils/tagUtils";
-import { getPopularityDisplay } from "../utils/popularityUtils";
-
-type GagEntry = CollectionEntry<"gags">;
+import BookmarkIcon from "../icons/Bookmark.astro";
+import Share2Icon from "../icons/Share2.astro";
 
 interface Props {
-  gag: GagEntry;
+  gag: CollectionEntry<"gags">;
   variant?: "default" | "featured" | "detail";
   titleLevel?: "h1" | "h2" | "h3";
   showDate?: boolean;
-  showTitleLink?: boolean;
+  spoilerId?: string;
   showLikes?: boolean;
+  showTitleLink?: boolean;
   currentTag?: string;
-  spoilerId: string;
 }
 
 const {
   gag,
   variant = "default",
-  titleLevel = "h3",
+  titleLevel = "h2",
   showDate = false,
+  spoilerId = `spoiler-${gag.data.slug}`,
   showTitleLink = false,
-  showLikes = false,
-  currentTag,
-  spoilerId,
 } = Astro.props;
 
 const TitleTag = titleLevel;
+const isFeatured = variant === "featured";
 ---
 
-<article
-  class={`gag-card ${variant === "featured" ? "featured" : ""} ${variant === "detail" ? "gag-detail" : ""}`}
+<div
+  class={`card bg-card border border-border rounded-lg hover-lift group ${isFeatured ? "max-w-2xl mx-auto" : ""}`}
+  data-gag-slug={gag.data.slug}
 >
-  {
-    (variant !== "default" || showLikes) && (
-      <div class="gag-header">
-        {gag.data.featured && <span class="featured">⭐ 인기</span>}
-        {showLikes && gag.data.likes > 0 && (
-          <span class="likes-count">
-            {getPopularityDisplay(gag.data.likes)}
-          </span>
-        )}
+  <div class={`p-6 ${isFeatured ? "md:p-8" : ""}`}>
+    <div class="flex items-start justify-between mb-4">
+      <div class="flex flex-wrap gap-2">
+        {
+          gag.data.tags.map((tag: string) => (
+            <a
+              href={`/tags/${tag}`}
+              class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
+            >
+              #{tag}
+            </a>
+          ))
+        }
       </div>
-    )
-  }
+      <div class="flex items-center space-x-2">
+        <button
+          class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
+          data-gag={JSON.stringify({
+            slug: gag.data.slug,
+            title: gag.data.title,
+            body: gag.data.body,
+            tags: gag.data.tags,
+          })}
+          aria-label="저장"
+        >
+          <BookmarkIcon class="bookmark-icon w-4 h-4" />
+          <BookmarkIcon
+            class="bookmark-check-icon w-4 h-4 hidden text-primary"
+            fill="currentColor"
+          />
+        </button>
+        <button
+          class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+          data-content={`${gag.data.title}${gag.data.body ? " - " + gag.data.body : ""}`}
+          data-slug={gag.data.slug}
+          aria-label="공유"
+        >
+          <Share2Icon size={16} />
+        </button>
+      </div>
+    </div>
 
-  <TitleTag class="gag-title">
-    {
-      showTitleLink ? (
-        <a href={`/gags/${gag.data.slug}`} class="gag-title-link">
-          {gag.data.title}
-        </a>
-      ) : (
-        gag.data.title
-      )
-    }
-  </TitleTag>
-
-  {gag.data.body && <AnswerSpoiler answer={gag.data.body} id={spoilerId} />}
-
-  <div class="gag-footer">
-    <div class="gag-actions">
+    <div class="mb-4">
       {
-        variant !== "detail" && (
-          <a href={`/gags/${gag.data.slug}`} class="comment-link">
-            💬 댓글 & 좋아요
+        showTitleLink ? (
+          <a href={`/gags/${gag.data.slug}`}>
+            <TitleTag
+              class={`font-bold text-foreground mb-2 hover:text-primary transition-colors cursor-pointer ${isFeatured ? "text-2xl md:text-3xl" : "text-lg"}`}
+            >
+              Q. {gag.data.title}
+            </TitleTag>
           </a>
+        ) : (
+          <TitleTag
+            class={`font-bold text-foreground mb-2 ${isFeatured ? "text-2xl md:text-3xl" : "text-lg"}`}
+          >
+            Q. {gag.data.title}
+          </TitleTag>
+        )
+      }
+
+      {
+        gag.data.body && (
+          <div class="spoiler-container">
+            <button
+              id={spoilerId}
+              class="spoiler-btn text-sm bg-muted hover:bg-muted-foreground/20 text-muted-foreground px-3 py-1 rounded transition-colors"
+              data-spoiler-id={spoilerId}
+            >
+              답변 보기 👀
+            </button>
+            <p
+              id={`${spoilerId}-content`}
+              class="spoiler-content hidden text-foreground mt-2 text-base"
+            >
+              A. {gag.data.body}
+            </p>
+          </div>
         )
       }
     </div>
-    <div class="tags">
-      {
-        gag.data.tags.map((tag: string) => (
-          <a
-            href={`/tags/${tagToSlug(tag)}`}
-            class={`tag ${currentTag && tag === currentTag ? "current-tag" : ""}`}
-          >
-            #{tag}
-          </a>
-        ))
-      }
-    </div>
+
     {
-      showDate && (
-        <time datetime={gag.data.createdAt.toISOString()}>
+      showDate && gag.data.createdAt && (
+        <div class="text-sm text-muted-foreground">
           {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
-        </time>
+        </div>
       )
     }
   </div>
-</article>
+</div>
 
 <style>
-  /* Gag Card Component Styles */
-
-  .gag-card {
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-2xl);
-    padding: var(--space-8);
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-smooth);
-    max-width: 700px;
-    margin: 0 auto;
+  .hover-lift {
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
   }
-
-  .gag-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-
-  .gag-card.featured {
-    border: 2px solid var(--color-primary);
-    box-shadow: var(--shadow-md);
-  }
-
-  .gag-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: var(--space-3);
-    gap: var(--space-4);
-  }
-
-  .gag-title {
-    color: var(--color-text);
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-snug);
-    margin: 0;
-    flex: 1;
-  }
-
-  .gag-card.featured .gag-title {
-    color: var(--color-primary-dark);
-    font-size: var(--font-size-2xl);
-  }
-
-  .featured-badge {
-    font-size: var(--font-size-sm);
-    color: var(--color-warning);
-    font-weight: var(--font-weight-semibold);
-    background: rgba(245, 158, 11, 0.1);
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-base);
-    flex-shrink: 0;
-  }
-
-  .likes-count {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-base);
-    flex-shrink: 0;
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--color-primary-dark);
-  }
-
-  .gag-body {
-    color: var(--color-text);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-relaxed);
-    margin-bottom: var(--space-4);
-    white-space: pre-line;
-  }
-
-  .pun-format {
-    margin: var(--space-4) 0;
-  }
-
-  .pun-format .question {
-    color: var(--color-primary-dark);
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    margin-bottom: var(--space-3);
-    line-height: var(--line-height-snug);
-  }
-
-  .pun-format .answer {
-    color: white;
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    background: var(--gradient-primary);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    line-height: var(--line-height-snug);
-  }
-
-  .gag-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: var(--space-6);
-    padding-top: var(--space-6);
-    border-top: 1px solid var(--color-border);
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    flex: 1;
-  }
-
-  .tag {
-    font-size: var(--font-size-sm);
-    padding: var(--space-2) var(--space-3);
-    background: var(--color-primary);
-    color: white;
-    border-radius: var(--radius-full);
-    text-decoration: none;
-    transition: var(--transition-base);
-    font-weight: var(--font-weight-medium);
-  }
-
-  .tag:hover {
-    background: var(--color-primary-hover);
-    transform: translateY(-1px);
-  }
-
-  .comment-link {
-    color: var(--color-link);
-    text-decoration: none;
-    font-weight: var(--font-weight-semibold);
-    transition: var(--transition-base);
-    white-space: nowrap;
-  }
-
-  .comment-link:hover {
-    color: var(--color-link-hover);
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .gag-card {
-      padding: var(--space-6);
-    }
-
-    .gag-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-2);
-    }
-
-    .gag-title {
-      font-size: var(--font-size-lg);
-    }
-
-    .gag-card.featured .gag-title {
-      font-size: var(--font-size-xl);
-    }
-
-    .gag-footer {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .pun-format .answer {
-      font-size: var(--font-size-lg);
-    }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
 </style>
+
+<script>
+  // localStorage 키
+  const STORAGE_KEY = "ajae-gag-saved";
+
+  // 저장된 개그 가져오기
+  function getSavedGags(): any[] {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  }
+
+  // 개그 저장/제거
+  function toggleSaveGag(gag: any): boolean {
+    const saved = getSavedGags();
+    const index = saved.findIndex((item: any) => item.slug === gag.slug);
+
+    if (index > -1) {
+      saved.splice(index, 1);
+    } else {
+      saved.push(gag);
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    return index === -1;
+  }
+
+  // 개그가 저장되었는지 확인
+  function isGagSaved(gagSlug: string): boolean {
+    const saved = getSavedGags();
+    return saved.some((gag: any) => gag.slug === gagSlug);
+  }
+
+  // UI 업데이트
+  function updateSaveButtons(): void {
+    document.querySelectorAll(".save-btn").forEach((btn: Element) => {
+      const htmlBtn = btn as HTMLElement;
+      const gag = JSON.parse(htmlBtn.dataset.gag || "{}");
+      const bookmarkIcon = btn.querySelector(".bookmark-icon");
+      const bookmarkCheckIcon = btn.querySelector(".bookmark-check-icon");
+
+      if (isGagSaved(gag.slug)) {
+        bookmarkIcon?.classList.add("hidden");
+        bookmarkCheckIcon?.classList.remove("hidden");
+      } else {
+        bookmarkIcon?.classList.remove("hidden");
+        bookmarkCheckIcon?.classList.add("hidden");
+      }
+    });
+  }
+
+  // 스포일러 토글
+  function setupSpoilers(): void {
+    document.querySelectorAll(".spoiler-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const spoilerId = (btn as HTMLElement).dataset.spoilerId;
+        const content = document.getElementById(`${spoilerId}-content`);
+
+        if (content) {
+          content.classList.toggle("hidden");
+          btn.textContent = content.classList.contains("hidden")
+            ? "답변 보기 👀"
+            : "답변 숨기기 🙈";
+        }
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateSaveButtons();
+    setupSpoilers();
+
+    // 저장 버튼 이벤트
+    document.querySelectorAll(".save-btn").forEach((btn: Element) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const htmlBtn = btn as HTMLElement;
+        const gag = JSON.parse(htmlBtn.dataset.gag || "{}");
+        toggleSaveGag(gag);
+        updateSaveButtons();
+      });
+    });
+
+    // 공유 버튼 이벤트
+    document.querySelectorAll(".share-btn").forEach((btn: Element) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const htmlBtn = btn as HTMLElement;
+        const content = htmlBtn.dataset.content || "";
+        const slug = htmlBtn.dataset.slug || "";
+        const url = `${window.location.origin}/gags/${slug}`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: "아재개그",
+            text: content,
+            url: url,
+          });
+        } else {
+          navigator.clipboard.writeText(`${content}\n${url}`).then(() => {
+            const originalHtml = htmlBtn.innerHTML;
+            htmlBtn.innerHTML = "✓";
+            setTimeout(() => {
+              htmlBtn.innerHTML = originalHtml;
+            }, 1000);
+          });
+        }
+      });
+    });
+
+    // storage 이벤트 리스너
+    window.addEventListener("storage", (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY) {
+        updateSaveButtons();
+      }
+    });
+  });
+</script>
