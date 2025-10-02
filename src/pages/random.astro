@@ -1,7 +1,8 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import GagCard from "../components/GagCard.astro";
+import BookmarkIcon from "../icons/Bookmark.astro";
+import Share2Icon from "../icons/Share2.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -16,6 +17,7 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 }
 
 const randomGag = getRandomGag(allGags);
+const spoilerId = "random-gag";
 ---
 
 <Layout
@@ -38,13 +40,103 @@ const randomGag = getRandomGag(allGags);
   <!-- 랜덤 개그 섹션 -->
   <section class="py-8 px-4">
     <div class="container mx-auto max-w-4xl">
-      <GagCard
-        gag={randomGag}
-        variant="featured"
-        titleLevel="h3"
-        spoilerId="random-gag"
-        showTitleLink={true}
-      />
+      <div
+        class="card bg-card border border-border rounded-lg"
+        data-gag-slug={randomGag.data.slug}
+      >
+        <div class="p-6 md:p-8">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex flex-wrap gap-2">
+              {
+                randomGag.data.tags.map((tag: string) => (
+                  <a
+                    href={`/tags/${tag}`}
+                    class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
+                  >
+                    #{tag}
+                  </a>
+                ))
+              }
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
+                data-gag={JSON.stringify({
+                  slug: randomGag.data.slug,
+                  title: randomGag.data.title,
+                  body: randomGag.data.body,
+                  tags: randomGag.data.tags,
+                })}
+                aria-label="저장"
+              >
+                <BookmarkIcon class="bookmark-icon w-4 h-4" />
+                <BookmarkIcon
+                  class="bookmark-check-icon w-4 h-4 hidden text-primary"
+                  fill="currentColor"
+                />
+              </button>
+              <button
+                class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+                data-content={`${randomGag.data.title}${randomGag.data.body ? " - " + randomGag.data.body : ""}`}
+                data-slug={randomGag.data.slug}
+                aria-label="공유"
+              >
+                <Share2Icon size={16} />
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-xl md:text-2xl font-bold text-foreground mb-4">
+              Q. {randomGag.data.title}
+            </h3>
+
+            {
+              randomGag.data.body && (
+                <div class="spoiler-container">
+                  <button
+                    id={spoilerId}
+                    class="spoiler-btn text-sm bg-muted hover:bg-muted-foreground/20 text-muted-foreground px-3 py-1 rounded transition-colors"
+                    data-spoiler-id={spoilerId}
+                  >
+                    답변 보기 👀
+                  </button>
+                  <p
+                    id={`${spoilerId}-content`}
+                    class="spoiler-content hidden text-foreground mt-3 text-lg md:text-xl"
+                  >
+                    A. {randomGag.data.body}
+                  </p>
+                </div>
+              )
+            }
+          </div>
+
+          <div class="text-center">
+            <a
+              href={`/gags/${randomGag.data.slug}`}
+              class="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              댓글 보기
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="ml-1"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -59,3 +151,123 @@ const randomGag = getRandomGag(allGags);
     </button>
   </div>
 </Layout>
+
+<script>
+  // localStorage 키
+  const STORAGE_KEY = "ajae-gag-saved";
+
+  // 저장된 개그 가져오기
+  function getSavedGags(): any[] {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  }
+
+  // 개그 저장/제거
+  function toggleSaveGag(gag: any): boolean {
+    const saved = getSavedGags();
+    const index = saved.findIndex((item: any) => item.slug === gag.slug);
+
+    if (index > -1) {
+      saved.splice(index, 1);
+    } else {
+      saved.push(gag);
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    return index === -1;
+  }
+
+  // 개그가 저장되었는지 확인
+  function isGagSaved(gagSlug: string): boolean {
+    const saved = getSavedGags();
+    return saved.some((gag: any) => gag.slug === gagSlug);
+  }
+
+  // UI 업데이트
+  function updateSaveButtons(): void {
+    document.querySelectorAll(".save-btn").forEach((btn: Element) => {
+      const htmlBtn = btn as HTMLElement;
+      const gag = JSON.parse(htmlBtn.dataset.gag || "{}");
+      const bookmarkIcon = btn.querySelector(".bookmark-icon");
+      const bookmarkCheckIcon = btn.querySelector(".bookmark-check-icon");
+
+      if (isGagSaved(gag.slug)) {
+        bookmarkIcon?.classList.add("hidden");
+        bookmarkCheckIcon?.classList.remove("hidden");
+      } else {
+        bookmarkIcon?.classList.remove("hidden");
+        bookmarkCheckIcon?.classList.add("hidden");
+      }
+    });
+  }
+
+  // 스포일러 토글
+  function setupSpoilers(): void {
+    document.querySelectorAll(".spoiler-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const spoilerId = (btn as HTMLElement).dataset.spoilerId;
+        const content = document.getElementById(`${spoilerId}-content`);
+
+        if (content) {
+          content.classList.toggle("hidden");
+          btn.textContent = content.classList.contains("hidden")
+            ? "답변 보기 👀"
+            : "답변 숨기기 🙈";
+        }
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateSaveButtons();
+    setupSpoilers();
+
+    // 저장 버튼 이벤트
+    document.querySelectorAll(".save-btn").forEach((btn: Element) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const htmlBtn = btn as HTMLElement;
+        const gag = JSON.parse(htmlBtn.dataset.gag || "{}");
+        toggleSaveGag(gag);
+        updateSaveButtons();
+      });
+    });
+
+    // 공유 버튼 이벤트
+    document.querySelectorAll(".share-btn").forEach((btn: Element) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const htmlBtn = btn as HTMLElement;
+        const content = htmlBtn.dataset.content || "";
+        const slug = htmlBtn.dataset.slug || "";
+        const url = `${window.location.origin}/gags/${slug}`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: "아재개그",
+            text: content,
+            url: url,
+          });
+        } else {
+          navigator.clipboard.writeText(`${content}\n${url}`).then(() => {
+            const originalHtml = htmlBtn.innerHTML;
+            htmlBtn.innerHTML = "✓";
+            setTimeout(() => {
+              htmlBtn.innerHTML = originalHtml;
+            }, 1000);
+          });
+        }
+      });
+    });
+
+    // storage 이벤트 리스너
+    window.addEventListener("storage", (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY) {
+        updateSaveButtons();
+      }
+    });
+  });
+</script>

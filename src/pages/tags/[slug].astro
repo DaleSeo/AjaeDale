@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import GagCard from "../../components/GagCard.astro";
+import Card from "../../components/Card.astro";
 import { tagToSlug } from "../../utils/tagUtils";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -61,19 +61,7 @@ const pageDescription = `"${tag}" 태그가 포함된 ${gags.length}개의 재�
 
     <!-- 개그 목록 -->
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {
-        gags.map((gag) => (
-          <GagCard
-            gag={gag}
-            variant="default"
-            titleLevel="h2"
-            showDate={true}
-            showTitleLink={true}
-            currentTag={tag}
-            spoilerId={`tag-${gag.data.slug}`}
-          />
-        ))
-      }
+      {gags.map((gag) => <Card gag={gag} />)}
     </section>
   </div>
 </Layout>

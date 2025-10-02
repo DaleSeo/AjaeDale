@@ -5,33 +5,16 @@ import Share2Icon from "../icons/Share2.astro";
 
 interface Props {
   gag: CollectionEntry<"gags">;
-  variant?: "default" | "featured" | "detail";
-  titleLevel?: "h1" | "h2" | "h3";
-  showDate?: boolean;
-  spoilerId?: string;
-  showLikes?: boolean;
-  showTitleLink?: boolean;
-  currentTag?: string;
 }
 
-const {
-  gag,
-  variant = "default",
-  titleLevel = "h2",
-  showDate = false,
-  spoilerId = `spoiler-${gag.data.slug}`,
-  showTitleLink = false,
-} = Astro.props;
-
-const TitleTag = titleLevel;
-const isFeatured = variant === "featured";
+const { gag } = Astro.props;
 ---
 
 <div
-  class={`card bg-card border border-border rounded-lg hover-lift group ${isFeatured ? "max-w-2xl mx-auto" : ""}`}
+  class="card bg-card border border-border rounded-lg"
   data-gag-slug={gag.data.slug}
 >
-  <div class={`p-6 ${isFeatured ? "md:p-8" : ""}`}>
+  <div class="p-6 md:p-8">
     <div class="flex items-start justify-between mb-4">
       <div class="flex flex-wrap gap-2">
         {
@@ -74,66 +57,30 @@ const isFeatured = variant === "featured";
     </div>
 
     <div class="mb-4">
-      {
-        showTitleLink ? (
-          <a href={`/gags/${gag.data.slug}`}>
-            <TitleTag
-              class={`font-bold text-foreground mb-2 hover:text-primary transition-colors cursor-pointer ${isFeatured ? "text-2xl md:text-3xl" : "text-lg"}`}
-            >
-              Q. {gag.data.title}
-            </TitleTag>
-          </a>
-        ) : (
-          <TitleTag
-            class={`font-bold text-foreground mb-2 ${isFeatured ? "text-2xl md:text-3xl" : "text-lg"}`}
-          >
-            Q. {gag.data.title}
-          </TitleTag>
-        )
-      }
+      <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-4">
+        Q. {gag.data.title}
+      </h1>
 
       {
         gag.data.body && (
-          <div class="spoiler-container">
-            <button
-              id={spoilerId}
-              class="spoiler-btn text-sm bg-muted hover:bg-muted-foreground/20 text-muted-foreground px-3 py-1 rounded transition-colors"
-              data-spoiler-id={spoilerId}
-            >
-              답변 보기 👀
-            </button>
-            <p
-              id={`${spoilerId}-content`}
-              class="spoiler-content hidden text-foreground mt-2 text-base"
-            >
-              A. {gag.data.body}
-            </p>
-          </div>
+          <p class="text-lg md:text-xl text-foreground">A. {gag.data.body}</p>
         )
       }
     </div>
 
     {
-      showDate && gag.data.createdAt && (
+      gag.data.createdAt && (
         <div class="text-sm text-muted-foreground">
-          {new Date(gag.data.createdAt).toLocaleDateString("ko-KR")}
+          {new Date(gag.data.createdAt).toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </div>
       )
     }
   </div>
 </div>
-
-<style>
-  .hover-lift {
-    transition:
-      transform 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out;
-  }
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
-</style>
 
 <script>
   // localStorage 키
@@ -184,27 +131,8 @@ const isFeatured = variant === "featured";
     });
   }
 
-  // 스포일러 토글
-  function setupSpoilers(): void {
-    document.querySelectorAll(".spoiler-btn").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const spoilerId = (btn as HTMLElement).dataset.spoilerId;
-        const content = document.getElementById(`${spoilerId}-content`);
-
-        if (content) {
-          content.classList.toggle("hidden");
-          btn.textContent = content.classList.contains("hidden")
-            ? "답변 보기 👀"
-            : "답변 숨기기 🙈";
-        }
-      });
-    });
-  }
-
   document.addEventListener("DOMContentLoaded", () => {
     updateSaveButtons();
-    setupSpoilers();
 
     // 저장 버튼 이벤트
     document.querySelectorAll(".save-btn").forEach((btn: Element) => {

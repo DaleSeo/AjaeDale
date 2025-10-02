@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import GagCard from "../components/GagCard.astro";
+import Card from "../components/Card.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -77,12 +77,7 @@ function getRelativeTime(date: Date): string {
               <div class="absolute -top-3 -right-3 z-10 px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium shadow-md">
                 {getRelativeTime(new Date(gag.data.createdAt))}
               </div>
-              <GagCard
-                gag={gag}
-                variant={index < 3 ? "featured" : "default"}
-                spoilerId={`latest-gag-${index}`}
-                showTitleLink={true}
-              />
+              <Card gag={gag} />
             </div>
           ))
         }

@@ -43,7 +43,7 @@ const getMobileNavStyle = (isActive: boolean) => {
         <div>
           <h1 class="text-xl font-bold text-foreground">아재달레</h1>
           <p class="text-xs text-muted-foreground hidden sm:block">
-            아재개그로 웃어달레
+            아재개그 웃어달레
           </p>
         </div>
       </a>
@@ -79,7 +79,7 @@ const getMobileNavStyle = (isActive: boolean) => {
           class={isSavedPage
             ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
             : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title="저장목록"
+          title="북마크"
         >
           <BookmarkIcon size={20} />
         </a>
@@ -121,7 +121,7 @@ const getMobileNavStyle = (isActive: boolean) => {
         </a>
         <a href="/saved" class={getMobileNavStyle(isSavedPage)}>
           <BookmarkIcon size={16} class="inline mr-2" />
-          저장목록
+          북마크
         </a>
       </div>
     </nav>

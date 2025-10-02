@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import GagCard from "../components/GagCard.astro";
+import Card from "../components/Card.astro";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
 import { enrichGagsWithLikes } from "../utils/discussionsApi";
@@ -146,11 +146,7 @@ const totalGagsCount = allGags.length;
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {
-          topPopularGags.map((gag) => (
-            <GagCard gag={gag} spoilerId={`home-popular-${gag.data.slug}`} />
-          ))
-        }
+        {topPopularGags.map((gag) => <Card gag={gag} />)}
       </div>
 
       <div class="text-center">

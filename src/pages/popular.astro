@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import GagCard from "../components/GagCard.astro";
+import Card from "../components/Card.astro";
 import {
   sortGagsByPopularity,
   filterGagsByMinLikes,
@@ -61,13 +61,7 @@ const totalGagsCount = allGags.length;
               <div class="absolute -top-3 -left-3 z-10 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-md">
                 #{index + 1}
               </div>
-              <GagCard
-                gag={gag}
-                variant={index < 3 ? "featured" : "default"}
-                spoilerId={`popular-gag-${index}`}
-                showLikes={true}
-                showTitleLink={true}
-              />
+              <Card gag={gag} />
             </div>
           ))
         }
