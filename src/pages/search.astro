@@ -5,16 +5,19 @@ import XIcon from "../icons/X.astro";
 ---
 
 <Layout title="검색 | 아재달레" currentPage="search">
-  <section class="py-16 px-4">
-    <div class="container mx-auto max-w-4xl">
-      <!-- 페이지 헤더 -->
-      <div class="text-center mb-12">
-        <h1 class="text-3xl font-bold text-foreground mb-4">🔍 개그 검색</h1>
-        <p class="text-muted-foreground text-lg">
-          찾고 싶은 개그를 검색해보세요
-        </p>
-      </div>
+  <!-- 헤더 섹션 -->
+  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
+    <div class="container mx-auto text-center max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+        🔍 개그 검색
+      </h1>
+      <p class="text-lg text-muted-foreground">찾고 싶은 개그를 검색해보세요</p>
+    </div>
+  </section>
 
+  <!-- 검색 섹션 -->
+  <section class="py-8 px-4">
+    <div class="container mx-auto max-w-4xl">
       <!-- 검색 입력 -->
       <div class="mb-8">
         <div class="relative">

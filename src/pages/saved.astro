@@ -3,41 +3,26 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="저장한 개그 | 아재달레" currentPage="saved">
-  <section class="py-16 px-4">
-    <div class="container mx-auto">
-      <div class="flex items-center justify-between mb-12">
-        <div>
-          <h1 class="text-3xl font-bold text-foreground mb-2">
-            💾 저장한 아재개그
-          </h1>
-          <p class="text-muted-foreground">나만의 개그 컬렉션</p>
-        </div>
-        <div class="flex items-center gap-4">
-          <a
-            href="/"
-            class="inline-flex items-center px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors"
-          >
-            <svg
-              class="h-4 w-4 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            돌아가기
-          </a>
-          <button
-            id="clear-all-btn"
-            class="hidden px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors"
-          >
-            모두 삭제
-          </button>
-        </div>
+  <!-- 헤더 섹션 -->
+  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
+    <div class="container mx-auto text-center max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+        🔖 저장한 개그
+      </h1>
+      <p class="text-lg text-muted-foreground">나만의 개그 컬렉션</p>
+    </div>
+  </section>
+
+  <!-- 저장된 개그 섹션 -->
+  <section class="py-8 px-4">
+    <div class="container mx-auto max-w-6xl">
+      <div class="flex justify-end mb-6">
+        <button
+          id="clear-all-btn"
+          class="hidden px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors"
+        >
+          모두 삭제
+        </button>
       </div>
 
       <div id="saved-container">
@@ -46,18 +31,22 @@ import Layout from "../layouts/Layout.astro";
 
       <!-- 저장된 개그가 없을 때 표시할 템플릿 -->
       <template id="empty-template">
-        <div class="card bg-card border border-border rounded-lg p-12">
-          <div class="text-center">
-            <p class="text-xl text-muted-foreground mb-4">
-              아직 저장한 개그가 없습니다
-            </p>
-            <a
-              href="/"
-              class="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              개그 둘러보기
-            </a>
-          </div>
+        <div
+          class="card bg-card border border-border rounded-lg p-12 text-center"
+        >
+          <div class="text-4xl mb-4">🔖</div>
+          <p class="text-xl text-muted-foreground mb-2">
+            아직 저장한 개그가 없습니다
+          </p>
+          <p class="text-sm text-muted-foreground mb-6">
+            마음에 드는 개그를 저장해보세요
+          </p>
+          <a
+            href="/"
+            class="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            개그 둘러보기
+          </a>
         </div>
       </template>
 
