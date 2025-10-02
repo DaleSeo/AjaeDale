@@ -1,29 +1,64 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import SearchIcon from "../icons/Search.astro";
+import XIcon from "../icons/X.astro";
 ---
 
-<Layout title="검색" currentPage="search">
-  <div class="search-container">
-    <div class="search-header">
-      <h1>🔍 개그 검색</h1>
-      <p>찾고 싶은 개그를 검색해보세요</p>
-    </div>
+<Layout title="검색 | 아재달레" currentPage="search">
+  <section class="py-16 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <!-- 페이지 헤더 -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl font-bold text-foreground mb-4">🔍 개그 검색</h1>
+        <p class="text-muted-foreground text-lg">
+          찾고 싶은 개그를 검색해보세요
+        </p>
+      </div>
 
-    <div class="search-input-wrapper">
-      <input
-        type="text"
-        id="search-input"
-        class="search-input"
-        placeholder="개그 검색..."
-        autofocus
-      />
-    </div>
+      <!-- 검색 입력 -->
+      <div class="mb-8">
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+          >
+            <SearchIcon size={20} class="text-muted-foreground" />
+          </div>
+          <input
+            type="text"
+            id="search-input"
+            class="w-full pl-12 pr-12 py-4 bg-card border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-foreground placeholder-muted-foreground text-lg"
+            placeholder="개그 검색..."
+            autofocus
+          />
+          <button
+            id="clear-button"
+            class="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors hidden"
+            aria-label="검색어 지우기"
+          >
+            <XIcon size={20} />
+          </button>
+        </div>
+        <p class="text-sm text-muted-foreground mt-2 ml-1">
+          개그 제목이나 내용으로 검색할 수 있습니다
+        </p>
+      </div>
 
-    <div id="search-results" class="search-results"></div>
-    <div id="no-results" class="no-results" style="display: none;">
-      검색 결과가 없습니다
+      <!-- 검색 결과 -->
+      <div id="search-results" class="space-y-4"></div>
+
+      <!-- 검색 결과 없음 -->
+      <div
+        id="no-results"
+        class="hidden text-center py-12 bg-card border border-border rounded-xl"
+      >
+        <div class="text-4xl mb-4">🔍</div>
+        <p class="text-xl text-muted-foreground mb-2">검색 결과가 없습니다</p>
+        <p class="text-sm text-muted-foreground">
+          다른 키워드로 다시 검색해보세요
+        </p>
+      </div>
     </div>
-  </div>
+  </section>
 </Layout>
 
 <script>
@@ -36,6 +71,7 @@ import Layout from "../layouts/Layout.astro";
   ) as HTMLInputElement;
   const searchResults = document.getElementById("search-results");
   const noResults = document.getElementById("no-results");
+  const clearButton = document.getElementById("clear-button");
 
   let pagefind: any;
 
@@ -50,11 +86,23 @@ import Layout from "../layouts/Layout.astro";
     }
   }
 
+  // Clear 버튼 표시/숨김 업데이트
+  function updateClearButton() {
+    if (!clearButton) return;
+    if (searchInput.value.trim()) {
+      clearButton.classList.remove("hidden");
+    } else {
+      clearButton.classList.add("hidden");
+    }
+  }
+
   // 검색 수행
   async function performSearch(query: string) {
+    updateClearButton();
+
     if (!query.trim()) {
       if (searchResults) searchResults.innerHTML = "";
-      if (noResults) noResults.style.display = "none";
+      if (noResults) noResults.classList.add("hidden");
       return;
     }
 
@@ -73,26 +121,31 @@ import Layout from "../layouts/Layout.astro";
 
     if (search.results.length === 0) {
       searchResults.innerHTML = "";
-      noResults.style.display = "block";
+      noResults.classList.remove("hidden");
       return;
     }
 
-    noResults.style.display = "none";
+    noResults.classList.add("hidden");
 
     // 결과 렌더링
     const resultsHTML = await Promise.all(
       search.results.map(async (result: any) => {
         const data = await result.data();
-        // 디버깅: 어떤 데이터가 있는지 확인
-        console.log("Search result data:", data);
 
         // content에서 실제 개그 제목 추출 (HTML 태그 제거)
         const title = data.content || data.meta.title || "제목 없음";
         const cleanTitle = title.replace(/<[^>]*>/g, "").trim();
 
+        // excerpt 추출 (있는 경우)
+        const excerpt = data.excerpt || "";
+        const cleanExcerpt = excerpt.replace(/<[^>]*>/g, "").trim();
+
         return `
-          <a href="${data.url}" class="search-result-item">
-            <h3>${cleanTitle}</h3>
+          <a href="${data.url}" class="block p-6 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-md transition-all duration-200 group">
+            <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+              ${cleanTitle}
+            </h3>
+            ${cleanExcerpt ? `<p class="text-sm text-muted-foreground line-clamp-2">${cleanExcerpt}</p>` : ""}
           </a>
         `;
       }),
@@ -130,112 +183,15 @@ import Layout from "../layouts/Layout.astro";
     searchInput.addEventListener("input", debouncedSearch);
   }
 
+  // Clear 버튼 클릭 이벤트
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.focus();
+      performSearch("");
+    });
+  }
+
   // Pagefind 초기화
   initPagefind();
 </script>
-
-<style>
-  .search-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-
-  .search-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .search-header h1 {
-    color: var(--color-primary);
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--space-2);
-  }
-
-  .search-header p {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-lg);
-  }
-
-  .search-input-wrapper {
-    margin-bottom: 2rem;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    font-size: var(--font-size-lg);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-2xl);
-    background: var(--color-card);
-    color: var(--color-text);
-    transition: var(--transition-base);
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
-  }
-
-  .search-results {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .search-result-item {
-    display: block;
-    padding: 1.5rem;
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-2xl);
-    text-decoration: none;
-    transition: var(--transition-smooth);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .search-result-item:hover {
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-
-  .search-result-item h3 {
-    color: var(--color-text);
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-semibold);
-    margin: 0;
-  }
-
-  .no-results {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-lg);
-  }
-
-  @media (max-width: 768px) {
-    .search-container {
-      padding: 1rem 0.5rem;
-    }
-
-    .search-header h1 {
-      font-size: var(--font-size-3xl);
-    }
-
-    .search-input {
-      font-size: var(--font-size-base);
-      padding: 0.875rem 1.25rem;
-    }
-
-    .search-result-item {
-      padding: 1.25rem;
-    }
-
-    .search-result-item h3 {
-      font-size: var(--font-size-lg);
-    }
-  }
-</style>

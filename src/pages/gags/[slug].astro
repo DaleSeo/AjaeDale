@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import GagCard from "../../components/GagCard.astro";
+import Giscus from "../../components/Giscus.astro";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -26,8 +27,8 @@ const { gag }: Props = Astro.props;
 ---
 
 <Layout title={gag.data.title} currentPage="gag">
-  <article class="gag-detail-page">
-    <h1 class="visually-hidden" data-pagefind-body>{gag.data.title}</h1>
+  <article class="container mx-auto max-w-4xl px-4 py-8">
+    <h1 class="sr-only" data-pagefind-body>{gag.data.title}</h1>
 
     <GagCard
       gag={gag}
@@ -37,65 +38,6 @@ const { gag }: Props = Astro.props;
       spoilerId={`gag-${gag.data.slug}`}
     />
 
-    <!-- Giscus 댓글/좋아요 섹션 -->
-    <section class="giscus-section">
-      <h2 class="giscus-title">💬 댓글 & 좋아요</h2>
-      <script
-        src="https://giscus.app/client.js"
-        data-repo="DaleSeo/AjaeDale"
-        data-repo-id="R_kgDOPvdn0g"
-        data-category="feedback"
-        data-category-id="DIC_kwDOPvdn0s4CvasI"
-        data-mapping="og:title"
-        data-strict="1"
-        data-reactions-enabled="1"
-        data-emit-metadata="1"
-        data-input-position="top"
-        data-theme="preferred_color_scheme"
-        data-lang="ko"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async
-        is:inline></script>
-    </section>
+    <Giscus />
   </article>
 </Layout>
-
-<style>
-  .gag-detail-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-
-  .giscus-section {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #e5e7eb;
-  }
-
-  .giscus-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #374151;
-  }
-
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  @media (max-width: 768px) {
-    .gag-detail-page {
-      padding: 1rem 0.5rem;
-    }
-  }
-</style>

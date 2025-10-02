@@ -29,141 +29,49 @@ const totalGagsCount = allGags.length;
 ---
 
 <Layout title="인기 개그" currentPage="popular">
-  <div class="popular-container">
-    <!-- 헤더 -->
-    <header class="page-header">
-      <h1>🔥 인기 개그</h1>
-      <p class="stats">
+  <!-- 헤더 섹션 -->
+  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
+    <div class="container mx-auto text-center max-w-4xl">
+      <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+        🔥 인기 개그
+      </h1>
+      <p class="text-lg text-muted-foreground">
         전체 {totalGagsCount}개 중 {totalPopularCount}개가 좋아요를 받았습니다
       </p>
-    </header>
+    </div>
+  </section>
 
-    <!-- 인기 개그 섹션 -->
-    <section class="popular-section">
-      <h2>
+  <!-- 인기 개그 섹션 -->
+  <section class="py-8 px-4">
+    <div class="container mx-auto max-w-6xl">
+      <h2 class="text-2xl font-bold text-foreground mb-6 text-center">
         {totalPopularCount > 0 ? "좋아요를 많이 받은 개그" : "추천 개그"}
       </h2>
       {
         totalPopularCount === 0 && (
-          <p class="section-desc">
+          <p class="text-center text-muted-foreground mb-8">
             아직 좋아요가 없어서 무작위로 선정된 개그들을 보여드려요 ✨
           </p>
         )
       }
-      <div class="gag-grid">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
           displayGags.map((gag, index) => (
-            <div class="gag-item">
-              <div class="rank-badge">#{index + 1}</div>
+            <div class="relative">
+              <div class="absolute -top-3 -left-3 z-10 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                #{index + 1}
+              </div>
               <GagCard
                 gag={gag}
                 variant={index < 3 ? "featured" : "default"}
                 spoilerId={`popular-gag-${index}`}
                 showLikes={true}
+                showTitleLink={true}
               />
             </div>
           ))
         }
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </Layout>
-
-<style>
-  .popular-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-
-  .page-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-
-  .page-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-  }
-
-  .stats {
-    font-size: 1rem;
-    color: var(--text-secondary);
-  }
-
-  .popular-section,
-  .new-section {
-    margin-bottom: 4rem;
-  }
-
-  .popular-section h2,
-  .new-section h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-  }
-
-  .section-desc {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-  }
-
-  .gag-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-
-  .gag-item {
-    position: relative;
-  }
-
-  .rank-badge {
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.875rem;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .gag-item:nth-child(1) .rank-badge {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
-  }
-
-  .gag-item:nth-child(2) .rank-badge {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  }
-
-  .gag-item:nth-child(3) .rank-badge {
-    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-  }
-
-  @media (max-width: 768px) {
-    .popular-container {
-      padding: 1rem;
-    }
-
-    .page-header h1 {
-      font-size: 2rem;
-    }
-
-    .gag-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-  }
-</style>

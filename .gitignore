@@ -1,5 +1,6 @@
 # Spec folder - private project specifications
 spec/
+best-ui/
 
 # Dependencies
 node_modules/

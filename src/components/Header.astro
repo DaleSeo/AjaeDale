@@ -1,180 +1,139 @@
 ---
-export interface Props {
-  currentPage?:
-    | "home"
-    | "popular"
-    | "latest"
-    | "random"
-    | "search"
-    | "gag"
-    | "tag"
-    | "tags";
-}
+import BookmarkIcon from "../icons/Bookmark.astro";
+import SearchIcon from "../icons/Search.astro";
+import MenuIcon from "../icons/Menu.astro";
+import XIcon from "../icons/X.astro";
 
-const { currentPage } = Astro.props;
+// 현재 페이지 감지
+const currentPath = Astro.url.pathname;
+const isHomePage = currentPath === "/" || currentPath.startsWith("/gags/");
+const isTagsPage = currentPath === "/tags" || currentPath.startsWith("/tags/");
+const isPopularPage = currentPath === "/popular";
+const isLatestPage = currentPath === "/latest";
+const isRandomPage = currentPath === "/random";
+const isSearchPage = currentPath === "/search";
+const isSavedPage = currentPath === "/saved";
+
+// 활성 상태 스타일
+const getNavStyle = (isActive: boolean) => {
+  return isActive
+    ? "text-primary font-semibold transition-colors"
+    : "text-foreground hover:text-primary transition-colors";
+};
+
+const getSavedStyle = (isActive: boolean) => {
+  return isActive
+    ? "inline-flex items-center px-3 py-2 bg-primary/10 text-primary font-semibold rounded-md transition-colors"
+    : "inline-flex items-center px-3 py-2 hover:bg-accent rounded-md transition-colors";
+};
+
+// 모바일 네비게이션용 스타일
+const getMobileNavStyle = (isActive: boolean) => {
+  return isActive
+    ? "text-primary font-semibold bg-primary/10 px-3 py-2 rounded-md transition-colors"
+    : "text-foreground hover:text-primary px-3 py-2 rounded-md hover:bg-accent transition-colors";
+};
 ---
 
-<header class="header">
-  <div class="header-content">
-    <div class="logo-section">
-      <h1 class="logo-title">
-        <a href="/" class="logo-link">🤣 아재달레</a>
-      </h1>
-      <span class="logo-tagline">아재개그로 웃어달레</span>
+<header
+  class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+>
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <a href="/" class="flex items-center space-x-2">
+        <div class="text-2xl font-bold text-primary">🤣</div>
+        <div>
+          <h1 class="text-xl font-bold text-foreground">아재달레</h1>
+          <p class="text-xs text-muted-foreground hidden sm:block">
+            아재개그로 웃어달레
+          </p>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="/" class={getNavStyle(isHomePage)}> 🏠 홈 </a>
+        <a href="/latest" class={getNavStyle(isLatestPage)}> 🌟 최신개그 </a>
+        <a href="/popular" class={getNavStyle(isPopularPage)}> 🔥 인기개그 </a>
+        <a href="/random" class={getNavStyle(isRandomPage)}> 🎲 랜덤개그 </a>
+        <a href="/tags" class={getNavStyle(isTagsPage)}> 🏷️ 태그 </a>
+      </nav>
+
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="/saved" class={getSavedStyle(isSavedPage)}>
+          <BookmarkIcon size={16} class="mr-2" />
+          저장목록
+        </a>
+        <a
+          href="/search"
+          class="p-2 hover:bg-accent rounded-md transition-colors"
+        >
+          <SearchIcon size={16} />
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 hover:bg-accent rounded-md transition-colors"
+        aria-label="메뉴"
+      >
+        <MenuIcon id="menu-icon" size={20} />
+        <XIcon id="close-icon" size={20} class="hidden" />
+      </button>
     </div>
-    <nav class="nav">
-      <a href="/" class={`nav-link ${currentPage === "home" ? "active" : ""}`}>
-        🏠 홈
-      </a>
-      <a
-        href="/latest"
-        class={`nav-link ${currentPage === "latest" ? "active" : ""}`}
-      >
-        🌟 최신
-      </a>
-      <a
-        href="/popular"
-        class={`nav-link ${currentPage === "popular" ? "active" : ""}`}
-      >
-        🔥 인기
-      </a>
-      <a
-        href="/random"
-        class={`nav-link ${currentPage === "random" ? "active" : ""}`}
-      >
-        🎲 랜덤
-      </a>
-      <a
-        href="/tags"
-        class={`nav-link ${currentPage === "tags" || currentPage === "tag" ? "active" : ""}`}
-      >
-        🏷️ 태그
-      </a>
-      <a
-        href="/search"
-        class={`nav-link ${currentPage === "search" ? "active" : ""}`}
-      >
-        🔍 검색
-      </a>
+
+    <!-- Mobile Navigation -->
+    <nav
+      id="mobile-menu"
+      class="hidden md:hidden mt-4 pb-4 border-t border-border pt-4"
+    >
+      <div class="flex flex-col space-y-2">
+        <a href="/" class={getMobileNavStyle(isHomePage)}> 🏠 홈 </a>
+        <a href="/latest" class={getMobileNavStyle(isLatestPage)}>
+          🌟 최신개그
+        </a>
+        <a href="/popular" class={getMobileNavStyle(isPopularPage)}>
+          🔥 인기개그
+        </a>
+        <a href="/random" class={getMobileNavStyle(isRandomPage)}>
+          🎲 랜덤개그
+        </a>
+        <a href="/tags" class={getMobileNavStyle(isTagsPage)}> 🏷️ 태그 </a>
+        <a href="/saved" class={getMobileNavStyle(isSavedPage)}>
+          💾 저장목록
+        </a>
+        <a href="/search" class={getMobileNavStyle(isSearchPage)}> 🔍 검색 </a>
+      </div>
     </nav>
   </div>
 </header>
 
-<style>
-  .header {
-    padding: var(--space-6) var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-    background-color: var(--color-surface);
-  }
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuIcon = document.getElementById("menu-icon");
+    const closeIcon = document.getElementById("close-icon");
 
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: var(--container-max);
-    margin: 0 auto;
-  }
+    if (mobileMenuBtn && mobileMenu && menuIcon && closeIcon) {
+      mobileMenuBtn.addEventListener("click", () => {
+        // Toggle menu visibility
+        mobileMenu.classList.toggle("hidden");
 
-  .logo-section {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-4);
-  }
+        // Toggle icons
+        menuIcon.classList.toggle("hidden");
+        closeIcon.classList.toggle("hidden");
+      });
 
-  .logo-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    transition: var(--transition-base);
-  }
-
-  .logo-link:hover {
-    opacity: 0.9;
-  }
-
-  .logo-title {
-    color: var(--color-primary);
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-    margin: 0;
-    line-height: var(--line-height-tight);
-  }
-
-  .logo-tagline {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-medium);
-  }
-
-  .nav {
-    display: flex;
-    gap: var(--space-4);
-  }
-
-  .nav-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: var(--font-weight-medium);
-    padding: var(--space-3) var(--space-6);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius-lg);
-    transition: var(--transition-smooth);
-    font-size: var(--font-size-base);
-  }
-
-  .nav-link:hover {
-    background-color: var(--color-primary);
-    color: white;
-    transform: translateY(-1px);
-  }
-
-  .nav-link:active {
-    transform: translateY(0);
-  }
-
-  .nav-link.active {
-    background-color: var(--color-primary);
-    color: white;
-    font-weight: var(--font-weight-bold);
-    cursor: default;
-    box-shadow: 0 0 0 3px var(--color-primary-alpha-20);
-  }
-
-  .nav-link.active:hover {
-    transform: none;
-  }
-
-  @media (max-width: 768px) {
-    .header {
-      padding: var(--space-4);
+      // Close menu when clicking a link
+      mobileMenu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+          menuIcon.classList.remove("hidden");
+          closeIcon.classList.add("hidden");
+        });
+      });
     }
-
-    .header-content {
-      flex-direction: column;
-      gap: var(--space-4);
-    }
-
-    .logo-section {
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-1);
-    }
-
-    .logo-title {
-      font-size: var(--font-size-3xl);
-    }
-
-    .logo-tagline {
-      font-size: var(--font-size-sm);
-    }
-
-    .nav {
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .nav-link {
-      padding: var(--space-2) var(--space-4);
-      font-size: var(--font-size-sm);
-    }
-  }
-</style>
+  });
+</script>

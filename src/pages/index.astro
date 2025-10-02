@@ -1,7 +1,12 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
 import GagCard from "../components/GagCard.astro";
+import BookmarkIcon from "../icons/Bookmark.astro";
+import Share2Icon from "../icons/Share2.astro";
+import { enrichGagsWithLikes } from "../utils/discussionsApi";
+import { sortGagsByPopularity } from "../utils/popularityUtils";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -21,88 +26,281 @@ function getTodaysGag(gags: GagEntry[]): GagEntry {
 }
 
 const todaysGag = getTodaysGag(allGags);
+
+// 인기 개그 가져오기
+const gagsWithLikesData = await enrichGagsWithLikes(allGags);
+const popularGags = sortGagsByPopularity(gagsWithLikesData);
+const topPopularGags = popularGags.slice(0, 6);
+
 const totalGagsCount = allGags.length;
 ---
 
 <Layout title="홈" currentPage="home">
-  <!-- 오늘의 개그 섹션 -->
-  <section class="todays-gag">
-    <div class="section-header">
-      <h2>🌟 오늘의 개그</h2>
-      <p>
-        {
-          new Date().toLocaleDateString("ko-KR", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-        }
-      </p>
-    </div>
+  <Hero />
 
-    <GagCard
-      gag={todaysGag}
-      variant="featured"
-      titleLevel="h3"
-      spoilerId="todays-gag"
-    />
+  <!-- 오늘의 개그 섹션 -->
+  <section class="py-16 px-4 bg-gradient-to-b from-primary/5 to-background">
+    <div class="container mx-auto max-w-4xl">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-foreground mb-2">✨ 오늘의 개그</h2>
+        <p class="text-muted-foreground">
+          매일 바뀌는 특별한 개그를 만나보세요
+        </p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-primary/10 via-background to-primary/5 border-2 border-primary/20 rounded-2xl p-8 md:p-12 shadow-lg hover:shadow-xl transition-all duration-300"
+      >
+        <div class="flex items-start justify-between mb-6">
+          <div class="flex items-center gap-3">
+            {
+              todaysGag.data.tags.length > 0 && (
+                <span class="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-full shadow-md">
+                  #{todaysGag.data.tags[0]}
+                </span>
+              )
+            }
+            <span
+              class="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full animate-pulse"
+            >
+              TODAY
+            </span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button
+              class="save-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
+              data-gag={JSON.stringify({
+                slug: todaysGag.data.slug,
+                title: todaysGag.data.title,
+                body: todaysGag.data.body,
+              })}
+              aria-label="저장"
+            >
+              <BookmarkIcon class="bookmark-icon w-6 h-6" />
+              <BookmarkIcon
+                class="bookmark-check-icon w-6 h-6 hidden text-primary"
+                fill="currentColor"
+              />
+            </button>
+            <button
+              class="share-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
+              data-content={`${todaysGag.data.title}${todaysGag.data.body ? " - " + todaysGag.data.body : ""}`}
+              data-slug={todaysGag.data.slug}
+              aria-label="공유"
+            >
+              <Share2Icon size={24} />
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-6 text-center">
+          <h3 class="text-xl md:text-2xl font-bold text-foreground mb-3">
+            Q. {todaysGag.data.title}
+          </h3>
+          {
+            todaysGag.data.body && (
+              <p class="text-lg md:text-xl text-foreground">
+                A. {todaysGag.data.body}
+              </p>
+            )
+          }
+        </div>
+
+        <div class="mt-6 text-center">
+          <a
+            href={`/gags/${todaysGag.data.slug}`}
+            class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+          >
+            자세히 보기
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="ml-2"
+            >
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- 더 많은 개그 보기 -->
-  <section class="stats-section">
-    <p class="stats-text">
-      총 <strong>{totalGagsCount}개</strong>의 개그가 기다리고 있어요!
-    </p>
+  <!-- 인기 개그 섹션 -->
+  <section class="py-16 px-4">
+    <div class="container mx-auto max-w-6xl">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-foreground mb-2">
+          🔥 인기 아재개그
+        </h2>
+        <p class="text-muted-foreground">
+          가장 많은 사랑을 받고 있는 개그들이에요
+        </p>
+      </div>
 
-    <div class="action-buttons">
-      <a href="/random" class="action-button random"> 🎲 랜덤 개그 보기 </a>
-      <a href="/search" class="action-button search"> 🔍 개그 검색하기 </a>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {
+          topPopularGags.map((gag) => (
+            <GagCard gag={gag} spoilerId={`home-popular-${gag.data.slug}`} />
+          ))
+        }
+      </div>
+
+      <div class="text-center">
+        <a
+          href="/popular"
+          class="inline-flex items-center px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
+        >
+          인기 개그 더보기
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="ml-2"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 통계 섹션 -->
+  <section class="py-16 px-4 bg-gradient-to-b from-background to-primary/5">
+    <div class="container mx-auto text-center">
+      <p class="text-xl text-muted-foreground mb-8">
+        총 <strong class="text-primary text-2xl">{totalGagsCount}개</strong>의
+        재미있는 개그가 기다리고 있어요!
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a
+          href="/random"
+          class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
+        >
+          🎲 랜덤 개그 보기
+        </a>
+        <a
+          href="/search"
+          class="text-lg font-medium px-8 py-3 border border-border rounded-lg hover:bg-accent transition-colors shadow-sm hover:shadow-md"
+        >
+          🔍 개그 검색하기
+        </a>
+      </div>
     </div>
   </section>
 </Layout>
 
-<style>
-  /* Today's Gag Special Styling */
-  .todays-gag {
-    margin-bottom: var(--space-12);
+<script>
+  // localStorage 키
+  const STORAGE_KEY = "ajae-gag-saved";
+
+  // 저장된 개그 가져오기
+  function getSavedGags(): any[] {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
   }
 
-  .section-header {
-    text-align: center;
-    margin-bottom: var(--space-8);
-  }
+  // 개그 저장/제거
+  function toggleSaveGag(gag: any): boolean {
+    const saved = getSavedGags();
+    const index = saved.findIndex((item: any) => item.slug === gag.slug);
 
-  .section-header h2 {
-    color: var(--color-primary);
-    font-size: var(--font-size-4xl);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--space-2);
-    line-height: var(--line-height-tight);
-  }
-
-  .section-header p {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-lg);
-  }
-
-  .featured-gag {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .featured-gag .gag-title {
-    text-align: center;
-    margin-bottom: var(--space-4);
-  }
-
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .featured-gag {
-      margin: 0 var(--space-4);
+    if (index > -1) {
+      saved.splice(index, 1);
+    } else {
+      saved.push(gag);
     }
 
-    .section-header h2 {
-      font-size: var(--font-size-3xl);
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    return index === -1;
   }
-</style>
+
+  // 개그가 저장되었는지 확인
+  function isGagSaved(gagSlug: string): boolean {
+    const saved = getSavedGags();
+    return saved.some((gag: any) => gag.slug === gagSlug);
+  }
+
+  // UI 업데이트
+  function updateSaveButtons(): void {
+    document.querySelectorAll(".save-btn").forEach((btn: Element) => {
+      const htmlBtn = btn as HTMLElement;
+      const gag = JSON.parse(htmlBtn.dataset.gag || "{}");
+      const bookmarkIcon = btn.querySelector(".bookmark-icon");
+      const bookmarkCheckIcon = btn.querySelector(".bookmark-check-icon");
+
+      if (isGagSaved(gag.slug)) {
+        bookmarkIcon?.classList.add("hidden");
+        bookmarkCheckIcon?.classList.remove("hidden");
+      } else {
+        bookmarkIcon?.classList.remove("hidden");
+        bookmarkCheckIcon?.classList.add("hidden");
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // 초기 상태 설정
+    updateSaveButtons();
+
+    // 저장 버튼 이벤트
+    document.querySelectorAll(".save-btn").forEach((btn: Element) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const htmlBtn = btn as HTMLElement;
+        const gag = JSON.parse(htmlBtn.dataset.gag || "{}");
+        toggleSaveGag(gag);
+        updateSaveButtons();
+      });
+    });
+
+    // 공유 버튼 이벤트
+    document.querySelectorAll(".share-btn").forEach((btn: Element) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const htmlBtn = btn as HTMLElement;
+        const content = htmlBtn.dataset.content || "";
+        const slug = htmlBtn.dataset.slug || "";
+        const url = `${window.location.origin}/gags/${slug}`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: "오늘의 아재개그",
+            text: content,
+            url: url,
+          });
+        } else {
+          navigator.clipboard.writeText(`${content}\n${url}`).then(() => {
+            const originalHtml = htmlBtn.innerHTML;
+            htmlBtn.innerHTML = "✓";
+            setTimeout(() => {
+              htmlBtn.innerHTML = originalHtml;
+            }, 1000);
+          });
+        }
+      });
+    });
+
+    // storage 이벤트 리스너
+    window.addEventListener("storage", (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY) {
+        updateSaveButtons();
+      }
+    });
+  });
+</script>

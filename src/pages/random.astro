@@ -23,26 +23,36 @@ const randomGag = getRandomGag(allGags);
   description="랜덤으로 선택된 아재개그를 즐겨보세요"
   currentPage="random"
 >
-  <div class="section-header">
-    <h2 class="section-title">🎲 랜덤 개그</h2>
-    <p class="section-description">매번 새로운 개그를 만나보세요!</p>
-  </div>
+  <!-- 헤더 섹션 -->
+  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
+    <div class="container mx-auto text-center max-w-4xl">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+        🎲 랜덤 개그
+      </h2>
+      <p class="text-lg text-muted-foreground">
+        매번 새로운 개그를 만나보세요!
+      </p>
+    </div>
+  </section>
 
   <!-- 랜덤 개그 섹션 -->
-  <section class="page-section">
-    <GagCard
-      gag={randomGag}
-      variant="featured"
-      titleLevel="h3"
-      spoilerId="random-gag"
-    />
+  <section class="py-8 px-4">
+    <div class="container mx-auto max-w-4xl">
+      <GagCard
+        gag={randomGag}
+        variant="featured"
+        titleLevel="h3"
+        spoilerId="random-gag"
+        showTitleLink={true}
+      />
+    </div>
   </section>
 
   <!-- 액션 버튼들 -->
-  <div class="action-buttons">
+  <div class="py-8 px-4 text-center">
     <button
       type="button"
-      class="action-button random"
+      class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
       onclick="window.location.reload()"
     >
       🎲 다른 개그 보기
