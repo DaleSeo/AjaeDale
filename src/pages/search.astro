@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import SearchIcon from "../icons/Search.astro";
+import XIcon from "../icons/X.astro";
 ---
 
 <Layout title="검색 | 아재달레" currentPage="search">
@@ -25,10 +26,17 @@ import SearchIcon from "../icons/Search.astro";
           <input
             type="text"
             id="search-input"
-            class="w-full pl-12 pr-4 py-4 bg-card border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-foreground placeholder-muted-foreground text-lg"
+            class="w-full pl-12 pr-12 py-4 bg-card border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-foreground placeholder-muted-foreground text-lg"
             placeholder="개그 검색..."
             autofocus
           />
+          <button
+            id="clear-button"
+            class="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors hidden"
+            aria-label="검색어 지우기"
+          >
+            <XIcon size={20} />
+          </button>
         </div>
         <p class="text-sm text-muted-foreground mt-2 ml-1">
           개그 제목이나 내용으로 검색할 수 있습니다
@@ -63,6 +71,7 @@ import SearchIcon from "../icons/Search.astro";
   ) as HTMLInputElement;
   const searchResults = document.getElementById("search-results");
   const noResults = document.getElementById("no-results");
+  const clearButton = document.getElementById("clear-button");
 
   let pagefind: any;
 
@@ -77,8 +86,20 @@ import SearchIcon from "../icons/Search.astro";
     }
   }
 
+  // Clear 버튼 표시/숨김 업데이트
+  function updateClearButton() {
+    if (!clearButton) return;
+    if (searchInput.value.trim()) {
+      clearButton.classList.remove("hidden");
+    } else {
+      clearButton.classList.add("hidden");
+    }
+  }
+
   // 검색 수행
   async function performSearch(query: string) {
+    updateClearButton();
+
     if (!query.trim()) {
       if (searchResults) searchResults.innerHTML = "";
       if (noResults) noResults.classList.add("hidden");
@@ -160,6 +181,15 @@ import SearchIcon from "../icons/Search.astro";
     }, 300);
 
     searchInput.addEventListener("input", debouncedSearch);
+  }
+
+  // Clear 버튼 클릭 이벤트
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.focus();
+      performSearch("");
+    });
   }
 
   // Pagefind 초기화
