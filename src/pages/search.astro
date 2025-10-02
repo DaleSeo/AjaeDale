@@ -2,16 +2,20 @@
 import Layout from "../layouts/Layout.astro";
 import SearchIcon from "../icons/Search.astro";
 import XIcon from "../icons/X.astro";
+
+// 페이지 메타 정보
+const title = "개그 검색";
+const description = "찾고 싶은 아재 개그를 검색해보세요";
 ---
 
-<Layout title="검색 | 아재달레" currentPage="search">
+<Layout title={title} description={description} currentPage="search">
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
       <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-        🔍 개그 검색
+        🔍 {title}
       </h1>
-      <p class="text-lg text-muted-foreground">찾고 싶은 개그를 검색해보세요</p>
+      <p class="text-lg text-muted-foreground">{description}</p>
     </div>
   </section>
 

@@ -2,10 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
-import {
-  sortGagsByPopularity,
-  filterGagsByMinLikes,
-} from "../utils/popularityUtils";
+import { sortGagsByPopularity } from "../utils/popularityUtils";
 import { enrichGagsWithLikes } from "../utils/discussionsApi";
 
 type GagEntry = CollectionEntry<"gags">;
@@ -21,22 +18,22 @@ const gagsWithLikesData = await enrichGagsWithLikes(allGags);
 const popularGags = sortGagsByPopularity(gagsWithLikesData);
 
 // 표시할 개그 선택: 항상 12개 고정
-const gagsWithLikes = filterGagsByMinLikes(popularGags, 1);
 const displayGags = popularGags.slice(0, 12);
 
-const totalPopularCount = gagsWithLikes.length;
-const totalGagsCount = allGags.length;
+// 페이지 메타 정보
+const title = "인기 개그";
+const description = "가장 많은 사랑을 받은 개그들을 만나보세요!";
 ---
 
-<Layout title="인기 개그" currentPage="popular">
+<Layout title={title} description={description} currentPage="popular">
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
       <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-        🔥 인기 개그
+        🔥 {title}
       </h1>
       <p class="text-lg text-muted-foreground">
-        전체 {totalGagsCount}개 중 {totalPopularCount}개가 좋아요를 받았습니다
+        {description}
       </p>
     </div>
   </section>
@@ -44,16 +41,6 @@ const totalGagsCount = allGags.length;
   <!-- 인기 개그 섹션 -->
   <section class="py-8 px-4">
     <div class="container mx-auto max-w-6xl">
-      <h2 class="text-2xl font-bold text-foreground mb-6 text-center">
-        {totalPopularCount > 0 ? "좋아요를 많이 받은 개그" : "추천 개그"}
-      </h2>
-      {
-        totalPopularCount === 0 && (
-          <p class="text-center text-muted-foreground mb-8">
-            아직 좋아요가 없어서 무작위로 선정된 개그들을 보여드려요 ✨
-          </p>
-        )
-      }
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
           displayGags.map((gag, index) => (

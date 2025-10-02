@@ -17,16 +17,20 @@ allGags.forEach((gag: GagEntry) => {
 });
 
 const sortedTags = Array.from(allTags).sort();
+
+// 페이지 메타 정보
+const title = "개그 제출";
+const description = "재미있는 아재개그를 공유해주세요!";
 ---
 
-<Layout title="개그 제출 | 아재달레">
+<Layout title={title} description={description} currentPage="submit">
   <section class="py-16 px-4">
     <div class="container mx-auto max-w-2xl">
       <!-- 페이지 헤더 -->
       <div class="text-center mb-12">
-        <h1 class="text-3xl font-bold text-foreground mb-4">📝 개그 제출</h1>
+        <h1 class="text-3xl font-bold text-foreground mb-4">📝 {title}</h1>
         <p class="text-muted-foreground text-lg">
-          재미있는 아재개그를 공유해주세요!
+          {description}
         </p>
       </div>
 

@@ -18,7 +18,10 @@ const sortedGags = allGags.sort((a: GagEntry, b: GagEntry) => {
 
 // 표시할 개수 제한 (12개)
 const displayGags = sortedGags.slice(0, 12);
-const totalGagsCount = allGags.length;
+
+// 페이지 메타 정보
+const title = "최신 개그";
+const description = "방금 올라온 따끈따끈한 개그들을 만나볼까요?";
 
 // 상대적 시간 계산 함수
 function getRelativeTime(date: Date): string {
@@ -45,15 +48,15 @@ function getRelativeTime(date: Date): string {
 }
 ---
 
-<Layout title="최신 개그" currentPage="latest">
+<Layout title={title} description={description} currentPage="latest">
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
       <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-        🌟 최신 개그
+        🌟 {title}
       </h1>
       <p class="text-lg text-muted-foreground">
-        전체 {totalGagsCount}개 중 가장 최근에 추가된 개그들입니다
+        {description}
       </p>
     </div>
   </section>
@@ -61,12 +64,6 @@ function getRelativeTime(date: Date): string {
   <!-- 최신 개그 섹션 -->
   <section class="py-8 px-4">
     <div class="container mx-auto max-w-6xl">
-      <h2 class="text-2xl font-bold text-foreground mb-2 text-center">
-        가장 최근에 추가된 개그
-      </h2>
-      <p class="text-center text-muted-foreground mb-8">
-        방금 추가된 따끈따끈한 개그들을 가장 먼저 만나보세요! ✨
-      </p>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {
           displayGags.map((gag: GagEntry, index: number) => (

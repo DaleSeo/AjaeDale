@@ -21,13 +21,11 @@ allGags.forEach((gag: GagEntry) => {
 const sortedTags = Array.from(tagCounts.entries())
   .sort((a, b) => b[1] - a[1])
   .map(([tag, count]) => ({ tag, count }));
-
-const totalTags = sortedTags.length;
 ---
 
 <Layout
-  title="태그 | 아재달레"
-  description="아재개그를 태그별로 찾아보세요"
+  title="태그"
+  description="아재 개그를 태그 별로 골라보세요!"
   currentPage="tags"
 >
   <!-- 헤더 섹션 -->
@@ -40,7 +38,7 @@ const totalTags = sortedTags.length;
         🏷️ 모든 태그
       </h1>
       <p class="text-lg text-muted-foreground">
-        총 <strong>{totalTags}개</strong>의 태그로 개그를 분류했어요
+        아재 개그를 태그 별로 골라보세요!
       </p>
     </div>
   </section>

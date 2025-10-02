@@ -18,21 +18,21 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 
 const randomGag = getRandomGag(allGags);
 const spoilerId = "random-gag";
+
+// 페이지 메타 정보
+const title = "랜덤 개그";
+const description = "운명이 선택한 아재 개그를 만나보세요!";
 ---
 
-<Layout
-  title="랜덤 개그"
-  description="랜덤으로 선택된 아재개그를 즐겨보세요"
-  currentPage="random"
->
+<Layout title={title} description={description} currentPage="random">
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
       <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-        🎲 랜덤 개그
+        🎲 {title}
       </h2>
       <p class="text-lg text-muted-foreground">
-        매번 새로운 개그를 만나보세요!
+        {description}
       </p>
     </div>
   </section>
