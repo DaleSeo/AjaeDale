@@ -16,7 +16,7 @@ const gagSchema = z.object({
 
   // 핵심 필드
   title: z.string(), // 개그 제목/질문
-  body: z.string().optional(), // 본문/답변 (선택)
+  description: z.string().optional(), // 본문/답변 (선택)
 
   // 태그
   tags: z.array(z.string()).default([]),

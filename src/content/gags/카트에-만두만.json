@@ -1,7 +1,7 @@
 {
   "slug": "cart-only-dumplings",
   "title": "카트에 만두만 있으면?",
-  "body": "카트만두",
+  "description": "카트만두",
   "tags": ["음식"],
   "published": true,
   "featured": false,

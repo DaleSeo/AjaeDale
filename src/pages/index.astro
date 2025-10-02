@@ -72,7 +72,7 @@ const totalGagsCount = allGags.length;
               data-gag={JSON.stringify({
                 slug: todaysGag.data.slug,
                 title: todaysGag.data.title,
-                body: todaysGag.data.body,
+                description: todaysGag.data.description,
               })}
               aria-label="저장"
             >
@@ -84,7 +84,7 @@ const totalGagsCount = allGags.length;
             </button>
             <button
               class="share-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
-              data-content={`${todaysGag.data.title}${todaysGag.data.body ? " - " + todaysGag.data.body : ""}`}
+              data-content={`${todaysGag.data.title}${todaysGag.data.description ? " - " + todaysGag.data.description : ""}`}
               data-slug={todaysGag.data.slug}
               aria-label="공유"
             >
@@ -98,9 +98,9 @@ const totalGagsCount = allGags.length;
             Q. {todaysGag.data.title}
           </h3>
           {
-            todaysGag.data.body && (
+            todaysGag.data.description && (
               <p class="text-lg md:text-xl text-foreground">
-                A. {todaysGag.data.body}
+                A. {todaysGag.data.description}
               </p>
             )
           }

@@ -64,7 +64,7 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
                 data-gag={JSON.stringify({
                   slug: randomGag.data.slug,
                   title: randomGag.data.title,
-                  body: randomGag.data.body,
+                  description: randomGag.data.description,
                   tags: randomGag.data.tags,
                 })}
                 aria-label="저장"
@@ -77,7 +77,7 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
               </button>
               <button
                 class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
-                data-content={`${randomGag.data.title}${randomGag.data.body ? " - " + randomGag.data.body : ""}`}
+                data-content={`${randomGag.data.title}${randomGag.data.description ? " - " + randomGag.data.description : ""}`}
                 data-slug={randomGag.data.slug}
                 aria-label="공유"
               >
@@ -92,7 +92,7 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
             </h3>
 
             {
-              randomGag.data.body && (
+              randomGag.data.description && (
                 <div class="spoiler-container">
                   <button
                     id={spoilerId}
@@ -105,7 +105,7 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
                     id={`${spoilerId}-content`}
                     class="spoiler-content hidden text-foreground mt-3 text-lg md:text-xl"
                   >
-                    A. {randomGag.data.body}
+                    A. {randomGag.data.description}
                   </p>
                 </div>
               )

@@ -34,7 +34,7 @@ const { gag } = Astro.props;
           data-gag={JSON.stringify({
             slug: gag.data.slug,
             title: gag.data.title,
-            body: gag.data.body,
+            description: gag.data.description,
             tags: gag.data.tags,
           })}
           aria-label="저장"
@@ -47,7 +47,7 @@ const { gag } = Astro.props;
         </button>
         <button
           class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
-          data-content={`${gag.data.title}${gag.data.body ? " - " + gag.data.body : ""}`}
+          data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
           data-slug={gag.data.slug}
           aria-label="공유"
         >
@@ -62,8 +62,10 @@ const { gag } = Astro.props;
       </h1>
 
       {
-        gag.data.body && (
-          <p class="text-lg md:text-xl text-foreground">A. {gag.data.body}</p>
+        gag.data.description && (
+          <p class="text-lg md:text-xl text-foreground">
+            A. {gag.data.description}
+          </p>
         )
       }
     </div>
