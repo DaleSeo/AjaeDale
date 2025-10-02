@@ -3,10 +3,10 @@ import BookmarkIcon from "../icons/Bookmark.astro";
 import SearchIcon from "../icons/Search.astro";
 import MenuIcon from "../icons/Menu.astro";
 import XIcon from "../icons/X.astro";
+import TagIcon from "../icons/Tag.astro";
 
 // 현재 페이지 감지
 const currentPath = Astro.url.pathname;
-const isHomePage = currentPath === "/" || currentPath.startsWith("/gags/");
 const isTagsPage = currentPath === "/tags" || currentPath.startsWith("/tags/");
 const isPopularPage = currentPath === "/popular";
 const isLatestPage = currentPath === "/latest";
@@ -17,14 +17,8 @@ const isSavedPage = currentPath === "/saved";
 // 활성 상태 스타일
 const getNavStyle = (isActive: boolean) => {
   return isActive
-    ? "text-primary font-semibold transition-colors"
-    : "text-foreground hover:text-primary transition-colors";
-};
-
-const getSavedStyle = (isActive: boolean) => {
-  return isActive
-    ? "inline-flex items-center px-3 py-2 bg-primary/10 text-primary font-semibold rounded-md transition-colors"
-    : "inline-flex items-center px-3 py-2 hover:bg-accent rounded-md transition-colors";
+    ? "px-3 py-2 bg-primary/10 text-primary font-semibold rounded-md transition-colors"
+    : "px-3 py-2 text-foreground hover:text-primary hover:bg-accent rounded-md transition-colors";
 };
 
 // 모바일 네비게이션용 스타일
@@ -41,7 +35,11 @@ const getMobileNavStyle = (isActive: boolean) => {
   <div class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
       <a href="/" class="flex items-center space-x-2">
-        <div class="text-2xl font-bold text-primary">🤣</div>
+        <img
+          src="/logo.png"
+          alt="아재달레 로고"
+          class="w-10 h-10 rounded-full"
+        />
         <div>
           <h1 class="text-xl font-bold text-foreground">아재달레</h1>
           <p class="text-xs text-muted-foreground hidden sm:block">
@@ -51,24 +49,39 @@ const getMobileNavStyle = (isActive: boolean) => {
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-8">
-        <a href="/" class={getNavStyle(isHomePage)}> 🏠 홈 </a>
-        <a href="/latest" class={getNavStyle(isLatestPage)}> 🌟 최신개그 </a>
-        <a href="/popular" class={getNavStyle(isPopularPage)}> 🔥 인기개그 </a>
-        <a href="/random" class={getNavStyle(isRandomPage)}> 🎲 랜덤개그 </a>
-        <a href="/tags" class={getNavStyle(isTagsPage)}> 🏷️ 태그 </a>
+      <nav class="hidden md:flex items-center space-x-6">
+        <a href="/latest" class={getNavStyle(isLatestPage)}> 🌟 최신 개그 </a>
+        <a href="/popular" class={getNavStyle(isPopularPage)}> 🔥 인기 개그 </a>
+        <a href="/random" class={getNavStyle(isRandomPage)}> 🎲 랜덤 개그 </a>
       </nav>
 
-      <div class="hidden md:flex items-center space-x-4">
-        <a href="/saved" class={getSavedStyle(isSavedPage)}>
-          <BookmarkIcon size={16} class="mr-2" />
-          저장목록
+      <div class="hidden md:flex items-center space-x-2">
+        <a
+          href="/tags"
+          class={isTagsPage
+            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
+            : "p-2 hover:bg-accent rounded-md transition-colors"}
+          title="태그"
+        >
+          <TagIcon size={20} />
         </a>
         <a
           href="/search"
-          class="p-2 hover:bg-accent rounded-md transition-colors"
+          class={isSearchPage
+            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
+            : "p-2 hover:bg-accent rounded-md transition-colors"}
+          title="검색"
         >
-          <SearchIcon size={16} />
+          <SearchIcon size={20} />
+        </a>
+        <a
+          href="/saved"
+          class={isSavedPage
+            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
+            : "p-2 hover:bg-accent rounded-md transition-colors"}
+          title="저장목록"
+        >
+          <BookmarkIcon size={20} />
         </a>
       </div>
 
@@ -89,21 +102,27 @@ const getMobileNavStyle = (isActive: boolean) => {
       class="hidden md:hidden mt-4 pb-4 border-t border-border pt-4"
     >
       <div class="flex flex-col space-y-2">
-        <a href="/" class={getMobileNavStyle(isHomePage)}> 🏠 홈 </a>
         <a href="/latest" class={getMobileNavStyle(isLatestPage)}>
-          🌟 최신개그
+          🌟 최신 개그
         </a>
         <a href="/popular" class={getMobileNavStyle(isPopularPage)}>
-          🔥 인기개그
+          🔥 인기 개그
         </a>
         <a href="/random" class={getMobileNavStyle(isRandomPage)}>
-          🎲 랜덤개그
+          🎲 랜덤 개그
         </a>
-        <a href="/tags" class={getMobileNavStyle(isTagsPage)}> 🏷️ 태그 </a>
+        <a href="/tags" class={getMobileNavStyle(isTagsPage)}>
+          <TagIcon size={16} class="inline mr-2" />
+          태그
+        </a>
+        <a href="/search" class={getMobileNavStyle(isSearchPage)}>
+          <SearchIcon size={16} class="inline mr-2" />
+          검색
+        </a>
         <a href="/saved" class={getMobileNavStyle(isSavedPage)}>
-          💾 저장목록
+          <BookmarkIcon size={16} class="inline mr-2" />
+          저장목록
         </a>
-        <a href="/search" class={getMobileNavStyle(isSearchPage)}> 🔍 검색 </a>
       </div>
     </nav>
   </div>
