@@ -1,8 +1,17 @@
 {
   "slug": "sleep-laugh",
-  "title": "잠 자다가 웃으면?",
-  "description": "이불킥",
-  "tags": ["웃음"],
+  "title": {
+    "ko": "잠 자다가 웃으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "이불킥",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["웃음"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

@@ -4,12 +4,16 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SEO from "../components/SEO.astro";
 
+import type { Lang } from "../i18n/utils";
+import { getAlternateUrl } from "../i18n/utils";
+
 export interface Props {
   title?: string;
   description?: string;
   currentPage?: string;
   ogTitle?: string;
   ogDescription?: string;
+  lang?: Lang;
 }
 
 const {
@@ -17,11 +21,16 @@ const {
   description,
   ogTitle,
   ogDescription,
+  lang = "ko",
 } = Astro.props;
+
+// Get alternate language URL for SEO
+const alternateLang = lang === "ko" ? "en" : "ko";
+const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,6 +51,8 @@ const {
       description={description}
       ogTitle={ogTitle}
       ogDescription={ogDescription}
+      lang={lang}
+      alternateUrl={alternateUrl}
     />
 
     <!-- Preconnect for Google Fonts -->

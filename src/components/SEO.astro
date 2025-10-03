@@ -1,9 +1,13 @@
 ---
+import type { Lang } from "../i18n/utils";
+
 export interface Props {
   title: string;
   description?: string;
   ogTitle?: string;
   ogDescription?: string;
+  lang?: Lang;
+  alternateUrl?: string;
 }
 
 const {
@@ -11,17 +15,53 @@ const {
   description = "한국 아저씨들이 사랑하는 개그 총정리! 아재개그 웃어달레 🤣",
   ogTitle,
   ogDescription,
+  lang = "ko",
+  alternateUrl,
 } = Astro.props;
+
+// Get current URL without query params or hash
+const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 ---
 
 <meta name="description" content={description} />
 
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Multilingual hreflang tags -->
+{
+  alternateUrl && (
+    <>
+      <link rel="alternate" hreflang={lang} href={canonicalUrl} />
+      <link
+        rel="alternate"
+        hreflang={lang === "ko" ? "en" : "ko"}
+        href={alternateUrl}
+      />
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={canonicalUrl.replace("/en/", "/")}
+      />
+    </>
+  )
+}
+
 <!-- Open Graph for social sharing -->
 <meta property="og:site_name" content="아재달레" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url.href} />
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:title" content={ogTitle || title} />
 <meta property="og:description" content={ogDescription || description} />
+<meta property="og:locale" content={lang === "ko" ? "ko_KR" : "en_US"} />
+{
+  alternateUrl && (
+    <meta
+      property="og:locale:alternate"
+      content={lang === "ko" ? "en_US" : "ko_KR"}
+    />
+  )
+}
 <meta
   property="og:image"
   content={new URL("/og-image.png", Astro.url.origin).href}

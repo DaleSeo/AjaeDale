@@ -1,8 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
+import { useTranslations, type Lang } from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
 
 type GagEntry = CollectionEntry<"gags">;
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 // 모든 태그 목록 가져오기
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
@@ -11,7 +21,9 @@ const allGags = await getCollection("gags", ({ data }: GagEntry) => {
 
 const allTags = new Set<string>();
 allGags.forEach((gag: GagEntry) => {
-  gag.data.tags.forEach((tag: string) => {
+  // tags는 이제 {ko: string[], en: string[]} 구조
+  const tags = gag.data.tags[lang] || gag.data.tags.ko;
+  tags.forEach((tag: string) => {
     allTags.add(tag);
   });
 });
@@ -19,8 +31,8 @@ allGags.forEach((gag: GagEntry) => {
 const sortedTags = Array.from(allTags).sort();
 
 // 페이지 메타 정보
-const title = "개그 제출";
-const description = "재미있는 아재개그를 공유해주세요!";
+const title = t("submit.title");
+const description = t("submit.description");
 ---
 
 <Layout title={title} description={description} currentPage="submit">

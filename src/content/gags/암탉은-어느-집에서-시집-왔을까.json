@@ -1,9 +1,19 @@
 {
   "slug": "hen-marriage-origin",
-  "title": "암탉은 어느 집에서 시집 왔을까?",
-  "description": "꼬꼬댁",
-  "tags": ["암탉"],
+  "title": {
+    "ko": "암탉은 어느 집에서 시집 왔을까?",
+    "en": ""
+  },
+  "description": {
+    "ko": "꼬꼬댁",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["암탉"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
   "updatedAt": "2025-09-23T01:59:05.595Z"
 }

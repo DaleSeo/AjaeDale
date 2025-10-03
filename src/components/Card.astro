@@ -2,12 +2,22 @@
 import type { CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
+import type { Lang } from "../i18n/utils";
+import {
+  getLocalizedGag,
+  getLocalizedUrl,
+  getLangFromUrl,
+} from "../i18n/utils";
 
 interface Props {
   gag: CollectionEntry<"gags">;
+  lang?: Lang;
 }
 
-const { gag } = Astro.props;
+// If lang prop is not provided, detect from URL
+const detectedLang = getLangFromUrl(Astro.url);
+const { gag, lang = detectedLang } = Astro.props;
+const localizedGag = getLocalizedGag(gag, lang);
 ---
 
 <div
@@ -18,9 +28,9 @@ const { gag } = Astro.props;
     <div class="flex items-start justify-between mb-4">
       <div class="flex flex-wrap gap-2">
         {
-          gag.data.tags.map((tag: string) => (
+          localizedGag.tags.map((tag: string) => (
             <a
-              href={`/tags/${tag}`}
+              href={getLocalizedUrl(`/tags/${tag}`, lang)}
               class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
             >
               #{tag}
@@ -33,9 +43,9 @@ const { gag } = Astro.props;
           class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
           data-gag={JSON.stringify({
             slug: gag.data.slug,
-            title: gag.data.title,
-            description: gag.data.description,
-            tags: gag.data.tags,
+            title: localizedGag.title,
+            description: localizedGag.description,
+            tags: localizedGag.tags,
           })}
           aria-label="저장"
         >
@@ -47,7 +57,7 @@ const { gag } = Astro.props;
         </button>
         <button
           class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
-          data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+          data-content={`${localizedGag.title}${localizedGag.description ? " - " + localizedGag.description : ""}`}
           data-slug={gag.data.slug}
           aria-label="공유"
         >
@@ -57,11 +67,11 @@ const { gag } = Astro.props;
     </div>
 
     <div class="mb-4">
-      <a href={`/gags/${gag.data.slug}`}>
+      <a href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}>
         <h2
           class="text-lg font-bold text-foreground mb-2 hover:text-primary transition-colors cursor-pointer"
         >
-          {gag.data.title}
+          {localizedGag.title}
         </h2>
       </a>
     </div>
@@ -152,7 +162,12 @@ const { gag } = Astro.props;
         const htmlBtn = btn as HTMLElement;
         const content = htmlBtn.dataset.content || "";
         const slug = htmlBtn.dataset.slug || "";
-        const url = `${window.location.origin}/gags/${slug}`;
+
+        // Detect language from current URL
+        const currentPath = window.location.pathname;
+        const isEnglish = currentPath.startsWith("/en/");
+        const urlPath = isEnglish ? `/en/gags/${slug}` : `/gags/${slug}`;
+        const url = `${window.location.origin}${urlPath}`;
 
         if (navigator.share) {
           navigator.share({

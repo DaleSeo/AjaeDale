@@ -1,8 +1,17 @@
 {
   "slug": "president-election-opposite",
-  "title": "대통령 선거의 반댓말은?",
-  "description": "대통령 앉은거",
-  "tags": ["정치"],
+  "title": {
+    "ko": "대통령 선거의 반댓말은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "대통령 앉은거",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["정치"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

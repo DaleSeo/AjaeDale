@@ -1,9 +1,19 @@
 {
   "slug": "five-trees-plant",
-  "title": "다섯 그루의 나무를 심으면?",
-  "description": "오목",
-  "tags": ["나무", "다섯"],
+  "title": {
+    "ko": "다섯 그루의 나무를 심으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "오목",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["나무", "다섯"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

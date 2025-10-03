@@ -1,9 +1,19 @@
 {
   "slug": "apple-one-bite",
-  "title": "사과를 한 입 베어먹으면?",
-  "description": "파인애플",
-  "tags": ["사과"],
+  "title": {
+    "ko": "사과를 한 입 베어먹으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "파인애플",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["사과"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

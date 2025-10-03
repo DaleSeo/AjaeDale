@@ -1,9 +1,19 @@
 {
   "slug": "singer-rain-la",
-  "title": "가수 비가 로스앤젤레스로 갈 것이다를 4글자로 줄이면?",
-  "description": "LA갈비",
-  "tags": [],
+  "title": {
+    "ko": "가수 비가 로스앤젤레스로 갈 것이다를 4글자로 줄이면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "LA갈비",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

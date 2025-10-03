@@ -1,9 +1,19 @@
 {
   "slug": "thieves-hate-snack",
-  "title": "도둑놈들이 가장 싫어하는 과자는?",
-  "description": "누네띠네",
-  "tags": ["도둑", "과자"],
+  "title": {
+    "ko": "도둑놈들이 가장 싫어하는 과자는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "누네띠네",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["도둑", "과자"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

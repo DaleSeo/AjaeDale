@@ -1,9 +1,19 @@
 {
   "slug": "salt-expiration-date",
-  "title": "소금의 유통기한은?",
-  "description": "천일염",
-  "tags": ["소금"],
+  "title": {
+    "ko": "소금의 유통기한은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "천일염",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["소금"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

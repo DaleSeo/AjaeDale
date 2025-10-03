@@ -1,9 +1,19 @@
 {
   "slug": "north-korea-mountain",
-  "title": "북한에 있는 산은?",
-  "description": "북한산",
-  "tags": [],
+  "title": {
+    "ko": "북한에 있는 산은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "북한산",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

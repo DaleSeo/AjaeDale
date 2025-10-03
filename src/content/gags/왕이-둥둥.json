@@ -1,8 +1,17 @@
 {
   "slug": "floating-king",
-  "title": "왕이 둥둥 떠 있으면?",
-  "description": "공중전화",
-  "tags": ["왕"],
+  "title": {
+    "ko": "왕이 둥둥 떠 있으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "공중전화",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["왕"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

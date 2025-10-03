@@ -1,9 +1,19 @@
 {
   "slug": "kindest-lion",
-  "title": "세상에서 가장 착한 사자는?",
-  "description": "자원봉사자",
-  "tags": [],
+  "title": {
+    "ko": "세상에서 가장 착한 사자는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "자원봉사자",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

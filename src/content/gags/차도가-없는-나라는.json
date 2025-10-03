@@ -1,9 +1,19 @@
 {
   "slug": "country-without-roads",
-  "title": "차도가 없는 나라는?",
-  "description": "인도",
-  "tags": ["차도"],
+  "title": {
+    "ko": "차도가 없는 나라는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "인도",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["차도"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

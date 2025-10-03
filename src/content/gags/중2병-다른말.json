@@ -1,8 +1,17 @@
 {
   "slug": "middle-school-syndrome",
-  "title": "중2병을 다른 말로 하면?",
-  "description": "중이염",
-  "tags": [],
+  "title": {
+    "ko": "중2병을 다른 말로 하면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "중이염",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

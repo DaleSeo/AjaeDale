@@ -1,8 +1,17 @@
 {
   "slug": "incheon-sea-opposite",
-  "title": "인천앞바다의 반댓말은?",
-  "description": "인천엄마다",
-  "tags": ["지역"],
+  "title": {
+    "ko": "인천앞바다의 반댓말은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "인천엄마다",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["지역"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

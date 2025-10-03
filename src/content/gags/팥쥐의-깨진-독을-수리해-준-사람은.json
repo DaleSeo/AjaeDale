@@ -1,9 +1,19 @@
 {
   "slug": "patjwi-jar-repair",
-  "title": "팥쥐의 깨진 독을 수리해 준 사람은?",
-  "description": "독수리 오형제",
-  "tags": ["팥쥐"],
+  "title": {
+    "ko": "팥쥐의 깨진 독을 수리해 준 사람은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "독수리 오형제",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["팥쥐"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

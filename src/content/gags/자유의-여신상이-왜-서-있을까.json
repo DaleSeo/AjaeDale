@@ -1,9 +1,19 @@
 {
   "slug": "statue-liberty-standing",
-  "title": "자유의 여신상이 왜 서 있을까?",
-  "description": "의자가 없으니까",
-  "tags": ["자유의여신상"],
+  "title": {
+    "ko": "자유의 여신상이 왜 서 있을까?",
+    "en": ""
+  },
+  "description": {
+    "ko": "의자가 없으니까",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["자유의여신상"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

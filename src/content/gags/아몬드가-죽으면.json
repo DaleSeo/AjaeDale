@@ -1,8 +1,17 @@
 {
   "slug": "almond-dies",
-  "title": "아몬드가 죽으면?",
-  "description": "다이아몬드",
-  "tags": [],
+  "title": {
+    "ko": "아몬드가 죽으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "다이아몬드",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

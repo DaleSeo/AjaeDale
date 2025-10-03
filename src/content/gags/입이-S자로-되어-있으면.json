@@ -1,9 +1,19 @@
 {
   "slug": "mouth-s-shape",
-  "title": "입이 S자로 되어 있으면?",
-  "description": "EBS",
-  "tags": ["입"],
+  "title": {
+    "ko": "입이 S자로 되어 있으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "EBS",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["입"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

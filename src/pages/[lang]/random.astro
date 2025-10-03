@@ -1,10 +1,25 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../layouts/Layout.astro";
-import BookmarkIcon from "../icons/Bookmark.astro";
-import Share2Icon from "../icons/Share2.astro";
+import Layout from "../../layouts/Layout.astro";
+import BookmarkIcon from "../../icons/Bookmark.astro";
+import Share2Icon from "../../icons/Share2.astro";
+import {
+  useTranslations,
+  getLocalizedGag,
+  getLocalizedUrl,
+  type Lang,
+} from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
 
 type GagEntry = CollectionEntry<"gags">;
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -17,11 +32,12 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 }
 
 const randomGag = getRandomGag(allGags);
+const localizedRandomGag = getLocalizedGag(randomGag, lang);
 const spoilerId = "random-gag";
 
 // 페이지 메타 정보
-const title = "랜덤 개그";
-const description = "운명이 선택한 아재 개그를 만나보세요!";
+const title = t("random.title");
+const description = t("random.subtitle");
 ---
 
 <Layout title={title} description={description} currentPage="random">
@@ -48,9 +64,9 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
           <div class="flex items-start justify-between mb-4">
             <div class="flex flex-wrap gap-2">
               {
-                randomGag.data.tags.map((tag: string) => (
+                localizedRandomGag.tags.map((tag: string) => (
                   <a
-                    href={`/tags/${tag}`}
+                    href={getLocalizedUrl(`/tags/${tag}`, lang)}
                     class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
                   >
                     #{tag}
@@ -63,11 +79,11 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
                 class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
                 data-gag={JSON.stringify({
                   slug: randomGag.data.slug,
-                  title: randomGag.data.title,
-                  description: randomGag.data.description,
-                  tags: randomGag.data.tags,
+                  title: localizedRandomGag.title,
+                  description: localizedRandomGag.description,
+                  tags: localizedRandomGag.tags,
                 })}
-                aria-label="저장"
+                aria-label={t("gag.save")}
               >
                 <BookmarkIcon class="bookmark-icon w-4 h-4" />
                 <BookmarkIcon
@@ -77,9 +93,9 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
               </button>
               <button
                 class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
-                data-content={`${randomGag.data.title}${randomGag.data.description ? " - " + randomGag.data.description : ""}`}
+                data-content={`${localizedRandomGag.title}${localizedRandomGag.description ? " - " + localizedRandomGag.description : ""}`}
                 data-slug={randomGag.data.slug}
-                aria-label="공유"
+                aria-label={t("gag.share")}
               >
                 <Share2Icon size={16} />
               </button>
@@ -88,24 +104,25 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
 
           <div class="mb-6">
             <h3 class="text-xl md:text-2xl font-bold text-foreground mb-4">
-              Q. {randomGag.data.title}
+              {t("gag.question")}
+              {localizedRandomGag.title}
             </h3>
 
             {
-              randomGag.data.description && (
+              localizedRandomGag.description && (
                 <div class="spoiler-container">
                   <button
                     id={spoilerId}
                     class="spoiler-btn text-sm bg-muted hover:bg-muted-foreground/20 text-muted-foreground px-3 py-1 rounded transition-colors"
                     data-spoiler-id={spoilerId}
                   >
-                    답변 보기 👀
+                    {lang === "ko" ? "답변 보기 👀" : "Show Answer 👀"}
                   </button>
                   <p
                     id={`${spoilerId}-content`}
                     class="spoiler-content hidden text-foreground mt-3 text-lg md:text-xl"
                   >
-                    A. {randomGag.data.description}
+                    {t("gag.answer")} {localizedRandomGag.description}
                   </p>
                 </div>
               )
@@ -114,10 +131,10 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
 
           <div class="text-center">
             <a
-              href={`/gags/${randomGag.data.slug}`}
+              href={getLocalizedUrl(`/gags/${randomGag.data.slug}`, lang)}
               class="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              댓글 보기
+              {t("gag.backToList")}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -147,7 +164,7 @@ const description = "운명이 선택한 아재 개그를 만나보세요!";
       class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
       onclick="window.location.reload()"
     >
-      🎲 다른 개그 보기
+      {t("random.nextBtn")}
     </button>
   </div>
 </Layout>

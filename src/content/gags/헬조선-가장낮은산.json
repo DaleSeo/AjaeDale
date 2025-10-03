@@ -1,8 +1,17 @@
 {
   "slug": "hell-joseon-lowest-mountain",
-  "title": "헬조선에서 가장 낮은 산은?",
-  "description": "출산",
-  "tags": ["산"],
+  "title": {
+    "ko": "헬조선에서 가장 낮은 산은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "출산",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["산"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

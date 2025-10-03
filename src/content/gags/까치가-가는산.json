@@ -1,8 +1,17 @@
 {
   "slug": "magpie-mountain",
-  "title": "까치가 가는 산은?",
-  "description": "까치산",
-  "tags": ["산"],
+  "title": {
+    "ko": "까치가 가는 산은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "까치산",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["산"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

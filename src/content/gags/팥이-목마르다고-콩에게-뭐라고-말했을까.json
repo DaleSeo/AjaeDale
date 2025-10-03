@@ -1,9 +1,19 @@
 {
   "slug": "red-bean-thirsty",
-  "title": "팥이 목마르다고 콩에게 뭐라고 말했을까?",
-  "description": "콩나물",
-  "tags": ["팥", "목마름"],
+  "title": {
+    "ko": "팥이 목마르다고 콩에게 뭐라고 말했을까?",
+    "en": ""
+  },
+  "description": {
+    "ko": "콩나물",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["팥", "목마름"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

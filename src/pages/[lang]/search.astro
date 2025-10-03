@@ -1,16 +1,34 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import SearchIcon from "../icons/Search.astro";
-import XIcon from "../icons/X.astro";
+import Layout from "../../layouts/Layout.astro";
+import SearchIcon from "../../icons/Search.astro";
+import XIcon from "../../icons/X.astro";
+import { useTranslations, type Lang } from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 // 페이지 메타 정보
-const title = "개그 검색";
-const description = "찾고 싶은 아재 개그를 검색해보세요";
+const title = t("search.title");
+const description = t("search.description");
 ---
 
-<Layout title={title} description={description} currentPage="search">
+<Layout
+  title={title}
+  description={description}
+  currentPage="search"
+  lang={lang}
+>
   <!-- 헤더 섹션 -->
-  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
+  <section
+    class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background"
+    data-pagefind-ignore
+  >
     <div class="container mx-auto text-center max-w-4xl">
       <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
         🔍 {title}
@@ -20,7 +38,7 @@ const description = "찾고 싶은 아재 개그를 검색해보세요";
   </section>
 
   <!-- 검색 섹션 -->
-  <section class="py-8 px-4">
+  <section class="py-8 px-4" data-pagefind-ignore>
     <div class="container mx-auto max-w-4xl">
       <!-- 검색 입력 -->
       <div class="mb-8">
@@ -34,19 +52,19 @@ const description = "찾고 싶은 아재 개그를 검색해보세요";
             type="text"
             id="search-input"
             class="w-full pl-12 pr-12 py-4 bg-card border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-foreground placeholder-muted-foreground text-lg"
-            placeholder="개그 검색..."
+            placeholder={t("search.placeholder")}
             autofocus
           />
           <button
             id="clear-button"
             class="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors hidden"
-            aria-label="검색어 지우기"
+            aria-label={t("search.clearButton")}
           >
             <XIcon size={20} />
           </button>
         </div>
         <p class="text-sm text-muted-foreground mt-2 ml-1">
-          개그 제목이나 내용으로 검색할 수 있습니다
+          {t("search.hint")}
         </p>
       </div>
 
@@ -59,9 +77,11 @@ const description = "찾고 싶은 아재 개그를 검색해보세요";
         class="hidden text-center py-12 bg-card border border-border rounded-xl"
       >
         <div class="text-4xl mb-4">🔍</div>
-        <p class="text-xl text-muted-foreground mb-2">검색 결과가 없습니다</p>
+        <p class="text-xl text-muted-foreground mb-2">
+          {t("search.noResults")}
+        </p>
         <p class="text-sm text-muted-foreground">
-          다른 키워드로 다시 검색해보세요
+          {t("search.tryAgain")}
         </p>
       </div>
     </div>
@@ -69,6 +89,10 @@ const description = "찾고 싶은 아재 개그를 검색해보세요";
 </Layout>
 
 <script>
+  // Get current language from URL
+  const currentPath = window.location.pathname;
+  const currentLang = currentPath.startsWith("/en/") ? "en" : "ko";
+
   // URL에서 검색어 가져오기
   const urlParams = new URLSearchParams(window.location.search);
   const initialQuery = urlParams.get("q") || "";
@@ -88,6 +112,15 @@ const description = "찾고 싶은 아재 개그를 검색해보세요";
       // @ts-ignore - 동적 import를 사용하여 Vite 분석 우회
       const pagefindPath = "/pagefind/pagefind.js";
       pagefind = await import(/* @vite-ignore */ pagefindPath);
+
+      // Set language filter for multilingual search
+      if (pagefind && currentLang) {
+        await pagefind.options({
+          filters: {
+            lang: currentLang,
+          },
+        });
+      }
     } catch (e) {
       console.error("Pagefind not available. Run 'bun run build' first.");
     }

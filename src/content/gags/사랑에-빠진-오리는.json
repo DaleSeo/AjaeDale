@@ -1,9 +1,19 @@
 {
   "slug": "duck-in-love",
-  "title": "사랑에 빠진 오리는?",
-  "description": "러버덕",
-  "tags": ["오리", "사랑"],
+  "title": {
+    "ko": "사랑에 빠진 오리는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "러버덕",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["오리", "사랑"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

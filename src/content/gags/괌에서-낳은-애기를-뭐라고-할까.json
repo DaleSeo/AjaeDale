@@ -1,9 +1,19 @@
 {
   "slug": "guam-baby-dried-fish",
-  "title": "괌에서 낳은 애기를 뭐라고 할까?",
-  "description": "과메기",
-  "tags": ["괌", "애기"],
+  "title": {
+    "ko": "괌에서 낳은 애기를 뭐라고 할까?",
+    "en": ""
+  },
+  "description": {
+    "ko": "과메기",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["괌", "애기"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.919Z",
   "updatedAt": "2025-09-23T23:47:52.919Z"
 }

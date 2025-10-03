@@ -1,9 +1,19 @@
 {
   "slug": "deer-road-norway",
-  "title": "노루가 다니는 길은?",
-  "description": "노르웨이",
-  "tags": ["노루", "길"],
+  "title": {
+    "ko": "노루가 다니는 길은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "노르웨이",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["노루", "길"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.919Z",
   "updatedAt": "2025-09-23T23:47:52.919Z"
 }

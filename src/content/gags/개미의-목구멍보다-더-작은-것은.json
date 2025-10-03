@@ -1,9 +1,19 @@
 {
   "slug": "ant-throat-smaller",
-  "title": "개미의 목구멍보다 더 작은 것은?",
-  "description": "개미먹이",
-  "tags": ["목구멍"],
+  "title": {
+    "ko": "개미의 목구멍보다 더 작은 것은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "개미먹이",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["목구멍"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.919Z",
   "updatedAt": "2025-09-23T23:47:52.919Z"
 }

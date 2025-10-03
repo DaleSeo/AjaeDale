@@ -1,9 +1,19 @@
 {
   "slug": "found-wood-crack",
-  "title": "길을 가다가 나무를 주었다를 3글자로",
-  "description": "우드득",
-  "tags": ["나무"],
+  "title": {
+    "ko": "길을 가다가 나무를 주었다를 3글자로",
+    "en": ""
+  },
+  "description": {
+    "ko": "우드득",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["나무"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

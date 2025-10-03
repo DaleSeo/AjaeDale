@@ -1,8 +1,17 @@
 {
   "slug": "dragon-horse-mountain",
-  "title": "용이 말을 타고 간 산은?",
-  "description": "용마산",
-  "tags": ["산"],
+  "title": {
+    "ko": "용이 말을 타고 간 산은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "용마산",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["산"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

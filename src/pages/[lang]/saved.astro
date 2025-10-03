@@ -1,15 +1,25 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
+import { useTranslations, type Lang } from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 ---
 
-<Layout title="저장한 개그 | 아재달레" currentPage="saved">
+<Layout title={t("saved.title")} currentPage="saved" lang={lang}>
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
       <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-        🔖 저장한 개그
+        🔖 {t("saved.title")}
       </h1>
-      <p class="text-lg text-muted-foreground">나만의 개그 컬렉션</p>
+      <p class="text-lg text-muted-foreground">{t("saved.subtitle")}</p>
     </div>
   </section>
 

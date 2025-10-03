@@ -1,8 +1,17 @@
 {
   "slug": "cow-lightning",
-  "title": "소가 번개에 맞아 죽으면?",
-  "description": "우사인 볼트",
-  "tags": ["소"],
+  "title": {
+    "ko": "소가 번개에 맞아 죽으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "우사인 볼트",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["소"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

@@ -1,9 +1,19 @@
 {
   "slug": "mountain-water-falls",
-  "title": "물이 떨어지는 산은?",
-  "description": "수락산",
-  "tags": ["물"],
+  "title": {
+    "ko": "물이 떨어지는 산은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "수락산",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["물"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
   "updatedAt": "2025-09-23T01:59:05.593Z"
 }
