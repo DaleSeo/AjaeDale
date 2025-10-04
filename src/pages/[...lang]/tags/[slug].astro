@@ -3,7 +3,11 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import Card from "../../../components/Card.astro";
 import { tagToSlug } from "../../../utils/tagUtils";
-import { getStaticPathsLocales, normalizeLang } from "../../../utils/i18n";
+import {
+  getStaticPathsLocales,
+  normalizeLang,
+  useTranslations,
+} from "../../../utils/i18n";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -50,27 +54,14 @@ const { tag, gags } = Astro.props as Props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
-// 페이지별 메시지 정의
-const messages = {
-  ko: {
-    filterByTag: "#{tag} 개그 모음",
-    totalGags: "총 {count}개의 개그",
-    tagDescriptionPrefix: "이 태그가 포함된 개그",
-    tagDescriptionSuffix: "개",
-  },
-  en: {
-    filterByTag: "#{tag} Puns",
-    totalGags: "{count} puns in total",
-    tagDescriptionPrefix: "",
-    tagDescriptionSuffix: "puns with this tag",
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 
 // SEO를 위한 메타 데이터
-const pageTitle = t.filterByTag.replace("{tag}", tag);
-const pageDescription = t.totalGags.replace("{count}", String(gags.length));
+const pageTitle = t(`#${tag} 개그 모음`, `#${tag} Puns`);
+const pageDescription = t(
+  `총 ${gags.length}개의 개그`,
+  `${gags.length} puns in total`,
+);
 ---
 
 <Layout
@@ -84,8 +75,8 @@ const pageDescription = t.totalGags.replace("{count}", String(gags.length));
     <section class="mb-8" data-pagefind-ignore>
       <h1 class="text-foreground mb-2 text-3xl font-bold">#{tag}</h1>
       <p class="text-muted-foreground">
-        {t.tagDescriptionPrefix}
-        <strong>{gags.length}</strong>{t.tagDescriptionSuffix}
+        {t(`이 태그가 포함된 개그 `, ``)}
+        <strong>{gags.length}</strong>{t(`개`, ` puns with this tag`)}
       </p>
     </section>
 

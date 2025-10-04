@@ -2,7 +2,11 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
-import { getStaticPathsLocales, normalizeLang } from "../../utils/i18n";
+import {
+  getStaticPathsLocales,
+  normalizeLang,
+  useTranslations,
+} from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -15,19 +19,7 @@ type GagEntry = CollectionEntry<"gags">;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
-// 페이지별 메시지 정의
-const messages = {
-  ko: {
-    title: "최신 개그",
-    subtitle: "최근에 추가된 신선한 개그들",
-  },
-  en: {
-    title: "Latest Puns",
-    subtitle: "Recently added fresh puns",
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -42,10 +34,6 @@ const sortedGags = allGags.sort((a: GagEntry, b: GagEntry) => {
 
 // 표시할 개수 제한 (12개)
 const displayGags = sortedGags.slice(0, 12);
-
-// 페이지 메타 정보
-const title = t.title;
-const description = t.subtitle;
 
 // 상대적 시간 계산 함수
 function getRelativeTime(date: Date): string {
@@ -73,8 +61,8 @@ function getRelativeTime(date: Date): string {
 ---
 
 <Layout
-  title={title}
-  description={description}
+  title={t("최신 개그", "Latest Puns")}
+  description={t("최근에 추가된 신선한 개그들", "Recently added fresh puns")}
   currentPage="latest"
   lang={lang}
 >
@@ -82,10 +70,10 @@ function getRelativeTime(date: Date): string {
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
     <div class="container mx-auto max-w-4xl text-center">
       <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
-        🌟 {title}
+        🌟 {t("최신 개그", "Latest Puns")}
       </h1>
       <p class="text-muted-foreground text-lg">
-        {description}
+        {t("최근에 추가된 신선한 개그들", "Recently added fresh puns")}
       </p>
     </div>
   </section>

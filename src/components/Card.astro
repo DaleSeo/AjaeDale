@@ -3,7 +3,11 @@ import type { CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
 import type { Lang } from "../utils/i18n";
-import { getLocalizedUrl, getLangFromUrl } from "../utils/i18n";
+import {
+  getLocalizedUrl,
+  getLangFromUrl,
+  useTranslations,
+} from "../utils/i18n";
 
 interface Props {
   gag: CollectionEntry<"gags">;
@@ -13,6 +17,7 @@ interface Props {
 // If lang prop is not provided, detect from URL
 const detectedLang = getLangFromUrl(Astro.url);
 const { gag, lang = detectedLang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <div
@@ -42,7 +47,7 @@ const { gag, lang = detectedLang } = Astro.props;
             description: gag.data.description,
             tags: gag.data.tags,
           })}
-          aria-label="저장"
+          aria-label={t("저장", "Save")}
         >
           <BookmarkIcon class="bookmark-icon h-4 w-4" />
           <BookmarkIcon
@@ -54,7 +59,7 @@ const { gag, lang = detectedLang } = Astro.props;
           class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
           data-slug={gag.data.slug}
-          aria-label="공유"
+          aria-label={t("공유", "Share")}
         >
           <Share2Icon size={16} />
         </button>

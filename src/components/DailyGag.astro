@@ -2,7 +2,7 @@
 import { type CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
-import { getLocalizedUrl, type Lang } from "../utils/i18n";
+import { getLocalizedUrl, type Lang, useTranslations } from "../utils/i18n";
 
 interface Props {
   gag: CollectionEntry<"gags">;
@@ -10,56 +10,40 @@ interface Props {
 }
 
 const { gag, lang } = Astro.props;
-
-const messages = {
-  "today.title": { ko: "오늘의 개그", en: "Today's Pun" },
-  "today.subtitle": {
-    ko: "매일 바뀌는 특별한 개그를 만나보세요",
-    en: "Discover a special pun that changes daily",
-  },
-  "today.badge": { ko: "TODAY", en: "TODAY" },
-  "today.viewMore": { ko: "자세히 보기", en: "View More" },
-  "gag.question": { ko: "Q.", en: "Q." },
-  "gag.answer": { ko: "A.", en: "A." },
-  "gag.save": { ko: "저장", en: "Save" },
-  "gag.share": { ko: "공유", en: "Share" },
-};
-
-const t = (key: string) =>
-  (messages as Record<string, Record<string, string>>)[key]?.[lang] ||
-  (messages as Record<string, Record<string, string>>)[key]?.ko ||
-  "";
+const t = useTranslations(lang);
 ---
 
-<section class="from-primary/5 to-background bg-gradient-to-b px-4 py-16">
-  <div class="container mx-auto max-w-4xl">
-    <div class="mb-8 text-center">
+<article class="from-primary/5 to-background bg-gradient-to-b px-4 py-16">
+  <div class="container mx-auto max-w-3xl">
+    <header class="mb-8 text-center">
       <h2 class="text-foreground mb-2 text-3xl font-bold">
-        ✨ {t("today.title")}
+        🤣 {t("오늘의 아재개그", "Pun of the Day")}
       </h2>
       <p class="text-muted-foreground">
-        {t("today.subtitle")}
+        {
+          t(
+            "매일 바뀌는 특별한 개그를 만나보세요",
+            "Discover a special pun that changes daily",
+          )
+        }
       </p>
-    </div>
+    </header>
 
     <div
       class="from-primary/10 via-background to-primary/5 border-primary/20 rounded-2xl border-2 bg-gradient-to-br p-8 shadow-lg transition-all duration-300 hover:shadow-xl md:p-12"
     >
       <div class="mb-6 flex items-start justify-between">
-        <div class="flex items-center gap-3">
-          {
-            gag.data.tags.length > 0 && (
-              <span class="bg-primary text-primary-foreground inline-block rounded-full px-4 py-2 text-sm font-bold shadow-md">
-                #{gag.data.tags[0]}
-              </span>
-            )
-          }
-          <span
-            class="inline-block animate-pulse rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-yellow-900"
-          >
-            {t("today.badge")}
-          </span>
-        </div>
+        {
+          gag.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2">
+              {gag.data.tags.map((tag: string) => (
+                <span class="bg-primary/10 text-foreground inline-block rounded-full px-4 py-2 text-sm font-medium">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
         <div class="flex items-center space-x-2">
           <button
             class="save-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
@@ -68,7 +52,7 @@ const t = (key: string) =>
               title: gag.data.title,
               description: gag.data.description,
             })}
-            aria-label={t("gag.save")}
+            aria-label={t("저장", "Save")}
           >
             <BookmarkIcon class="bookmark-icon h-6 w-6" />
             <BookmarkIcon
@@ -80,7 +64,7 @@ const t = (key: string) =>
             class="share-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
             data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
             data-slug={gag.data.slug}
-            aria-label={t("gag.share")}
+            aria-label={t("공유", "Share")}
           >
             <Share2Icon size={24} />
           </button>
@@ -89,24 +73,24 @@ const t = (key: string) =>
 
       <div class="mb-6 text-center">
         <h3 class="text-foreground mb-3 text-xl font-bold md:text-2xl">
-          {t("gag.question")}
+          {t("Q.", "Q.")}
           {gag.data.title}
         </h3>
         {
           gag.data.description && (
             <p class="text-foreground text-lg md:text-xl">
-              {t("gag.answer")} {gag.data.description}
+              {t("A.", "A.")} {gag.data.description}
             </p>
           )
         }
       </div>
 
-      <div class="mt-6 text-center">
+      <footer class="mt-6 text-center">
         <a
           href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
           class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
         >
-          {t("today.viewMore")}
+          {t("자세히 보기", "View More")}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -123,7 +107,7 @@ const t = (key: string) =>
             <path d="m12 5 7 7-7 7"></path>
           </svg>
         </a>
-      </div>
+      </footer>
     </div>
   </div>
-</section>
+</article>

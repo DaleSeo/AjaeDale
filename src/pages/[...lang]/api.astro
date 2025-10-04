@@ -1,6 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getStaticPathsLocales, normalizeLang } from "../../utils/i18n";
+import {
+  getStaticPathsLocales,
+  normalizeLang,
+  useTranslations,
+} from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -11,124 +15,13 @@ export async function getStaticPaths() {
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
-// 페이지별 메시지 정의
-const messages = {
-  ko: {
-    title: "개그 API",
-    description: "아재달레 개그 데이터를 자유롭게 사용하세요",
-    overview: {
-      title: "개요",
-      description:
-        "아재달레는 무료 REST API를 제공합니다. 모든 엔드포인트는 읽기 전용이며, 빌드 시점에 정적 JSON 파일로 생성됩니다.",
-      feature1: "✅ 완전 무료 - 인증 불필요",
-      feature2: "✅ CORS 지원 - 모든 도메인에서 접근 가능",
-      feature3: "✅ 정적 파일 - 빠른 응답 속도",
-      feature4: "✅ 읽기 전용 - GET 요청만 지원",
-    },
-    endpoints: {
-      gags: {
-        title: "개그 엔드포인트",
-        all: {
-          title: "모든 개그 조회",
-          description: "게시된 모든 개그를 최신순으로 반환합니다.",
-        },
-        single: {
-          title: "특정 개그 조회",
-          description: "slug로 특정 개그의 상세 정보를 조회합니다.",
-        },
-        featured: {
-          title: "인기 개그 조회",
-          description: "featured로 표시된 인기 개그만 반환합니다.",
-        },
-        latest: {
-          title: "최신 개그 조회",
-          description: "최신 20개의 개그를 반환합니다.",
-        },
-      },
-      tags: {
-        title: "태그 엔드포인트",
-        all: {
-          title: "모든 태그 조회",
-          description: "모든 태그와 각 태그의 개그 수를 반환합니다.",
-        },
-        single: {
-          title: "태그별 개그 조회",
-          description: "특정 태그가 포함된 모든 개그를 반환합니다.",
-        },
-      },
-    },
-    cors: {
-      title: "CORS",
-      description:
-        "모든 API 엔드포인트는 CORS가 활성화되어 있어 어떤 도메인에서든 접근할 수 있습니다.",
-    },
-    usage: {
-      title: "사용 예시",
-      description: "JavaScript에서 fetch API로 쉽게 사용할 수 있습니다:",
-    },
-    example: "예시 응답 보기",
-  },
-  en: {
-    title: "Pun API",
-    description: "Use AjaeDale pun data freely",
-    overview: {
-      title: "Overview",
-      description:
-        "AjaeDale provides a free REST API. All endpoints are read-only and generated as static JSON files at build time.",
-      feature1: "✅ Completely Free - No authentication required",
-      feature2: "✅ CORS Enabled - Accessible from any domain",
-      feature3: "✅ Static Files - Fast response times",
-      feature4: "✅ Read-only - GET requests only",
-    },
-    endpoints: {
-      gags: {
-        title: "Pun Endpoints",
-        all: {
-          title: "Get All Puns",
-          description: "Returns all published puns sorted by creation date.",
-        },
-        single: {
-          title: "Get Single Pun",
-          description: "Get detailed information for a specific pun by slug.",
-        },
-        featured: {
-          title: "Get Featured Puns",
-          description: "Returns only puns marked as featured.",
-        },
-        latest: {
-          title: "Get Latest Puns",
-          description: "Returns the 20 most recent puns.",
-        },
-      },
-      tags: {
-        title: "Tag Endpoints",
-        all: {
-          title: "Get All Tags",
-          description: "Returns all tags with pun counts for each tag.",
-        },
-        single: {
-          title: "Get Puns by Tag",
-          description: "Returns all puns containing a specific tag.",
-        },
-      },
-    },
-    cors: {
-      title: "CORS",
-      description:
-        "All API endpoints have CORS enabled and can be accessed from any domain.",
-    },
-    usage: {
-      title: "Usage Example",
-      description: "Easy to use with the fetch API in JavaScript:",
-    },
-    example: "View Example Response",
-  },
-};
+const t = useTranslations(lang);
 
-const t = messages[lang as keyof typeof messages] || messages.ko;
-
-const title = t.title;
-const description = t.description;
+const title = t("개그 API", "Pun API");
+const description = t(
+  "아재달레 개그 데이터를 자유롭게 사용하세요",
+  "Use AjaeDale pun data freely",
+);
 const baseUrl = "https://www.ajaedale.com";
 ---
 
@@ -146,30 +39,63 @@ const baseUrl = "https://www.ajaedale.com";
       <!-- API 개요 -->
       <div class="bg-muted/50 mb-8 rounded-lg p-6">
         <h2 class="text-foreground mb-4 text-2xl font-semibold">
-          {t.overview.title}
+          {t("개요", "Overview")}
         </h2>
         <p class="text-muted-foreground mb-4">
-          {t.overview.description}
+          {
+            t(
+              "아재달레는 무료 REST API를 제공합니다. 모든 엔드포인트는 읽기 전용이며, 빌드 시점에 정적 JSON 파일로 생성됩니다.",
+              "AjaeDale provides a free REST API. All endpoints are read-only and generated as static JSON files at build time.",
+            )
+          }
         </p>
         <ul class="text-muted-foreground list-inside list-disc space-y-2">
-          <li>{t.overview.feature1}</li>
-          <li>{t.overview.feature2}</li>
-          <li>{t.overview.feature3}</li>
-          <li>{t.overview.feature4}</li>
+          <li>
+            {
+              t(
+                "✅ 완전 무료 - 인증 불필요",
+                "✅ Completely Free - No authentication required",
+              )
+            }
+          </li>
+          <li>
+            {
+              t(
+                "✅ CORS 지원 - 모든 도메인에서 접근 가능",
+                "✅ CORS Enabled - Accessible from any domain",
+              )
+            }
+          </li>
+          <li>
+            {
+              t(
+                "✅ 정적 파일 - 빠른 응답 속도",
+                "✅ Static Files - Fast response times",
+              )
+            }
+          </li>
+          <li>
+            {
+              t(
+                "✅ 읽기 전용 - GET 요청만 지원",
+                "✅ Read-only - GET requests only",
+              )
+            }
+          </li>
         </ul>
       </div>
 
       <!-- 개그 엔드포인트 -->
       <div class="mb-8">
         <h2 class="text-foreground mb-6 text-2xl font-semibold">
-          {t.endpoints.gags.title}
+          {t("개그 엔드포인트", "Pun Endpoints")}
         </h2>
 
         <!-- 모든 개그 -->
         <div class="bg-card mb-6 rounded-lg border p-6">
           <div class="mb-4">
             <h3 class="text-foreground mb-2 text-xl font-medium">
-              {t.endpoints.gags.all.title}
+              {t("모든 개그 조회", "Get All Puns")}
             </h3>
             <code
               class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
@@ -178,13 +104,18 @@ const baseUrl = "https://www.ajaedale.com";
             </code>
           </div>
           <p class="text-muted-foreground mb-4">
-            {t.endpoints.gags.all.description}
+            {
+              t(
+                "게시된 모든 개그를 최신순으로 반환합니다.",
+                "Returns all published puns sorted by creation date.",
+              )
+            }
           </p>
           <details class="mb-4">
             <summary
               class="text-primary cursor-pointer font-medium hover:underline"
             >
-              {t.example}
+              {t("예시 응답 보기", "View Example Response")}
             </summary>
             <pre
               class="bg-muted mt-4 overflow-x-auto rounded p-4"><code class="text-sm">{JSON.stringify(
@@ -209,7 +140,7 @@ const baseUrl = "https://www.ajaedale.com";
         <div class="bg-card mb-6 rounded-lg border p-6">
           <div class="mb-4">
             <h3 class="text-foreground mb-2 text-xl font-medium">
-              {t.endpoints.gags.single.title}
+              {t("특정 개그 조회", "Get Single Pun")}
             </h3>
             <code
               class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
@@ -218,7 +149,12 @@ const baseUrl = "https://www.ajaedale.com";
             </code>
           </div>
           <p class="text-muted-foreground mb-4">
-            {t.endpoints.gags.single.description}
+            {
+              t(
+                "slug로 특정 개그의 상세 정보를 조회합니다.",
+                "Get detailed information for a specific pun by slug.",
+              )
+            }
           </p>
         </div>
 
@@ -226,7 +162,7 @@ const baseUrl = "https://www.ajaedale.com";
         <div class="bg-card mb-6 rounded-lg border p-6">
           <div class="mb-4">
             <h3 class="text-foreground mb-2 text-xl font-medium">
-              {t.endpoints.gags.featured.title}
+              {t("인기 개그 조회", "Get Featured Puns")}
             </h3>
             <code
               class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
@@ -235,7 +171,12 @@ const baseUrl = "https://www.ajaedale.com";
             </code>
           </div>
           <p class="text-muted-foreground">
-            {t.endpoints.gags.featured.description}
+            {
+              t(
+                "featured로 표시된 인기 개그만 반환합니다.",
+                "Returns only puns marked as featured.",
+              )
+            }
           </p>
         </div>
 
@@ -243,7 +184,7 @@ const baseUrl = "https://www.ajaedale.com";
         <div class="bg-card mb-6 rounded-lg border p-6">
           <div class="mb-4">
             <h3 class="text-foreground mb-2 text-xl font-medium">
-              {t.endpoints.gags.latest.title}
+              {t("최신 개그 조회", "Get Latest Puns")}
             </h3>
             <code
               class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
@@ -252,7 +193,12 @@ const baseUrl = "https://www.ajaedale.com";
             </code>
           </div>
           <p class="text-muted-foreground">
-            {t.endpoints.gags.latest.description}
+            {
+              t(
+                "최신 20개의 개그를 반환합니다.",
+                "Returns the 20 most recent puns.",
+              )
+            }
           </p>
         </div>
       </div>
@@ -260,14 +206,14 @@ const baseUrl = "https://www.ajaedale.com";
       <!-- 태그 엔드포인트 -->
       <div class="mb-8">
         <h2 class="text-foreground mb-6 text-2xl font-semibold">
-          {t.endpoints.tags.title}
+          {t("태그 엔드포인트", "Tag Endpoints")}
         </h2>
 
         <!-- 모든 태그 -->
         <div class="bg-card mb-6 rounded-lg border p-6">
           <div class="mb-4">
             <h3 class="text-foreground mb-2 text-xl font-medium">
-              {t.endpoints.tags.all.title}
+              {t("모든 태그 조회", "Get All Tags")}
             </h3>
             <code
               class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
@@ -276,13 +222,18 @@ const baseUrl = "https://www.ajaedale.com";
             </code>
           </div>
           <p class="text-muted-foreground mb-4">
-            {t.endpoints.tags.all.description}
+            {
+              t(
+                "모든 태그와 각 태그의 개그 수를 반환합니다.",
+                "Returns all tags with pun counts for each tag.",
+              )
+            }
           </p>
           <details class="mb-4">
             <summary
               class="text-primary cursor-pointer font-medium hover:underline"
             >
-              {t.example}
+              {t("예시 응답 보기", "View Example Response")}
             </summary>
             <pre
               class="bg-muted mt-4 overflow-x-auto rounded p-4"><code class="text-sm">{JSON.stringify(
@@ -303,7 +254,7 @@ const baseUrl = "https://www.ajaedale.com";
         <div class="bg-card mb-6 rounded-lg border p-6">
           <div class="mb-4">
             <h3 class="text-foreground mb-2 text-xl font-medium">
-              {t.endpoints.tags.single.title}
+              {t("태그별 개그 조회", "Get Puns by Tag")}
             </h3>
             <code
               class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
@@ -312,7 +263,12 @@ const baseUrl = "https://www.ajaedale.com";
             </code>
           </div>
           <p class="text-muted-foreground">
-            {t.endpoints.tags.single.description}
+            {
+              t(
+                "특정 태그가 포함된 모든 개그를 반환합니다.",
+                "Returns all puns containing a specific tag.",
+              )
+            }
           </p>
         </div>
       </div>
@@ -320,20 +276,30 @@ const baseUrl = "https://www.ajaedale.com";
       <!-- CORS -->
       <div class="bg-muted/50 mb-8 rounded-lg p-6">
         <h2 class="text-foreground mb-4 text-2xl font-semibold">
-          {t.cors.title}
+          {t("CORS", "CORS")}
         </h2>
         <p class="text-muted-foreground">
-          {t.cors.description}
+          {
+            t(
+              "모든 API 엔드포인트는 CORS가 활성화되어 있어 어떤 도메인에서든 접근할 수 있습니다.",
+              "All API endpoints have CORS enabled and can be accessed from any domain.",
+            )
+          }
         </p>
       </div>
 
       <!-- 사용 예시 -->
       <div class="bg-card rounded-lg border p-6">
         <h2 class="text-foreground mb-4 text-2xl font-semibold">
-          {t.usage.title}
+          {t("사용 예시", "Usage Example")}
         </h2>
         <p class="text-muted-foreground mb-4">
-          {t.usage.description}
+          {
+            t(
+              "JavaScript에서 fetch API로 쉽게 사용할 수 있습니다:",
+              "Easy to use with the fetch API in JavaScript:",
+            )
+          }
         </p>
         <pre
           class="bg-muted overflow-x-auto rounded p-4"><code class="text-sm">fetch('{baseUrl}/api/gags.json')

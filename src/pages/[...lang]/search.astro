@@ -2,7 +2,11 @@
 import Layout from "../../layouts/Layout.astro";
 import SearchIcon from "../../icons/Search.astro";
 import XIcon from "../../icons/X.astro";
-import { getStaticPathsLocales, normalizeLang } from "../../utils/i18n";
+import {
+  getStaticPathsLocales,
+  normalizeLang,
+  useTranslations,
+} from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -13,33 +17,14 @@ export async function getStaticPaths() {
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
-// 페이지별 메시지 정의
-const messages = {
-  ko: {
-    title: "개그 검색",
-    description: "찾고 싶은 아재 개그를 검색해보세요",
-    placeholder: "개그 검색...",
-    hint: "개그 제목이나 내용으로 검색할 수 있습니다",
-    clearButton: "검색어 지우기",
-    noResults: "검색 결과가 없습니다",
-    tryAgain: "다른 키워드로 다시 검색해보세요",
-  },
-  en: {
-    title: "Search",
-    description: "Search for your favorite Korean puns",
-    placeholder: "Search puns...",
-    hint: "You can search by pun title or content",
-    clearButton: "Clear search",
-    noResults: "No results found",
-    tryAgain: "Try searching with different keywords",
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 
 // 페이지 메타 정보
-const title = t.title;
-const description = t.description;
+const title = t("개그 검색", "Search");
+const description = t(
+  "찾고 싶은 아재 개그를 검색해보세요",
+  "Search for your favorite Korean puns",
+);
 ---
 
 <Layout
@@ -76,19 +61,24 @@ const description = t.description;
             type="text"
             id="search-input"
             class="bg-card border-border focus:ring-primary focus:border-primary text-foreground placeholder-muted-foreground w-full rounded-xl border-2 py-4 pr-12 pl-12 text-lg transition-all focus:ring-2 focus:outline-none"
-            placeholder={t.placeholder}
+            placeholder={t("개그 검색...", "Search puns...")}
             autofocus
           />
           <button
             id="clear-button"
             class="text-muted-foreground hover:text-foreground absolute inset-y-0 right-0 flex hidden items-center pr-4 transition-colors"
-            aria-label={t.clearButton}
+            aria-label={t("검색어 지우기", "Clear search")}
           >
             <XIcon size={20} />
           </button>
         </div>
         <p class="text-muted-foreground mt-2 ml-1 text-sm">
-          {t.hint}
+          {
+            t(
+              "개그 제목이나 내용으로 검색할 수 있습니다",
+              "You can search by pun title or content",
+            )
+          }
         </p>
       </div>
 
@@ -102,10 +92,15 @@ const description = t.description;
       >
         <div class="mb-4 text-4xl">🔍</div>
         <p class="text-muted-foreground mb-2 text-xl">
-          {t.noResults}
+          {t("검색 결과가 없습니다", "No results found")}
         </p>
         <p class="text-muted-foreground text-sm">
-          {t.tryAgain}
+          {
+            t(
+              "다른 키워드로 다시 검색해보세요",
+              "Try searching with different keywords",
+            )
+          }
         </p>
       </div>
     </div>

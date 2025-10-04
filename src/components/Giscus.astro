@@ -1,9 +1,19 @@
 ---
-// Giscus 댓글 컴포넌트
+import type { Lang } from "../utils/i18n";
+import { useTranslations } from "../utils/i18n";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "ko" } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section class="border-border mt-12 border-t pt-8">
-  <h2 class="text-foreground mb-6 text-2xl font-bold">💬 댓글 & 좋아요</h2>
+  <h2 class="text-foreground mb-6 text-2xl font-bold">
+    {t("💬 댓글 & 좋아요", "💬 Comments & Reactions")}
+  </h2>
   <script
     src="https://giscus.app/client.js"
     data-repo="DaleSeo/AjaeDale"

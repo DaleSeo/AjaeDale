@@ -6,6 +6,7 @@ import {
   getLocalizedUrl,
   getStaticPathsLocales,
   normalizeLang,
+  useTranslations,
 } from "../../../utils/i18n";
 
 export async function getStaticPaths() {
@@ -19,23 +20,7 @@ type GagEntry = CollectionEntry<"gags">;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
-// 페이지별 메시지 정의
-const messages = {
-  ko: {
-    title: "개그 분류",
-    subtitle: "개그를 태그 별로 분류해놓았습니다",
-    gagCount: "{count}개",
-    backHome: "홈으로 돌아가기",
-  },
-  en: {
-    title: "Tags",
-    subtitle: "Find puns by tags",
-    gagCount: "{count} puns",
-    backHome: "Back to Home",
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -55,7 +40,12 @@ const sortedTags = Array.from(tagCounts.entries())
   .map(([tag, count]) => ({ tag, count }));
 ---
 
-<Layout title={t.title} description={t.subtitle} currentPage="tags" lang={lang}>
+<Layout
+  title={t("개그 분류", "Tags")}
+  description={t("개그를 태그 별로 분류해놓았습니다", "Find puns by tags")}
+  currentPage="tags"
+  lang={lang}
+>
   <!-- 헤더 섹션 -->
   <section
     class="from-primary/5 to-background bg-gradient-to-b px-4 py-12"
@@ -63,10 +53,10 @@ const sortedTags = Array.from(tagCounts.entries())
   >
     <div class="container mx-auto max-w-4xl text-center">
       <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
-        📁 {t.title}
+        📁 {t("개그 분류", "Tags")}
       </h1>
       <p class="text-muted-foreground text-lg">
-        {t.subtitle}
+        {t("개그를 태그 별로 분류해놓았습니다", "Find puns by tags")}
       </p>
     </div>
   </section>
@@ -87,7 +77,7 @@ const sortedTags = Array.from(tagCounts.entries())
                 #{tag}
               </div>
               <div class="text-muted-foreground text-sm">
-                {t.gagCount.replace("{count}", String(count))}
+                {t(`${count}개`, `${count} puns`)}
               </div>
             </a>
           ))
@@ -99,7 +89,7 @@ const sortedTags = Array.from(tagCounts.entries())
           href={getLocalizedUrl("/", lang)}
           class="border-border hover:bg-accent inline-block rounded-lg border px-6 py-3 transition-colors"
         >
-          ← {t.backHome}
+          ← {t("홈으로 돌아가기", "Back to Home")}
         </a>
       </div>
     </div>

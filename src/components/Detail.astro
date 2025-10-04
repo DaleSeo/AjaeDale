@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
 import type { Lang } from "../utils/i18n";
-import { getLocalizedUrl } from "../utils/i18n";
+import { getLocalizedUrl, useTranslations } from "../utils/i18n";
 
 interface Props {
   gag: CollectionEntry<"gags">;
@@ -11,24 +11,7 @@ interface Props {
 }
 
 const { gag, lang = "ko" } = Astro.props;
-
-// 컴포넌트별 메시지 정의
-const messages = {
-  ko: {
-    question: "Q.",
-    answer: "A.",
-    save: "저장",
-    share: "공유",
-  },
-  en: {
-    question: "Q.",
-    answer: "A.",
-    save: "Save",
-    share: "Share",
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 ---
 
 <div
@@ -58,7 +41,7 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
             description: gag.data.description,
             tags: gag.data.tags,
           })}
-          aria-label={t.save}
+          aria-label={t("저장", "Save")}
         >
           <BookmarkIcon class="bookmark-icon h-4 w-4" />
           <BookmarkIcon
@@ -70,7 +53,7 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
           class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
           data-slug={gag.data.slug}
-          aria-label={t.share}
+          aria-label={t("공유", "Share")}
         >
           <Share2Icon size={16} />
         </button>
@@ -79,14 +62,14 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
 
     <div class="mb-4">
       <h1 class="text-foreground mb-4 text-2xl font-bold md:text-3xl">
-        {t.question}
+        {t("Q.", "Q.")}
         {gag.data.title}
       </h1>
 
       {
         gag.data.description && (
           <p class="text-foreground text-lg md:text-xl">
-            {t.answer} {gag.data.description}
+            {t("A.", "A.")} {gag.data.description}
           </p>
         )
       }

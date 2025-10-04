@@ -1,40 +1,13 @@
 ---
 import type { Lang } from "../utils/i18n";
-import { getLocalizedUrl } from "../utils/i18n";
+import { getLocalizedUrl, useTranslations } from "../utils/i18n";
 
 interface Props {
   lang?: Lang;
 }
 
 const { lang = "ko" } = Astro.props;
-
-// 컴포넌트별 메시지 정의
-const messages = {
-  ko: {
-    home: {
-      title: "아재달레",
-      description:
-        "매일 새로운 아재개그를 만나보세요. 재미있는 개그부터 황당한 개그까지!",
-    },
-    nav: {
-      popular: "인기",
-      random: "랜덤",
-    },
-  },
-  en: {
-    home: {
-      title: "AjaeDale",
-      description:
-        "Discover new Korean puns every day. From hilarious to absurd!",
-    },
-    nav: {
-      popular: "Popular",
-      random: "Random",
-    },
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 ---
 
 <section id="home" class="px-4 py-20">
@@ -43,7 +16,7 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
       <div class="mb-8">
         <img
           src="/og-image.png"
-          alt={t.home.title}
+          alt={t("아재달레", "AjaeDale")}
           class="mx-auto h-auto w-full max-w-lg md:max-w-2xl"
           width="1200"
           height="630"
@@ -55,7 +28,12 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
       <p
         class="text-muted-foreground mx-auto mb-8 max-w-2xl text-xl text-pretty"
       >
-        {t.home.description}
+        {
+          t(
+            "매일 새로운 아재개그를 만나보세요. 재미있는 개그부터 황당한 개그까지!",
+            "Discover new Korean puns every day. From hilarious to absurd!",
+          )
+        }
       </p>
 
       <div
@@ -65,13 +43,13 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
           href={getLocalizedUrl("/popular", lang)}
           class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium transition-colors"
         >
-          {t.nav.popular}
+          {t("인기", "Popular")}
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
           class="border-border hover:bg-accent rounded-lg border px-8 py-3 text-lg font-medium transition-colors"
         >
-          {t.nav.random}
+          {t("랜덤", "Random")}
         </a>
       </div>
 
@@ -79,21 +57,21 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
         <div class="p-6">
           <div class="text-primary mb-2 text-3xl font-bold">160+</div>
           <div class="text-muted-foreground">
-            {lang === "ko" ? "레전드 아재개그" : "Dad Jokes"}
+            {t("레전드 아재개그", "Dad Jokes")}
           </div>
         </div>
         <div class="p-6">
           <div class="text-primary mb-2 text-3xl font-bold">50+</div>
           <div class="text-muted-foreground">
-            {lang === "ko" ? "다양한 카테고리" : "Categories"}
+            {t("다양한 카테고리", "Categories")}
           </div>
         </div>
         <div class="p-6">
           <div class="text-primary mb-2 text-3xl font-bold">
-            {lang === "ko" ? "매일" : "Daily"}
+            {t("매일", "Daily")}
           </div>
           <div class="text-muted-foreground">
-            {lang === "ko" ? "새로운 개그 업데이트" : "New Jokes"}
+            {t("새로운 개그 업데이트", "New Jokes")}
           </div>
         </div>
       </div>

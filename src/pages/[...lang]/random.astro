@@ -7,6 +7,7 @@ import {
   getLocalizedUrl,
   getStaticPathsLocales,
   normalizeLang,
+  useTranslations,
 } from "../../utils/i18n";
 
 export async function getStaticPaths() {
@@ -20,35 +21,7 @@ type GagEntry = CollectionEntry<"gags">;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
-// 페이지별 메시지 정의
-const messages = {
-  ko: {
-    title: "랜덤 개그",
-    subtitle: "행운의 개그를 만나보세요",
-    question: "Q.",
-    answer: "A.",
-    save: "저장",
-    share: "공유",
-    backToList: "목록으로",
-    nextBtn: "🎲 다음 개그",
-    showAnswer: "답변 보기 👀",
-    hideAnswer: "답변 숨기기 🙈",
-  },
-  en: {
-    title: "Random Pun",
-    subtitle: "Discover your lucky pun",
-    question: "Q.",
-    answer: "A.",
-    save: "Save",
-    share: "Share",
-    backToList: "Back to List",
-    nextBtn: "🎲 Next Pun",
-    showAnswer: "Show Answer 👀",
-    hideAnswer: "Hide Answer 🙈",
-  },
-};
-
-const t = messages[lang as keyof typeof messages] || messages.ko;
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -64,8 +37,8 @@ const randomGag = getRandomGag(allGags);
 const spoilerId = "random-gag";
 
 // 페이지 메타 정보
-const title = t.title;
-const description = t.subtitle;
+const title = t("랜덤 개그", "Random Pun");
+const description = t("행운의 개그를 만나보세요", "Discover your lucky pun");
 ---
 
 <Layout title={title} description={description} currentPage="random">
@@ -111,7 +84,7 @@ const description = t.subtitle;
                   description: randomGag.data.description,
                   tags: randomGag.data.tags,
                 })}
-                aria-label={t.save}
+                aria-label={t("저장", "Save")}
               >
                 <BookmarkIcon class="bookmark-icon h-4 w-4" />
                 <BookmarkIcon
@@ -123,7 +96,7 @@ const description = t.subtitle;
                 class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
                 data-content={`${randomGag.data.title}${randomGag.data.description ? " - " + randomGag.data.description : ""}`}
                 data-slug={randomGag.data.slug}
-                aria-label={t.share}
+                aria-label={t("공유", "Share")}
               >
                 <Share2Icon size={16} />
               </button>
@@ -132,7 +105,7 @@ const description = t.subtitle;
 
           <div class="mb-6">
             <h3 class="text-foreground mb-4 text-xl font-bold md:text-2xl">
-              {t.question}
+              {t("Q.", "Q.")}
               {randomGag.data.title}
             </h3>
 
@@ -144,13 +117,13 @@ const description = t.subtitle;
                     class="spoiler-btn bg-muted hover:bg-muted-foreground/20 text-muted-foreground rounded px-3 py-1 text-sm transition-colors"
                     data-spoiler-id={spoilerId}
                   >
-                    {t.showAnswer}
+                    {t("답변 보기 👀", "Show Answer 👀")}
                   </button>
                   <p
                     id={`${spoilerId}-content`}
                     class="spoiler-content text-foreground mt-3 hidden text-lg md:text-xl"
                   >
-                    {t.answer} {randomGag.data.description}
+                    {t("A.", "A.")} {randomGag.data.description}
                   </p>
                 </div>
               )
@@ -162,7 +135,7 @@ const description = t.subtitle;
               href={getLocalizedUrl(`/gags/${randomGag.data.slug}`, lang)}
               class="text-muted-foreground hover:text-primary inline-flex items-center text-sm transition-colors"
             >
-              {t.backToList}
+              {t("목록으로", "Back to List")}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -192,7 +165,7 @@ const description = t.subtitle;
       class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
       onclick="window.location.reload()"
     >
-      {t.nextBtn}
+      {t("🎲 다음 개그", "🎲 Next Pun")}
     </button>
   </div>
 </Layout>

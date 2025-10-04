@@ -50,3 +50,8 @@ export function getAlternateUrl(currentUrl: URL, targetLang: Lang): string {
   // 대상 언어 prefix 추가
   return getLocalizedUrl(path || "/", targetLang);
 }
+
+// Translation helper
+export function useTranslations(lang: Lang) {
+  return (ko: string, en: string) => (lang === "en" ? en : ko);
+}
