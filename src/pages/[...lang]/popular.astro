@@ -4,11 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
-import {
-  useTranslations,
-  getStaticPathsLocales,
-  normalizeLang,
-} from "../../i18n/utils";
+import { getStaticPathsLocales, normalizeLang } from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -20,7 +16,20 @@ type GagEntry = CollectionEntry<"gags">;
 
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
-const t = useTranslations(lang);
+
+// 페이지별 메시지 정의
+const messages = {
+  ko: {
+    title: "인기 개그",
+    subtitle: "가장 많은 사랑을 받고 있는 개그들",
+  },
+  en: {
+    title: "Popular Puns",
+    subtitle: "The most loved puns",
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -36,8 +45,8 @@ const popularGags = sortGagsByPopularity(gagsWithLikesData);
 const displayGags = popularGags.slice(0, 12);
 
 // 페이지 메타 정보
-const title = t("popular.title");
-const description = t("popular.subtitle");
+const title = t.title;
+const description = t.subtitle;
 ---
 
 <Layout

@@ -2,8 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
-import type { Lang } from "../i18n/utils";
-import { getLocalizedUrl, getLangFromUrl } from "../i18n/utils";
+import type { Lang } from "../utils/i18n";
+import { getLocalizedUrl, getLangFromUrl } from "../utils/i18n";
 
 interface Props {
   gag: CollectionEntry<"gags">;

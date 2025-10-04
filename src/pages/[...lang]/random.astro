@@ -4,11 +4,10 @@ import Layout from "../../layouts/Layout.astro";
 import BookmarkIcon from "../../icons/Bookmark.astro";
 import Share2Icon from "../../icons/Share2.astro";
 import {
-  useTranslations,
   getLocalizedUrl,
   getStaticPathsLocales,
   normalizeLang,
-} from "../../i18n/utils";
+} from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -20,7 +19,36 @@ type GagEntry = CollectionEntry<"gags">;
 
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
-const t = useTranslations(lang);
+
+// 페이지별 메시지 정의
+const messages = {
+  ko: {
+    title: "랜덤 개그",
+    subtitle: "행운의 개그를 만나보세요",
+    question: "Q.",
+    answer: "A.",
+    save: "저장",
+    share: "공유",
+    backToList: "목록으로",
+    nextBtn: "🎲 다음 개그",
+    showAnswer: "답변 보기 👀",
+    hideAnswer: "답변 숨기기 🙈",
+  },
+  en: {
+    title: "Random Pun",
+    subtitle: "Discover your lucky pun",
+    question: "Q.",
+    answer: "A.",
+    save: "Save",
+    share: "Share",
+    backToList: "Back to List",
+    nextBtn: "🎲 Next Pun",
+    showAnswer: "Show Answer 👀",
+    hideAnswer: "Hide Answer 🙈",
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -36,8 +64,8 @@ const randomGag = getRandomGag(allGags);
 const spoilerId = "random-gag";
 
 // 페이지 메타 정보
-const title = t("random.title");
-const description = t("random.subtitle");
+const title = t.title;
+const description = t.subtitle;
 ---
 
 <Layout title={title} description={description} currentPage="random">
@@ -93,7 +121,7 @@ const description = t("random.subtitle");
                   description: randomGag.data.description,
                   tags: randomGag.data.tags,
                 })}
-                aria-label={t("gag.save")}
+                aria-label={t.save}
               >
                 <BookmarkIcon class="bookmark-icon h-4 w-4" />
                 <BookmarkIcon
@@ -105,7 +133,7 @@ const description = t("random.subtitle");
                 class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
                 data-content={`${randomGag.data.title}${randomGag.data.description ? " - " + randomGag.data.description : ""}`}
                 data-slug={randomGag.data.slug}
-                aria-label={t("gag.share")}
+                aria-label={t.share}
               >
                 <Share2Icon size={16} />
               </button>
@@ -114,7 +142,7 @@ const description = t("random.subtitle");
 
           <div class="mb-6">
             <h3 class="text-foreground mb-4 text-xl font-bold md:text-2xl">
-              {t("gag.question")}
+              {t.question}
               {randomGag.data.title}
             </h3>
 
@@ -126,13 +154,13 @@ const description = t("random.subtitle");
                     class="spoiler-btn bg-muted hover:bg-muted-foreground/20 text-muted-foreground rounded px-3 py-1 text-sm transition-colors"
                     data-spoiler-id={spoilerId}
                   >
-                    {lang === "ko" ? "답변 보기 👀" : "Show Answer 👀"}
+                    {t.showAnswer}
                   </button>
                   <p
                     id={`${spoilerId}-content`}
                     class="spoiler-content text-foreground mt-3 hidden text-lg md:text-xl"
                   >
-                    {t("gag.answer")} {randomGag.data.description}
+                    {t.answer} {randomGag.data.description}
                   </p>
                 </div>
               )
@@ -144,7 +172,7 @@ const description = t("random.subtitle");
               href={getLocalizedUrl(`/gags/${randomGag.data.slug}`, lang)}
               class="text-muted-foreground hover:text-primary inline-flex items-center text-sm transition-colors"
             >
-              {t("gag.backToList")}
+              {t.backToList}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -174,7 +202,7 @@ const description = t("random.subtitle");
       class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
       onclick="window.location.reload()"
     >
-      {t("random.nextBtn")}
+      {t.nextBtn}
     </button>
   </div>
 </Layout>
@@ -230,6 +258,12 @@ const description = t("random.subtitle");
 
   // 스포일러 토글
   function setupSpoilers(): void {
+    // Get current language from URL
+    const currentPath = window.location.pathname;
+    const currentLang = currentPath.startsWith("/en/") ? "en" : "ko";
+    const showText = currentLang === "ko" ? "답변 보기 👀" : "Show Answer 👀";
+    const hideText = currentLang === "ko" ? "답변 숨기기 🙈" : "Hide Answer 🙈";
+
     document.querySelectorAll(".spoiler-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -239,8 +273,8 @@ const description = t("random.subtitle");
         if (content) {
           content.classList.toggle("hidden");
           btn.textContent = content.classList.contains("hidden")
-            ? "답변 보기 👀"
-            : "답변 숨기기 🙈";
+            ? showText
+            : hideText;
         }
       });
     });

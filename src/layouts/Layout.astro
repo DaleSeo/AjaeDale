@@ -1,11 +1,13 @@
 ---
 import "../styles/globals.css";
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SEO from "../components/SEO.astro";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 
-import type { Lang } from "../i18n/utils";
-import { getAlternateUrl } from "../i18n/utils";
+import type { Lang } from "../utils/i18n";
+import { getAlternateUrl } from "../utils/i18n";
 
 export interface Props {
   title?: string;
@@ -78,6 +80,9 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
+
+    <ClientRouter />
+    <GoogleAnalytics />
   </head>
   <body class="korean-text font-sans">
     <Header />

@@ -1,13 +1,40 @@
 ---
-import type { Lang } from "../i18n/utils";
-import { useTranslations, getLocalizedUrl } from "../i18n/utils";
+import type { Lang } from "../utils/i18n";
+import { getLocalizedUrl } from "../utils/i18n";
 
 interface Props {
   lang?: Lang;
 }
 
 const { lang = "ko" } = Astro.props;
-const t = useTranslations(lang);
+
+// 컴포넌트별 메시지 정의
+const messages = {
+  ko: {
+    home: {
+      title: "아재달레",
+      description:
+        "매일 새로운 아재개그를 만나보세요. 재미있는 개그부터 황당한 개그까지!",
+    },
+    nav: {
+      popular: "인기",
+      random: "랜덤",
+    },
+  },
+  en: {
+    home: {
+      title: "AjaeDale",
+      description:
+        "Discover new Korean puns every day. From hilarious to absurd!",
+    },
+    nav: {
+      popular: "Popular",
+      random: "Random",
+    },
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 ---
 
 <section id="home" class="px-4 py-20">
@@ -16,7 +43,7 @@ const t = useTranslations(lang);
       <div class="mb-8">
         <img
           src="/og-image.png"
-          alt={t("home.hero.title")}
+          alt={t.home.title}
           class="mx-auto h-auto w-full max-w-lg md:max-w-2xl"
           width="1200"
           height="630"
@@ -28,7 +55,7 @@ const t = useTranslations(lang);
       <p
         class="text-muted-foreground mx-auto mb-8 max-w-2xl text-xl text-pretty"
       >
-        {t("home.hero.description")}
+        {t.home.description}
       </p>
 
       <div
@@ -38,13 +65,13 @@ const t = useTranslations(lang);
           href={getLocalizedUrl("/popular", lang)}
           class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium transition-colors"
         >
-          {t("nav.popular")}
+          {t.nav.popular}
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
           class="border-border hover:bg-accent rounded-lg border px-8 py-3 text-lg font-medium transition-colors"
         >
-          {t("nav.random")}
+          {t.nav.random}
         </a>
       </div>
 

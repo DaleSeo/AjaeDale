@@ -1,16 +1,27 @@
 ---
 import Moon from "../icons/Moon.astro";
 import Sun from "../icons/Sun.astro";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl } from "../utils/i18n";
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+
+// 컴포넌트별 메시지 정의
+const messages = {
+  ko: {
+    toggleTheme: "테마 전환",
+  },
+  en: {
+    toggleTheme: "Toggle theme",
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 ---
 
 <button
   class="theme-toggle hover:bg-accent rounded-md p-2 transition-colors"
-  aria-label={t("nav.toggleTheme")}
-  title={t("nav.toggleTheme")}
+  aria-label={t.toggleTheme}
+  title={t.toggleTheme}
 >
   <Sun size={20} class="sun-icon hidden dark:block" />
   <Moon size={20} class="moon-icon block dark:hidden" />

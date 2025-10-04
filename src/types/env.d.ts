@@ -1,7 +1,7 @@
 /// <reference types="astro/client" />
 
 interface ImportMetaEnv {
-  // No environment variables needed for pure static site
+  readonly PUBLIC_GA_ID?: string;
 }
 
 interface ImportMeta {

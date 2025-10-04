@@ -2,8 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
-import type { Lang } from "../i18n/utils";
-import { getLocalizedUrl, useTranslations } from "../i18n/utils";
+import type { Lang } from "../utils/i18n";
+import { getLocalizedUrl } from "../utils/i18n";
 
 interface Props {
   gag: CollectionEntry<"gags">;
@@ -11,7 +11,24 @@ interface Props {
 }
 
 const { gag, lang = "ko" } = Astro.props;
-const t = useTranslations(lang);
+
+// 컴포넌트별 메시지 정의
+const messages = {
+  ko: {
+    question: "Q.",
+    answer: "A.",
+    save: "저장",
+    share: "공유",
+  },
+  en: {
+    question: "Q.",
+    answer: "A.",
+    save: "Save",
+    share: "Share",
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 ---
 
 <div
@@ -51,7 +68,7 @@ const t = useTranslations(lang);
             description: gag.data.description,
             tags: gag.data.tags,
           })}
-          aria-label={t("gag.save")}
+          aria-label={t.save}
         >
           <BookmarkIcon class="bookmark-icon h-4 w-4" />
           <BookmarkIcon
@@ -63,7 +80,7 @@ const t = useTranslations(lang);
           class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
           data-slug={gag.data.slug}
-          aria-label={t("gag.share")}
+          aria-label={t.share}
         >
           <Share2Icon size={16} />
         </button>
@@ -72,14 +89,14 @@ const t = useTranslations(lang);
 
     <div class="mb-4">
       <h1 class="text-foreground mb-4 text-2xl font-bold md:text-3xl">
-        {t("gag.question")}
+        {t.question}
         {gag.data.title}
       </h1>
 
       {
         gag.data.description && (
           <p class="text-foreground text-lg md:text-xl">
-            {t("gag.answer")} {gag.data.description}
+            {t.answer} {gag.data.description}
           </p>
         )
       }
