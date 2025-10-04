@@ -114,6 +114,14 @@ const t = useTranslations(lang);
               {t("footer.nav.submit")}
             </a>
           </li>
+          <li>
+            <a
+              href={getLocalizedUrl("/api", lang)}
+              class="text-muted-foreground hover:text-primary transition-colors"
+            >
+              {t("footer.nav.api")}
+            </a>
+          </li>
         </ul>
       </div>
     </div>

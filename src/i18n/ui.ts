@@ -88,6 +88,43 @@ export const ui = {
     "submit.description": "재미있는 아재개그를 알고 계신가요?",
     "submit.cta": "GitHub에서 제보하기",
 
+    // API 문서
+    "api.title": "개그 API",
+    "api.description": "아재달레 개그 데이터를 자유롭게 사용하세요",
+    "api.overview.title": "개요",
+    "api.overview.description":
+      "아재달레는 무료 REST API를 제공합니다. 모든 엔드포인트는 읽기 전용이며, 빌드 시점에 정적 JSON 파일로 생성됩니다.",
+    "api.overview.feature1": "✅ 완전 무료 - 인증 불필요",
+    "api.overview.feature2": "✅ CORS 지원 - 모든 도메인에서 접근 가능",
+    "api.overview.feature3": "✅ 정적 파일 - 빠른 응답 속도",
+    "api.overview.feature4": "✅ 읽기 전용 - GET 요청만 지원",
+    "api.endpoints.gags.title": "개그 엔드포인트",
+    "api.endpoints.gags.all.title": "모든 개그 조회",
+    "api.endpoints.gags.all.description":
+      "게시된 모든 개그를 최신순으로 반환합니다.",
+    "api.endpoints.gags.single.title": "특정 개그 조회",
+    "api.endpoints.gags.single.description":
+      "slug로 특정 개그의 상세 정보를 조회합니다.",
+    "api.endpoints.gags.featured.title": "인기 개그 조회",
+    "api.endpoints.gags.featured.description":
+      "featured로 표시된 인기 개그만 반환합니다.",
+    "api.endpoints.gags.latest.title": "최신 개그 조회",
+    "api.endpoints.gags.latest.description": "최신 20개의 개그를 반환합니다.",
+    "api.endpoints.tags.title": "태그 엔드포인트",
+    "api.endpoints.tags.all.title": "모든 태그 조회",
+    "api.endpoints.tags.all.description":
+      "모든 태그와 각 태그의 개그 수를 반환합니다.",
+    "api.endpoints.tags.single.title": "태그별 개그 조회",
+    "api.endpoints.tags.single.description":
+      "특정 태그가 포함된 모든 개그를 반환합니다.",
+    "api.cors.title": "CORS",
+    "api.cors.description":
+      "모든 API 엔드포인트는 CORS가 활성화되어 있어 어떤 도메인에서든 접근할 수 있습니다.",
+    "api.usage.title": "사용 예시",
+    "api.usage.description":
+      "JavaScript에서 fetch API로 쉽게 사용할 수 있습니다:",
+    "api.example": "예시 응답 보기",
+
     // 푸터
     "footer.copyright": "© 2025 아재달레. All rights reserved.",
     "footer.madeWith": "Made with ❤️ for 아재",
@@ -102,6 +139,7 @@ export const ui = {
     "footer.nav.search": "개그 검색",
     "footer.nav.saved": "개그 저장",
     "footer.nav.submit": "개그 제보",
+    "footer.nav.api": "개그 API",
 
     // 공통
     "common.loading": "로딩 중...",
@@ -124,76 +162,112 @@ export const ui = {
     // Homepage
     "home.title": "Home",
     "home.hero.title": "AjaeDale",
-    "home.hero.subtitle": "Korean Dad Jokes Collection",
+    "home.hero.subtitle": "Korean Puns Collection",
     "home.hero.description":
-      "Discover new Korean dad jokes every day. From hilarious to absurd!",
-    "home.today.title": "Today's Joke",
-    "home.today.subtitle": "Discover a special joke that changes daily",
+      "Discover new Korean puns every day. From hilarious to absurd!",
+    "home.today.title": "Today's Pun",
+    "home.today.subtitle": "Discover a special pun that changes daily",
     "home.today.badge": "TODAY",
     "home.today.viewMore": "View More",
-    "home.popular.title": "Popular Jokes",
-    "home.popular.subtitle": "The most loved jokes by our community",
-    "home.popular.viewMore": "View More Popular Jokes",
-    "home.stats.total": "{count} funny jokes waiting for you!",
-    "home.stats.randomBtn": "🎲 Random Joke",
-    "home.stats.searchBtn": "🔍 Search Jokes",
+    "home.popular.title": "Popular Puns",
+    "home.popular.subtitle": "The most loved puns by our community",
+    "home.popular.viewMore": "View More Popular Puns",
+    "home.stats.total": "{count} funny puns waiting for you!",
+    "home.stats.randomBtn": "🎲 Random Pun",
+    "home.stats.searchBtn": "🔍 Search Puns",
 
     // Gag Detail
     "gag.question": "Q.",
     "gag.answer": "A.",
     "gag.share": "Share",
     "gag.save": "Save",
-    "gag.related": "Related Jokes",
-    "gag.noRelated": "No related jokes",
+    "gag.related": "Related Puns",
+    "gag.noRelated": "No related puns",
     "gag.backToList": "Back to List",
 
     // Tags
     "tags.title": "Tags",
-    "tags.subtitle": "Find jokes by tags",
-    "tags.gagCount": "{count} jokes",
-    "tags.filterByTag": "#{tag} Jokes",
-    "tags.totalGags": "{count} jokes in total",
+    "tags.subtitle": "Find puns by tags",
+    "tags.gagCount": "{count} puns",
+    "tags.filterByTag": "#{tag} Puns",
+    "tags.totalGags": "{count} puns in total",
 
     // Search
     "search.title": "Search",
-    "search.description": "Search for your favorite Korean dad jokes",
-    "search.placeholder": "Search jokes...",
-    "search.hint": "You can search by joke title or content",
+    "search.description": "Search for your favorite Korean puns",
+    "search.placeholder": "Search puns...",
+    "search.hint": "You can search by pun title or content",
     "search.clearButton": "Clear search",
     "search.noResults": "No results found",
     "search.tryAgain": "Try searching with different keywords",
     "search.searching": "Searching...",
 
     // Popular
-    "popular.title": "Popular Jokes",
-    "popular.subtitle": "The most loved jokes",
+    "popular.title": "Popular Puns",
+    "popular.subtitle": "The most loved puns",
 
     // Latest
-    "latest.title": "Latest Jokes",
-    "latest.subtitle": "Recently added fresh jokes",
+    "latest.title": "Latest Puns",
+    "latest.subtitle": "Recently added fresh puns",
 
     // Random
-    "random.title": "Random Joke",
-    "random.subtitle": "Discover your lucky joke",
-    "random.nextBtn": "🎲 Next Joke",
+    "random.title": "Random Pun",
+    "random.subtitle": "Discover your lucky pun",
+    "random.nextBtn": "🎲 Next Pun",
     "random.viewDetail": "View Detail",
 
     // Saved
-    "saved.title": "Saved Jokes",
-    "saved.subtitle": "Jokes you want to revisit",
-    "saved.empty": "No saved jokes",
-    "saved.emptyDesc": "Save your favorite jokes!",
+    "saved.title": "Saved Puns",
+    "saved.subtitle": "Puns you want to revisit",
+    "saved.empty": "No saved puns",
+    "saved.emptyDesc": "Save your favorite puns!",
 
     // Submit
-    "submit.title": "Submit a Joke",
-    "submit.description": "Know a funny Korean dad joke?",
+    "submit.title": "Submit a Pun",
+    "submit.description": "Know a funny Korean pun?",
     "submit.cta": "Submit on GitHub",
+
+    // API Documentation
+    "api.title": "Pun API",
+    "api.description": "Use AjaeDale pun data freely",
+    "api.overview.title": "Overview",
+    "api.overview.description":
+      "AjaeDale provides a free REST API. All endpoints are read-only and generated as static JSON files at build time.",
+    "api.overview.feature1": "✅ Completely Free - No authentication required",
+    "api.overview.feature2": "✅ CORS Enabled - Accessible from any domain",
+    "api.overview.feature3": "✅ Static Files - Fast response times",
+    "api.overview.feature4": "✅ Read-only - GET requests only",
+    "api.endpoints.gags.title": "Pun Endpoints",
+    "api.endpoints.gags.all.title": "Get All Puns",
+    "api.endpoints.gags.all.description":
+      "Returns all published puns sorted by creation date.",
+    "api.endpoints.gags.single.title": "Get Single Pun",
+    "api.endpoints.gags.single.description":
+      "Get detailed information for a specific pun by slug.",
+    "api.endpoints.gags.featured.title": "Get Featured Puns",
+    "api.endpoints.gags.featured.description":
+      "Returns only puns marked as featured.",
+    "api.endpoints.gags.latest.title": "Get Latest Puns",
+    "api.endpoints.gags.latest.description": "Returns the 20 most recent puns.",
+    "api.endpoints.tags.title": "Tag Endpoints",
+    "api.endpoints.tags.all.title": "Get All Tags",
+    "api.endpoints.tags.all.description":
+      "Returns all tags with pun counts for each tag.",
+    "api.endpoints.tags.single.title": "Get Puns by Tag",
+    "api.endpoints.tags.single.description":
+      "Returns all puns containing a specific tag.",
+    "api.cors.title": "CORS",
+    "api.cors.description":
+      "All API endpoints have CORS enabled and can be accessed from any domain.",
+    "api.usage.title": "Usage Example",
+    "api.usage.description": "Easy to use with the fetch API in JavaScript:",
+    "api.example": "View Example Response",
 
     // Footer
     "footer.copyright": "© 2025 AjaeDale. All rights reserved.",
     "footer.madeWith": "Made with ❤️ for Dads",
     "footer.description":
-      "A space for everyone who loves Korean dad jokes. We bring you new laughs every day.",
+      "A space for everyone who loves Korean puns. We bring you new laughs every day.",
     "footer.quickLinks": "Quick Links",
     "footer.community": "Community",
     "footer.nav.latest": "Latest",
@@ -203,6 +277,7 @@ export const ui = {
     "footer.nav.search": "Search",
     "footer.nav.saved": "Saved",
     "footer.nav.submit": "Submit",
+    "footer.nav.api": "Pun API",
 
     // Common
     "common.loading": "Loading...",

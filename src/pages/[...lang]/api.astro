@@ -1,0 +1,234 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import {
+  useTranslations,
+  getStaticPathsLocales,
+  normalizeLang,
+} from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return getStaticPathsLocales().map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
+const t = useTranslations(lang);
+
+const title = t("api.title");
+const description = t("api.description");
+const baseUrl = "https://www.ajaedale.com";
+---
+
+<Layout title={title} description={description} currentPage="api">
+  <section class="px-4 py-16">
+    <div class="container mx-auto max-w-4xl">
+      <!-- 페이지 헤더 -->
+      <div class="mb-12 text-center">
+        <h1 class="text-foreground mb-4 text-3xl font-bold">🚀 {title}</h1>
+        <p class="text-muted-foreground text-lg">
+          {description}
+        </p>
+      </div>
+
+      <!-- API 개요 -->
+      <div class="bg-muted/50 mb-8 rounded-lg p-6">
+        <h2 class="text-foreground mb-4 text-2xl font-semibold">
+          {t("api.overview.title")}
+        </h2>
+        <p class="text-muted-foreground mb-4">
+          {t("api.overview.description")}
+        </p>
+        <ul class="text-muted-foreground list-inside list-disc space-y-2">
+          <li>{t("api.overview.feature1")}</li>
+          <li>{t("api.overview.feature2")}</li>
+          <li>{t("api.overview.feature3")}</li>
+          <li>{t("api.overview.feature4")}</li>
+        </ul>
+      </div>
+
+      <!-- 개그 엔드포인트 -->
+      <div class="mb-8">
+        <h2 class="text-foreground mb-6 text-2xl font-semibold">
+          {t("api.endpoints.gags.title")}
+        </h2>
+
+        <!-- 모든 개그 -->
+        <div class="bg-card mb-6 rounded-lg border p-6">
+          <div class="mb-4">
+            <h3 class="text-foreground mb-2 text-xl font-medium">
+              {t("api.endpoints.gags.all.title")}
+            </h3>
+            <code
+              class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
+            >
+              GET {baseUrl}/api/gags.json
+            </code>
+          </div>
+          <p class="text-muted-foreground mb-4">
+            {t("api.endpoints.gags.all.description")}
+          </p>
+          <details class="mb-4">
+            <summary
+              class="text-primary cursor-pointer font-medium hover:underline"
+            >
+              {t("api.example")}
+            </summary>
+            <pre
+              class="bg-muted mt-4 overflow-x-auto rounded p-4"><code class="text-sm">{JSON.stringify(
+                [
+                  {
+                    slug: "king-falls-kingkong",
+                    lang: "ko",
+                    title: "왕이 넘어지면?",
+                    description: "킹콩",
+                    tags: ["왕"],
+                    featured: false,
+                    createdAt: "2025-09-23T00:17:31.623Z",
+                  },
+                ],
+                null,
+                2,
+              )}</code></pre>
+          </details>
+        </div>
+
+        <!-- 개별 개그 -->
+        <div class="bg-card mb-6 rounded-lg border p-6">
+          <div class="mb-4">
+            <h3 class="text-foreground mb-2 text-xl font-medium">
+              {t("api.endpoints.gags.single.title")}
+            </h3>
+            <code
+              class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
+            >
+              GET {baseUrl}/api/gags/[slug].json
+            </code>
+          </div>
+          <p class="text-muted-foreground mb-4">
+            {t("api.endpoints.gags.single.description")}
+          </p>
+        </div>
+
+        <!-- 인기 개그 -->
+        <div class="bg-card mb-6 rounded-lg border p-6">
+          <div class="mb-4">
+            <h3 class="text-foreground mb-2 text-xl font-medium">
+              {t("api.endpoints.gags.featured.title")}
+            </h3>
+            <code
+              class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
+            >
+              GET {baseUrl}/api/gags/featured.json
+            </code>
+          </div>
+          <p class="text-muted-foreground">
+            {t("api.endpoints.gags.featured.description")}
+          </p>
+        </div>
+
+        <!-- 최신 개그 -->
+        <div class="bg-card mb-6 rounded-lg border p-6">
+          <div class="mb-4">
+            <h3 class="text-foreground mb-2 text-xl font-medium">
+              {t("api.endpoints.gags.latest.title")}
+            </h3>
+            <code
+              class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
+            >
+              GET {baseUrl}/api/gags/latest.json
+            </code>
+          </div>
+          <p class="text-muted-foreground">
+            {t("api.endpoints.gags.latest.description")}
+          </p>
+        </div>
+      </div>
+
+      <!-- 태그 엔드포인트 -->
+      <div class="mb-8">
+        <h2 class="text-foreground mb-6 text-2xl font-semibold">
+          {t("api.endpoints.tags.title")}
+        </h2>
+
+        <!-- 모든 태그 -->
+        <div class="bg-card mb-6 rounded-lg border p-6">
+          <div class="mb-4">
+            <h3 class="text-foreground mb-2 text-xl font-medium">
+              {t("api.endpoints.tags.all.title")}
+            </h3>
+            <code
+              class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
+            >
+              GET {baseUrl}/api/tags.json
+            </code>
+          </div>
+          <p class="text-muted-foreground mb-4">
+            {t("api.endpoints.tags.all.description")}
+          </p>
+          <details class="mb-4">
+            <summary
+              class="text-primary cursor-pointer font-medium hover:underline"
+            >
+              {t("api.example")}
+            </summary>
+            <pre
+              class="bg-muted mt-4 overflow-x-auto rounded p-4"><code class="text-sm">{JSON.stringify(
+                [
+                  {
+                    name: "왕",
+                    slug: "wang",
+                    count: 5,
+                  },
+                ],
+                null,
+                2,
+              )}</code></pre>
+          </details>
+        </div>
+
+        <!-- 태그별 개그 -->
+        <div class="bg-card mb-6 rounded-lg border p-6">
+          <div class="mb-4">
+            <h3 class="text-foreground mb-2 text-xl font-medium">
+              {t("api.endpoints.tags.single.title")}
+            </h3>
+            <code
+              class="bg-muted text-primary block rounded px-3 py-2 font-mono text-sm"
+            >
+              GET {baseUrl}/api/tags/[slug].json
+            </code>
+          </div>
+          <p class="text-muted-foreground">
+            {t("api.endpoints.tags.single.description")}
+          </p>
+        </div>
+      </div>
+
+      <!-- CORS -->
+      <div class="bg-muted/50 mb-8 rounded-lg p-6">
+        <h2 class="text-foreground mb-4 text-2xl font-semibold">
+          {t("api.cors.title")}
+        </h2>
+        <p class="text-muted-foreground">
+          {t("api.cors.description")}
+        </p>
+      </div>
+
+      <!-- 사용 예시 -->
+      <div class="bg-card rounded-lg border p-6">
+        <h2 class="text-foreground mb-4 text-2xl font-semibold">
+          {t("api.usage.title")}
+        </h2>
+        <p class="text-muted-foreground mb-4">
+          {t("api.usage.description")}
+        </p>
+        <pre
+          class="bg-muted overflow-x-auto rounded p-4"><code class="text-sm">fetch('{baseUrl}/api/gags.json')
+  .then(response => response.json())
+  .then(data => console.log(data));</code></pre>
+      </div>
+    </div>
+  </section>
+</Layout>
