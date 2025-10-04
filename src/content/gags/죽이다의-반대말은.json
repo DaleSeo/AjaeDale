@@ -1,9 +1,19 @@
 {
   "slug": "kill-opposite-word",
-  "title": "죽이다의 반대말은?",
-  "description": "밥이다",
-  "tags": ["죽", "반대말"],
+  "title": {
+    "ko": "죽이다의 반대말은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "밥이다",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["죽", "반대말"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

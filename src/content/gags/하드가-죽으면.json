@@ -1,8 +1,17 @@
 {
   "slug": "hard-dies",
-  "title": "하드가 죽으면?",
-  "description": "다이 하드",
-  "tags": [],
+  "title": {
+    "ko": "하드가 죽으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "다이 하드",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

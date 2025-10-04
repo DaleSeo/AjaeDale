@@ -4,15 +4,24 @@ import SearchIcon from "../icons/Search.astro";
 import MenuIcon from "../icons/Menu.astro";
 import XIcon from "../icons/X.astro";
 import TagIcon from "../icons/Tag.astro";
+import LanguagePicker from "./LanguagePicker.astro";
+import {
+  getLangFromUrl,
+  useTranslations,
+  getLocalizedUrl,
+} from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 // 현재 페이지 감지
 const currentPath = Astro.url.pathname;
-const isTagsPage = currentPath === "/tags" || currentPath.startsWith("/tags/");
-const isPopularPage = currentPath === "/popular";
-const isLatestPage = currentPath === "/latest";
-const isRandomPage = currentPath === "/random";
-const isSearchPage = currentPath === "/search";
-const isSavedPage = currentPath === "/saved";
+const isTagsPage = currentPath.includes("/tags");
+const isPopularPage = currentPath.includes("/popular");
+const isLatestPage = currentPath.includes("/latest");
+const isRandomPage = currentPath.includes("/random");
+const isSearchPage = currentPath.includes("/search");
+const isSavedPage = currentPath.includes("/saved");
 
 // 활성 상태 스타일
 const getNavStyle = (isActive: boolean) => {
@@ -34,52 +43,72 @@ const getMobileNavStyle = (isActive: boolean) => {
 >
   <div class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
-      <a href="/" class="flex items-center space-x-2">
+      <a href={getLocalizedUrl("/", lang)} class="flex items-center space-x-2">
         <img
           src="/logo.png"
-          alt="아재달레 로고"
+          alt={t("home.hero.title")}
           class="w-10 h-10 rounded-full"
         />
         <div>
-          <h1 class="text-xl font-bold text-foreground">아재달레</h1>
+          <h1 class="text-xl font-bold text-foreground">
+            {t("home.hero.title")}
+          </h1>
           <p class="text-xs text-muted-foreground hidden sm:block">
-            아재개그 웃어달레
+            {t("home.hero.subtitle")}
           </p>
         </div>
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-6">
-        <a href="/latest" class={getNavStyle(isLatestPage)}> 🌟 최신 개그 </a>
-        <a href="/popular" class={getNavStyle(isPopularPage)}> 🔥 인기 개그 </a>
-        <a href="/random" class={getNavStyle(isRandomPage)}> 🎲 랜덤 개그 </a>
+        <a
+          href={getLocalizedUrl("/latest", lang)}
+          class={getNavStyle(isLatestPage)}
+        >
+          🌟 {t("nav.latest")}
+        </a>
+        <a
+          href={getLocalizedUrl("/popular", lang)}
+          class={getNavStyle(isPopularPage)}
+        >
+          🔥 {t("nav.popular")}
+        </a>
+        <a
+          href={getLocalizedUrl("/random", lang)}
+          class={getNavStyle(isRandomPage)}
+        >
+          🎲 {t("nav.random")}
+        </a>
       </nav>
 
       <div class="hidden md:flex items-center space-x-2">
+        <!-- 언어 전환기 -->
+        <LanguagePicker />
+
         <a
-          href="/tags"
+          href={getLocalizedUrl("/tags", lang)}
           class={isTagsPage
             ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
             : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title="태그"
+          title={t("nav.tags")}
         >
           <TagIcon size={20} />
         </a>
         <a
-          href="/search"
+          href={getLocalizedUrl("/search", lang)}
           class={isSearchPage
             ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
             : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title="검색"
+          title={t("nav.search")}
         >
           <SearchIcon size={20} />
         </a>
         <a
-          href="/saved"
+          href={getLocalizedUrl("/saved", lang)}
           class={isSavedPage
             ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
             : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title="북마크"
+          title={t("nav.saved")}
         >
           <BookmarkIcon size={20} />
         </a>
@@ -102,26 +131,47 @@ const getMobileNavStyle = (isActive: boolean) => {
       class="hidden md:hidden mt-4 pb-4 border-t border-border pt-4"
     >
       <div class="flex flex-col space-y-2">
-        <a href="/latest" class={getMobileNavStyle(isLatestPage)}>
-          🌟 최신 개그
+        <!-- 언어 전환 (모바일) -->
+        <LanguagePicker showLabel={true} />
+
+        <a
+          href={getLocalizedUrl("/latest", lang)}
+          class={getMobileNavStyle(isLatestPage)}
+        >
+          🌟 {t("nav.latest")}
         </a>
-        <a href="/popular" class={getMobileNavStyle(isPopularPage)}>
-          🔥 인기 개그
+        <a
+          href={getLocalizedUrl("/popular", lang)}
+          class={getMobileNavStyle(isPopularPage)}
+        >
+          🔥 {t("nav.popular")}
         </a>
-        <a href="/random" class={getMobileNavStyle(isRandomPage)}>
-          🎲 랜덤 개그
+        <a
+          href={getLocalizedUrl("/random", lang)}
+          class={getMobileNavStyle(isRandomPage)}
+        >
+          🎲 {t("nav.random")}
         </a>
-        <a href="/tags" class={getMobileNavStyle(isTagsPage)}>
+        <a
+          href={getLocalizedUrl("/tags", lang)}
+          class={getMobileNavStyle(isTagsPage)}
+        >
           <TagIcon size={16} class="inline mr-2" />
-          태그
+          {t("nav.tags")}
         </a>
-        <a href="/search" class={getMobileNavStyle(isSearchPage)}>
+        <a
+          href={getLocalizedUrl("/search", lang)}
+          class={getMobileNavStyle(isSearchPage)}
+        >
           <SearchIcon size={16} class="inline mr-2" />
-          검색
+          {t("nav.search")}
         </a>
-        <a href="/saved" class={getMobileNavStyle(isSavedPage)}>
+        <a
+          href={getLocalizedUrl("/saved", lang)}
+          class={getMobileNavStyle(isSavedPage)}
+        >
           <BookmarkIcon size={16} class="inline mr-2" />
-          북마크
+          {t("nav.saved")}
         </a>
       </div>
     </nav>

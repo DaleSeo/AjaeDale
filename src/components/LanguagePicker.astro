@@ -1,0 +1,28 @@
+---
+import { getLangFromUrl, getAlternateUrl } from "../i18n/utils";
+
+interface Props {
+  showLabel?: boolean;
+}
+
+const { showLabel = false } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const alternateLang = lang === "ko" ? "en" : "ko";
+const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+---
+
+<a
+  href={alternateUrl}
+  class={showLabel
+    ? "text-center py-2 px-3 bg-primary/5 text-primary font-medium rounded-md inline-block w-full"
+    : "px-3 py-2 text-sm font-medium hover:bg-accent rounded-md transition-colors"}
+  title={alternateLang === "ko" ? "한국어" : "English"}
+>
+  {
+    showLabel
+      ? alternateLang === "ko"
+        ? "🇰🇷 한국어"
+        : "🇺🇸 English"
+      : alternateLang.toUpperCase()
+  }
+</a>

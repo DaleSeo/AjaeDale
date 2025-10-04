@@ -1,9 +1,19 @@
 {
   "slug": "dj-doc-nationality",
-  "title": "DJ DOC의 국적은?",
-  "description": "이런(이란)",
-  "tags": ["DJ DOC", "국적"],
+  "title": {
+    "ko": "DJ DOC의 국적은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "이런(이란)",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["DJ DOC", "국적"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

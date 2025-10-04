@@ -1,9 +1,19 @@
 {
   "slug": "worst-lying-proverb",
-  "title": "생활의 지혜가 담긴 속담 중 최고의 거짓말을 하는 속담은?",
-  "description": "뒤로 넘어져도 코가 깨진다",
-  "tags": ["속담", "거짓말"],
+  "title": {
+    "ko": "생활의 지혜가 담긴 속담 중 최고의 거짓말을 하는 속담은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "뒤로 넘어져도 코가 깨진다",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["속담", "거짓말"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

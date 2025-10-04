@@ -1,11 +1,21 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import { sortGagsByPopularity } from "../utils/popularityUtils";
-import { enrichGagsWithLikes } from "../utils/discussionsApi";
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card.astro";
+import { sortGagsByPopularity } from "../../utils/popularityUtils";
+import { enrichGagsWithLikes } from "../../utils/discussionsApi";
+import { useTranslations, type Lang } from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
 
 type GagEntry = CollectionEntry<"gags">;
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -21,11 +31,16 @@ const popularGags = sortGagsByPopularity(gagsWithLikesData);
 const displayGags = popularGags.slice(0, 12);
 
 // 페이지 메타 정보
-const title = "인기 개그";
-const description = "가장 많은 사랑을 받은 개그들을 만나보세요!";
+const title = t("popular.title");
+const description = t("popular.subtitle");
 ---
 
-<Layout title={title} description={description} currentPage="popular">
+<Layout
+  title={title}
+  description={description}
+  currentPage="popular"
+  lang={lang}
+>
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
@@ -48,7 +63,7 @@ const description = "가장 많은 사랑을 받은 개그들을 만나보세요
               <div class="absolute -top-3 -left-3 z-10 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-md">
                 #{index + 1}
               </div>
-              <Card gag={gag} />
+              <Card gag={gag} lang={lang} />
             </div>
           ))
         }

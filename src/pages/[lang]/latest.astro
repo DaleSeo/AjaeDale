@@ -1,9 +1,19 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card.astro";
+import { useTranslations, type Lang } from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
 
 type GagEntry = CollectionEntry<"gags">;
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -20,8 +30,8 @@ const sortedGags = allGags.sort((a: GagEntry, b: GagEntry) => {
 const displayGags = sortedGags.slice(0, 12);
 
 // 페이지 메타 정보
-const title = "최신 개그";
-const description = "방금 올라온 따끈따끈한 개그들을 만나볼까요?";
+const title = t("latest.title");
+const description = t("latest.subtitle");
 
 // 상대적 시간 계산 함수
 function getRelativeTime(date: Date): string {
@@ -48,7 +58,12 @@ function getRelativeTime(date: Date): string {
 }
 ---
 
-<Layout title={title} description={description} currentPage="latest">
+<Layout
+  title={title}
+  description={description}
+  currentPage="latest"
+  lang={lang}
+>
   <!-- 헤더 섹션 -->
   <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto text-center max-w-4xl">
@@ -74,7 +89,7 @@ function getRelativeTime(date: Date): string {
               <div class="absolute -top-3 -right-3 z-10 px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium shadow-md">
                 {getRelativeTime(new Date(gag.data.createdAt))}
               </div>
-              <Card gag={gag} />
+              <Card gag={gag} lang={lang} />
             </div>
           ))
         }

@@ -1,9 +1,19 @@
 {
   "slug": "dad-strong-tax",
-  "title": "아빠가 힘이 세면?",
-  "description": "부가세",
-  "tags": ["아빠", "힘"],
+  "title": {
+    "ko": "아빠가 힘이 세면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "부가세",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["아빠", "힘"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

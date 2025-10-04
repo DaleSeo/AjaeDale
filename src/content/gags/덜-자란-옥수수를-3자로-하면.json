@@ -1,9 +1,19 @@
 {
   "slug": "young-corn-icon",
-  "title": "덜 자란 옥수수를 3자로 하면?",
-  "description": "아이콘",
-  "tags": ["옥수수"],
+  "title": {
+    "ko": "덜 자란 옥수수를 3자로 하면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "아이콘",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["옥수수"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

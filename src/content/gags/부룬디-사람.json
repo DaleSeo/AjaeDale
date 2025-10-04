@@ -1,8 +1,17 @@
 {
   "slug": "burundi-person-full",
-  "title": "부룬디 사람이 밥을 먹고 하는 말은?",
-  "description": "배부룬디",
-  "tags": ["나라"],
+  "title": {
+    "ko": "부룬디 사람이 밥을 먹고 하는 말은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "배부룬디",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["나라"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

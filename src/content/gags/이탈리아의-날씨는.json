@@ -1,9 +1,19 @@
 {
   "slug": "italy-weather",
-  "title": "이탈리아의 날씨는?",
-  "description": "습하게띠",
-  "tags": ["이탈리아", "스파게티", "날씨"],
+  "title": {
+    "ko": "이탈리아의 날씨는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "습하게띠",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["이탈리아", "스파게티", "날씨"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

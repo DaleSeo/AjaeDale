@@ -1,8 +1,17 @@
 {
   "slug": "kings-father",
-  "title": "왕의 아버지는?",
-  "description": "부킹",
-  "tags": ["왕"],
+  "title": {
+    "ko": "왕의 아버지는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "부킹",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["왕"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

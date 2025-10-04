@@ -1,9 +1,19 @@
 {
   "slug": "banana-milk-smile",
-  "title": "바나나 우유가 웃으면?",
-  "description": "빙그레",
-  "tags": ["바나나우유", "웃음"],
+  "title": {
+    "ko": "바나나 우유가 웃으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "빙그레",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["바나나우유", "웃음"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

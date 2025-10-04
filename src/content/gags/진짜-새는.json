@@ -1,9 +1,19 @@
 {
   "slug": "real-bird",
-  "title": "진짜 새는?",
-  "description": "참새",
-  "tags": [],
+  "title": {
+    "ko": "진짜 새는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "참새",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

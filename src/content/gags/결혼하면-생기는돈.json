@@ -1,8 +1,17 @@
 {
   "slug": "marriage-money",
-  "title": "결혼하면 생기는 돈은?",
-  "description": "사돈",
-  "tags": ["결혼"],
+  "title": {
+    "ko": "결혼하면 생기는 돈은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "사돈",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["결혼"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

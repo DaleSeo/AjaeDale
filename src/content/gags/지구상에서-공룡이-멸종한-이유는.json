@@ -1,9 +1,19 @@
 {
   "slug": "dinosaur-extinct-reason",
-  "title": "지구상에서 공룡이 멸종한 이유는?",
-  "description": "다 죽었기 때문에",
-  "tags": ["공룡", "멸종"],
+  "title": {
+    "ko": "지구상에서 공룡이 멸종한 이유는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "다 죽었기 때문에",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["공룡", "멸종"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

@@ -1,9 +1,19 @@
 {
   "slug": "cruelest-bibimbap",
-  "title": "세상에서 가장 잔인한 비빔밥은?",
-  "description": "산채비빔밥",
-  "tags": ["잔인"],
+  "title": {
+    "ko": "세상에서 가장 잔인한 비빔밥은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "산채비빔밥",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["잔인"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

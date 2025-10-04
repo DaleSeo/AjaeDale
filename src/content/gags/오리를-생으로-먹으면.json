@@ -1,9 +1,19 @@
 {
   "slug": "eating-raw-duck",
-  "title": "오리를 생으로 먹으면?",
-  "description": "회오리",
-  "tags": [],
+  "title": {
+    "ko": "오리를 생으로 먹으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "회오리",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
   "updatedAt": "2025-09-23T01:59:05.596Z"
 }

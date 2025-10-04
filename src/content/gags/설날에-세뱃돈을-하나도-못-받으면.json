@@ -1,9 +1,19 @@
 {
   "slug": "new-year-no-money",
-  "title": "설날에 세뱃돈을 하나도 못 받으면?",
-  "description": "설거지",
-  "tags": ["설날", "세뱃돈"],
+  "title": {
+    "ko": "설날에 세뱃돈을 하나도 못 받으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "설거지",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["설날", "세뱃돈"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

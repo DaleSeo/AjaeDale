@@ -1,14 +1,30 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import Card from "../components/Card.astro";
-import BookmarkIcon from "../icons/Bookmark.astro";
-import Share2Icon from "../icons/Share2.astro";
-import { enrichGagsWithLikes } from "../utils/discussionsApi";
-import { sortGagsByPopularity } from "../utils/popularityUtils";
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import Card from "../../components/Card.astro";
+import BookmarkIcon from "../../icons/Bookmark.astro";
+import Share2Icon from "../../icons/Share2.astro";
+import { enrichGagsWithLikes } from "../../utils/discussionsApi";
+import { sortGagsByPopularity } from "../../utils/popularityUtils";
+import {
+  useTranslations,
+  getLocalizedGag,
+  translate,
+  getLocalizedUrl,
+  type Lang,
+} from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
 
 type GagEntry = CollectionEntry<"gags">;
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -26,6 +42,7 @@ function getTodaysGag(gags: GagEntry[]): GagEntry {
 }
 
 const todaysGag = getTodaysGag(allGags);
+const localizedTodaysGag = getLocalizedGag(todaysGag, lang);
 
 // 인기 개그 가져오기
 const gagsWithLikesData = await enrichGagsWithLikes(allGags);
@@ -35,16 +52,18 @@ const topPopularGags = popularGags.slice(0, 6);
 const totalGagsCount = allGags.length;
 ---
 
-<Layout title="홈" currentPage="home">
-  <Hero />
+<Layout title={t("home.title")} currentPage="home" lang={lang}>
+  <Hero lang={lang} />
 
   <!-- 오늘의 개그 섹션 -->
   <section class="py-16 px-4 bg-gradient-to-b from-primary/5 to-background">
     <div class="container mx-auto max-w-4xl">
       <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold text-foreground mb-2">✨ 오늘의 개그</h2>
+        <h2 class="text-3xl font-bold text-foreground mb-2">
+          ✨ {t("home.today.title")}
+        </h2>
         <p class="text-muted-foreground">
-          매일 바뀌는 특별한 개그를 만나보세요
+          {t("home.today.subtitle")}
         </p>
       </div>
 
@@ -54,16 +73,16 @@ const totalGagsCount = allGags.length;
         <div class="flex items-start justify-between mb-6">
           <div class="flex items-center gap-3">
             {
-              todaysGag.data.tags.length > 0 && (
+              localizedTodaysGag.tags.length > 0 && (
                 <span class="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-full shadow-md">
-                  #{todaysGag.data.tags[0]}
+                  #{localizedTodaysGag.tags[0]}
                 </span>
               )
             }
             <span
               class="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full animate-pulse"
             >
-              TODAY
+              {t("home.today.badge")}
             </span>
           </div>
           <div class="flex items-center space-x-2">
@@ -71,10 +90,10 @@ const totalGagsCount = allGags.length;
               class="save-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
               data-gag={JSON.stringify({
                 slug: todaysGag.data.slug,
-                title: todaysGag.data.title,
-                description: todaysGag.data.description,
+                title: localizedTodaysGag.title,
+                description: localizedTodaysGag.description,
               })}
-              aria-label="저장"
+              aria-label={t("gag.save")}
             >
               <BookmarkIcon class="bookmark-icon w-6 h-6" />
               <BookmarkIcon
@@ -84,9 +103,9 @@ const totalGagsCount = allGags.length;
             </button>
             <button
               class="share-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
-              data-content={`${todaysGag.data.title}${todaysGag.data.description ? " - " + todaysGag.data.description : ""}`}
+              data-content={`${localizedTodaysGag.title}${localizedTodaysGag.description ? " - " + localizedTodaysGag.description : ""}`}
               data-slug={todaysGag.data.slug}
-              aria-label="공유"
+              aria-label={t("gag.share")}
             >
               <Share2Icon size={24} />
             </button>
@@ -95,12 +114,13 @@ const totalGagsCount = allGags.length;
 
         <div class="mb-6 text-center">
           <h3 class="text-xl md:text-2xl font-bold text-foreground mb-3">
-            Q. {todaysGag.data.title}
+            {t("gag.question")}
+            {localizedTodaysGag.title}
           </h3>
           {
-            todaysGag.data.description && (
+            localizedTodaysGag.description && (
               <p class="text-lg md:text-xl text-foreground">
-                A. {todaysGag.data.description}
+                {t("gag.answer")} {localizedTodaysGag.description}
               </p>
             )
           }
@@ -108,10 +128,10 @@ const totalGagsCount = allGags.length;
 
         <div class="mt-6 text-center">
           <a
-            href={`/gags/${todaysGag.data.slug}`}
+            href={getLocalizedUrl(`/gags/${todaysGag.data.slug}`, lang)}
             class="inline-flex items-center px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
           >
-            자세히 보기
+            {t("home.today.viewMore")}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -138,23 +158,23 @@ const totalGagsCount = allGags.length;
     <div class="container mx-auto max-w-6xl">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-foreground mb-2">
-          🔥 인기 아재개그
+          🔥 {t("home.popular.title")}
         </h2>
         <p class="text-muted-foreground">
-          가장 많은 사랑을 받고 있는 개그들이에요
+          {t("home.popular.subtitle")}
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {topPopularGags.map((gag) => <Card gag={gag} />)}
+        {topPopularGags.map((gag) => <Card gag={gag} lang={lang} />)}
       </div>
 
       <div class="text-center">
         <a
-          href="/popular"
+          href={getLocalizedUrl("/popular", lang)}
           class="inline-flex items-center px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
         >
-          인기 개그 더보기
+          {t("home.popular.viewMore")}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -178,25 +198,27 @@ const totalGagsCount = allGags.length;
   <!-- 통계 섹션 -->
   <section class="py-16 px-4 bg-gradient-to-b from-background to-primary/5">
     <div class="container mx-auto text-center">
-      <p class="text-xl text-muted-foreground mb-8">
-        총 <strong class="text-primary text-2xl">{totalGagsCount}개</strong>의
-        재미있는 개그가 기다리고 있어요!
-      </p>
+      <p
+        class="text-xl text-muted-foreground mb-8"
+        set:html={translate(lang, "home.stats.total", {
+          count: String(totalGagsCount),
+        })}
+      />
+    </div>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a
-          href="/random"
-          class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
-        >
-          🎲 랜덤 개그 보기
-        </a>
-        <a
-          href="/search"
-          class="text-lg font-medium px-8 py-3 border border-border rounded-lg hover:bg-accent transition-colors shadow-sm hover:shadow-md"
-        >
-          🔍 개그 검색하기
-        </a>
-      </div>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a
+        href={getLocalizedUrl("/random", lang)}
+        class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
+      >
+        {t("home.stats.randomBtn")}
+      </a>
+      <a
+        href={getLocalizedUrl("/search", lang)}
+        class="text-lg font-medium px-8 py-3 border border-border rounded-lg hover:bg-accent transition-colors shadow-sm hover:shadow-md"
+      >
+        {t("home.stats.searchBtn")}
+      </a>
     </div>
   </section>
 </Layout>

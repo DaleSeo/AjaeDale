@@ -1,9 +1,19 @@
 {
   "slug": "iron-favorite-food",
-  "title": "다리미가 좋아하는 음식은?",
-  "description": "피자",
-  "tags": ["다리미"],
+  "title": {
+    "ko": "다리미가 좋아하는 음식은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "피자",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["다리미"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
   "updatedAt": "2025-09-23T01:59:05.592Z"
 }

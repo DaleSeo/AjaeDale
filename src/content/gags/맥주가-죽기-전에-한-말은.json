@@ -1,9 +1,19 @@
 {
   "slug": "beer-dying-words",
-  "title": "맥주가 죽기 전에 한 말은?",
-  "description": "유언비어",
-  "tags": ["맥주"],
+  "title": {
+    "ko": "맥주가 죽기 전에 한 말은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "유언비어",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["맥주"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

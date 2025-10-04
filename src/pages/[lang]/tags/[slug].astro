@@ -1,0 +1,83 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Card from "../../../components/Card.astro";
+import { tagToSlug } from "../../../utils/tagUtils";
+import { useTranslations, translate, type Lang } from "../../../i18n/utils";
+
+type GagEntry = CollectionEntry<"gags">;
+
+export async function getStaticPaths() {
+  const allGags = await getCollection("gags", ({ data }: GagEntry) => {
+    return data.published === true;
+  });
+
+  const paths = [];
+
+  for (const lang of ["ko", "en"] as const) {
+    const allTags = new Set<string>();
+    allGags.forEach((gag: GagEntry) => {
+      const tags = gag.data.tags[lang] || [];
+      tags.forEach((tag: string) => {
+        allTags.add(tag);
+      });
+    });
+
+    for (const tag of allTags) {
+      paths.push({
+        params: {
+          lang,
+          slug: tagToSlug(tag),
+        },
+        props: {
+          tag,
+          gags: allGags.filter((gag: GagEntry) => {
+            const tags = gag.data.tags[lang] || [];
+            return tags.includes(tag);
+          }),
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+interface Props {
+  tag: string;
+  gags: GagEntry[];
+}
+
+const { tag, gags } = Astro.props;
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
+
+// SEO를 위한 메타 데이터
+const pageTitle = translate(lang, "tags.filterByTag", { tag });
+const pageDescription = translate(lang, "tags.totalGags", {
+  count: String(gags.length),
+});
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogTitle={pageTitle}
+  ogDescription={pageDescription}
+  currentPage="tag"
+>
+  <div class="container mx-auto px-4 py-8">
+    <!-- 태그 헤더 -->
+    <section class="mb-8" data-pagefind-ignore>
+      <h1 class="text-3xl font-bold text-foreground mb-2">#{tag}</h1>
+      <p class="text-muted-foreground">
+        이 태그가 포함된 개그 <strong>{gags.length}개</strong>
+      </p>
+    </section>
+
+    <!-- 개그 목록 -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {gags.map((gag: GagEntry) => <Card gag={gag} lang={lang} />)}
+    </section>
+  </div>
+</Layout>

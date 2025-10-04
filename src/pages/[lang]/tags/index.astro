@@ -1,9 +1,23 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
-import { tagToSlug } from "../../utils/tagUtils";
+import Layout from "../../../layouts/Layout.astro";
+import { tagToSlug } from "../../../utils/tagUtils";
+import {
+  useTranslations,
+  getLocalizedUrl,
+  type Lang,
+} from "../../../i18n/utils";
+
+export async function getStaticPaths() {
+  return ["ko", "en"].map((lang) => ({
+    params: { lang },
+  }));
+}
 
 type GagEntry = CollectionEntry<"gags">;
+
+const { lang } = Astro.params as { lang: Lang };
+const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -12,7 +26,8 @@ const allGags = await getCollection("gags", ({ data }: GagEntry) => {
 // 모든 태그와 개그 개수 계산
 const tagCounts = new Map<string, number>();
 allGags.forEach((gag: GagEntry) => {
-  gag.data.tags.forEach((tag: string) => {
+  const tags = gag.data.tags[lang] || [];
+  tags.forEach((tag: string) => {
     tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
   });
 });
@@ -24,9 +39,10 @@ const sortedTags = Array.from(tagCounts.entries())
 ---
 
 <Layout
-  title="태그"
-  description="아재 개그를 태그 별로 골라보세요!"
+  title={t("tags.title")}
+  description={t("tags.subtitle")}
   currentPage="tags"
+  lang={lang}
 >
   <!-- 헤더 섹션 -->
   <section
@@ -35,10 +51,10 @@ const sortedTags = Array.from(tagCounts.entries())
   >
     <div class="container mx-auto text-center max-w-4xl">
       <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-        🏷️ 모든 태그
+        🏷️ {t("tags.title")}
       </h1>
       <p class="text-lg text-muted-foreground">
-        아재 개그를 태그 별로 골라보세요!
+        {t("tags.subtitle")}
       </p>
     </div>
   </section>
@@ -52,7 +68,7 @@ const sortedTags = Array.from(tagCounts.entries())
         {
           sortedTags.map(({ tag, count }) => (
             <a
-              href={`/tags/${tagToSlug(tag)}`}
+              href={getLocalizedUrl(`/tags/${tagToSlug(tag)}`, lang)}
               class="group p-4 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-md transition-all duration-200 hover:scale-105"
             >
               <div class="text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
@@ -66,7 +82,7 @@ const sortedTags = Array.from(tagCounts.entries())
 
       <div class="text-center">
         <a
-          href="/"
+          href={getLocalizedUrl("/", lang)}
           class="inline-block px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
         >
           ← 홈으로 돌아가기

@@ -1,8 +1,17 @@
 {
   "slug": "t-sick",
-  "title": "트가 아프면?",
-  "description": "아파트",
-  "tags": [],
+  "title": {
+    "ko": "트가 아프면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "아파트",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

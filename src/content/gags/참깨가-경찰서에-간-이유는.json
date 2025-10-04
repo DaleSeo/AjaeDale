@@ -1,9 +1,19 @@
 {
   "slug": "sesame-police-station",
-  "title": "참깨가 경찰서에 간 이유는?",
-  "description": "고소해서",
-  "tags": ["참깨"],
+  "title": {
+    "ko": "참깨가 경찰서에 간 이유는?",
+    "en": ""
+  },
+  "description": {
+    "ko": "고소해서",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["참깨"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.632Z",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

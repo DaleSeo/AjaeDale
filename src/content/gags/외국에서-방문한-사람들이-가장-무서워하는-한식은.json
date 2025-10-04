@@ -1,9 +1,19 @@
 {
   "slug": "foreign-scary-korean-food",
-  "title": "외국에서 방문한 사람들이 가장 무서워하는 한식은?",
-  "description": "장모님 뼈다귀 해장국",
-  "tags": ["외국인", "한식"],
+  "title": {
+    "ko": "외국에서 방문한 사람들이 가장 무서워하는 한식은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "장모님 뼈다귀 해장국",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["외국인", "한식"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

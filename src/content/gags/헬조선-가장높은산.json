@@ -1,8 +1,17 @@
 {
   "slug": "hell-joseon-highest-mountain",
-  "title": "헬조선에서 가장 높은 산은?",
-  "description": "부동산",
-  "tags": ["산"],
+  "title": {
+    "ko": "헬조선에서 가장 높은 산은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "부동산",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["산"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

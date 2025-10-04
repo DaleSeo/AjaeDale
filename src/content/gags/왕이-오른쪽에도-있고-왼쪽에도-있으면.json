@@ -1,9 +1,19 @@
 {
   "slug": "king-left-and-right",
-  "title": "왕이 오른쪽에도 있고 왼쪽에도 있으면?",
-  "description": "우왕좌왕",
-  "tags": [],
+  "title": {
+    "ko": "왕이 오른쪽에도 있고 왼쪽에도 있으면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "우왕좌왕",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
   "updatedAt": "2025-09-23T01:59:05.596Z"
 }

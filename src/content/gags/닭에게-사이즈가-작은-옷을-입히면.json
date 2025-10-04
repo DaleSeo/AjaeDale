@@ -1,9 +1,19 @@
 {
   "slug": "chicken-small-clothes",
-  "title": "닭에게 사이즈가 작은 옷을 입히면?",
-  "description": "꼭끼오",
-  "tags": ["닭", "옷"],
+  "title": {
+    "ko": "닭에게 사이즈가 작은 옷을 입히면?",
+    "en": ""
+  },
+  "description": {
+    "ko": "꼭끼오",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["닭", "옷"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

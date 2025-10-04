@@ -1,8 +1,17 @@
 {
   "slug": "sashimi-door",
-  "title": "회를 전문적으로 하는 문은?",
-  "description": "회전문",
-  "tags": ["음식"],
+  "title": {
+    "ko": "회를 전문적으로 하는 문은?",
+    "en": ""
+  },
+  "description": {
+    "ko": "회전문",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["음식"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

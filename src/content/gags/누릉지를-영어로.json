@@ -1,9 +1,19 @@
 {
   "slug": "nurungji-english",
-  "title": "누릉지를 영어로",
-  "description": "바비 브라운",
-  "tags": ["누릉지", "영어"],
+  "title": {
+    "ko": "누릉지를 영어로",
+    "en": ""
+  },
+  "description": {
+    "ko": "바비 브라운",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["누릉지", "영어"],
+    "en": []
+  },
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

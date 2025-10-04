@@ -1,8 +1,17 @@
 {
   "slug": "gentleman-introduction",
-  "title": "신사가 자기소개를 할 때 어떻게 얘기하나?",
-  "description": "신사임당",
-  "tags": ["인물"],
+  "title": {
+    "ko": "신사가 자기소개를 할 때 어떻게 얘기하나?",
+    "en": ""
+  },
+  "description": {
+    "ko": "신사임당",
+    "en": ""
+  },
+  "tags": {
+    "ko": ["인물"],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"

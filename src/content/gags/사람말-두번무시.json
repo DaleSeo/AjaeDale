@@ -1,8 +1,17 @@
 {
   "slug": "ignore-twice",
-  "title": "사람 말을 두 번 무시하면 어떻게 되는지 알아?",
-  "description": "무시무시해져",
-  "tags": [],
+  "title": {
+    "ko": "사람 말을 두 번 무시하면 어떻게 되는지 알아?",
+    "en": ""
+  },
+  "description": {
+    "ko": "무시무시해져",
+    "en": ""
+  },
+  "tags": {
+    "ko": [],
+    "en": []
+  },
   "published": true,
   "featured": false,
   "createdAt": "2025-09-24T00:00:00.000Z"
