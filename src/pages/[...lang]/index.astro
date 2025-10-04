@@ -2,8 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
-import BookmarkIcon from "../../icons/Bookmark.astro";
-import Share2Icon from "../../icons/Share2.astro";
+import DailyGag from "../../components/DailyGag.astro";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import {
@@ -50,18 +49,6 @@ const totalGagsCount = allGags.length;
 // 페이지별 메시지 정의
 const messages = {
   title: { ko: "홈", en: "Home" },
-  "home.title": { ko: "아재달레", en: "AjaeDale" },
-  "hero.description": {
-    ko: "매일 새로운 아재개그를 만나보세요. 재미있는 개그부터 황당한 개그까지!",
-    en: "Discover new Korean puns every day. From hilarious to absurd!",
-  },
-  "today.title": { ko: "오늘의 개그", en: "Today's Pun" },
-  "today.subtitle": {
-    ko: "매일 바뀌는 특별한 개그를 만나보세요",
-    en: "Discover a special pun that changes daily",
-  },
-  "today.badge": { ko: "TODAY", en: "TODAY" },
-  "today.viewMore": { ko: "자세히 보기", en: "View More" },
   "popular.title": { ko: "인기 아재개그", en: "Popular Puns" },
   "popular.subtitle": {
     ko: "가장 많은 사랑을 받고 있는 개그들이에요",
@@ -74,10 +61,6 @@ const messages = {
   },
   "stats.randomBtn": { ko: "🎲 랜덤 개그 보기", en: "🎲 Random Pun" },
   "stats.searchBtn": { ko: "🔍 개그 검색하기", en: "🔍 Search Puns" },
-  "gag.question": { ko: "Q.", en: "Q." },
-  "gag.answer": { ko: "A.", en: "A." },
-  "gag.save": { ko: "저장", en: "Save" },
-  "gag.share": { ko: "공유", en: "Share" },
 };
 
 const t = (key: string) =>
@@ -86,121 +69,9 @@ const t = (key: string) =>
   "";
 ---
 
-<Layout
-  title={t("title")}
-  description={t("hero.description")}
-  currentPage="home"
-  lang={lang}
->
-  <!-- 헤더 섹션 -->
-  <section class="px-4 py-12 text-center">
-    <div class="container mx-auto max-w-3xl">
-      <h1 class="text-foreground mb-4 text-5xl font-bold md:text-6xl">
-        {t("home.title")}
-      </h1>
-      <p class="text-muted-foreground text-lg">
-        {t("hero.description")}
-      </p>
-    </div>
-  </section>
-
+<Layout title={t("title")} currentPage="home" lang={lang}>
   <!-- 오늘의 개그 섹션 -->
-  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-16">
-    <div class="container mx-auto max-w-4xl">
-      <div class="mb-8 text-center">
-        <h2 class="text-foreground mb-2 text-3xl font-bold">
-          ✨ {t("today.title")}
-        </h2>
-        <p class="text-muted-foreground">
-          {t("today.subtitle")}
-        </p>
-      </div>
-
-      <div
-        class="from-primary/10 via-background to-primary/5 border-primary/20 rounded-2xl border-2 bg-gradient-to-br p-8 shadow-lg transition-all duration-300 hover:shadow-xl md:p-12"
-      >
-        <div class="mb-6 flex items-start justify-between">
-          <div class="flex items-center gap-3">
-            {
-              todaysGag.data.tags.length > 0 && (
-                <span class="bg-primary text-primary-foreground inline-block rounded-full px-4 py-2 text-sm font-bold shadow-md">
-                  #{todaysGag.data.tags[0]}
-                </span>
-              )
-            }
-            <span
-              class="inline-block animate-pulse rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-yellow-900"
-            >
-              {t("today.badge")}
-            </span>
-          </div>
-          <div class="flex items-center space-x-2">
-            <button
-              class="save-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
-              data-gag={JSON.stringify({
-                slug: todaysGag.data.slug,
-                title: todaysGag.data.title,
-                description: todaysGag.data.description,
-              })}
-              aria-label={t("gag.save")}
-            >
-              <BookmarkIcon class="bookmark-icon h-6 w-6" />
-              <BookmarkIcon
-                class="bookmark-check-icon text-primary hidden h-6 w-6"
-                fill="currentColor"
-              />
-            </button>
-            <button
-              class="share-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
-              data-content={`${todaysGag.data.title}${todaysGag.data.description ? " - " + todaysGag.data.description : ""}`}
-              data-slug={todaysGag.data.slug}
-              aria-label={t("gag.share")}
-            >
-              <Share2Icon size={24} />
-            </button>
-          </div>
-        </div>
-
-        <div class="mb-6 text-center">
-          <h3 class="text-foreground mb-3 text-xl font-bold md:text-2xl">
-            {t("gag.question")}
-            {todaysGag.data.title}
-          </h3>
-          {
-            todaysGag.data.description && (
-              <p class="text-foreground text-lg md:text-xl">
-                {t("gag.answer")} {todaysGag.data.description}
-              </p>
-            )
-          }
-        </div>
-
-        <div class="mt-6 text-center">
-          <a
-            href={getLocalizedUrl(`/gags/${todaysGag.data.slug}`, lang)}
-            class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
-          >
-            {t("today.viewMore")}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="ml-2"
-            >
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <DailyGag gag={todaysGag} lang={lang} />
 
   <!-- 인기 개그 섹션 -->
   <section class="px-4 py-16">
