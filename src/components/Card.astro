@@ -16,24 +16,24 @@ const { gag, lang = detectedLang } = Astro.props;
 ---
 
 <div
-  class="card bg-card border border-border rounded-lg hover-lift group"
+  class="card bg-card border-border hover-lift group rounded-lg border"
   data-gag-slug={gag.data.slug}
 >
   <div class="p-6">
-    <div class="flex items-start justify-between mb-4">
+    <div class="mb-4 flex items-start justify-between">
       <div class="flex flex-wrap gap-2">
         {
           gag.data.tags.map((tag: string) => (
             <a
               href={getLocalizedUrl(`/tags/${tag}`, lang)}
-              class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
+              class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
             >
               #{tag}
             </a>
           ))
         }
         <span
-          class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+          class="inline-block rounded-full px-3 py-1 text-sm font-medium"
           class:list={[
             gag.data.lang === "ko"
               ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
@@ -45,7 +45,7 @@ const { gag, lang = detectedLang } = Astro.props;
       </div>
       <div class="flex items-center space-x-2">
         <button
-          class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
+          class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-gag={JSON.stringify({
             slug: gag.data.slug,
             title: gag.data.title,
@@ -54,14 +54,14 @@ const { gag, lang = detectedLang } = Astro.props;
           })}
           aria-label="저장"
         >
-          <BookmarkIcon class="bookmark-icon w-4 h-4" />
+          <BookmarkIcon class="bookmark-icon h-4 w-4" />
           <BookmarkIcon
-            class="bookmark-check-icon w-4 h-4 hidden text-primary"
+            class="bookmark-check-icon text-primary hidden h-4 w-4"
             fill="currentColor"
           />
         </button>
         <button
-          class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+          class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
           data-slug={gag.data.slug}
           aria-label="공유"
@@ -74,7 +74,7 @@ const { gag, lang = detectedLang } = Astro.props;
     <div class="mb-4">
       <a href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}>
         <h2
-          class="text-lg font-bold text-foreground mb-2 hover:text-primary transition-colors cursor-pointer"
+          class="text-foreground hover:text-primary mb-2 cursor-pointer text-lg font-bold transition-colors"
         >
           {gag.data.title}
         </h2>

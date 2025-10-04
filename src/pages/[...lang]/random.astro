@@ -42,39 +42,39 @@ const description = t("random.subtitle");
 
 <Layout title={title} description={description} currentPage="random">
   <!-- 헤더 섹션 -->
-  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
-    <div class="container mx-auto text-center max-w-4xl">
-      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h2 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
         🎲 {title}
       </h2>
-      <p class="text-lg text-muted-foreground">
+      <p class="text-muted-foreground text-lg">
         {description}
       </p>
     </div>
   </section>
 
   <!-- 랜덤 개그 섹션 -->
-  <section class="py-8 px-4">
+  <section class="px-4 py-8">
     <div class="container mx-auto max-w-4xl">
       <div
-        class="card bg-card border border-border rounded-lg"
+        class="card bg-card border-border rounded-lg border"
         data-gag-slug={randomGag.data.slug}
       >
         <div class="p-6 md:p-8">
-          <div class="flex items-start justify-between mb-4">
+          <div class="mb-4 flex items-start justify-between">
             <div class="flex flex-wrap gap-2">
               {
                 randomGag.data.tags.map((tag: string) => (
                   <a
                     href={getLocalizedUrl(`/tags/${tag}`, lang)}
-                    class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
+                    class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
                   >
                     #{tag}
                   </a>
                 ))
               }
               <span
-                class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+                class="inline-block rounded-full px-3 py-1 text-sm font-medium"
                 class:list={[
                   randomGag.data.lang === "ko"
                     ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
@@ -86,7 +86,7 @@ const description = t("random.subtitle");
             </div>
             <div class="flex items-center space-x-2">
               <button
-                class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
+                class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
                 data-gag={JSON.stringify({
                   slug: randomGag.data.slug,
                   title: randomGag.data.title,
@@ -95,14 +95,14 @@ const description = t("random.subtitle");
                 })}
                 aria-label={t("gag.save")}
               >
-                <BookmarkIcon class="bookmark-icon w-4 h-4" />
+                <BookmarkIcon class="bookmark-icon h-4 w-4" />
                 <BookmarkIcon
-                  class="bookmark-check-icon w-4 h-4 hidden text-primary"
+                  class="bookmark-check-icon text-primary hidden h-4 w-4"
                   fill="currentColor"
                 />
               </button>
               <button
-                class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+                class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
                 data-content={`${randomGag.data.title}${randomGag.data.description ? " - " + randomGag.data.description : ""}`}
                 data-slug={randomGag.data.slug}
                 aria-label={t("gag.share")}
@@ -113,7 +113,7 @@ const description = t("random.subtitle");
           </div>
 
           <div class="mb-6">
-            <h3 class="text-xl md:text-2xl font-bold text-foreground mb-4">
+            <h3 class="text-foreground mb-4 text-xl font-bold md:text-2xl">
               {t("gag.question")}
               {randomGag.data.title}
             </h3>
@@ -123,14 +123,14 @@ const description = t("random.subtitle");
                 <div class="spoiler-container">
                   <button
                     id={spoilerId}
-                    class="spoiler-btn text-sm bg-muted hover:bg-muted-foreground/20 text-muted-foreground px-3 py-1 rounded transition-colors"
+                    class="spoiler-btn bg-muted hover:bg-muted-foreground/20 text-muted-foreground rounded px-3 py-1 text-sm transition-colors"
                     data-spoiler-id={spoilerId}
                   >
                     {lang === "ko" ? "답변 보기 👀" : "Show Answer 👀"}
                   </button>
                   <p
                     id={`${spoilerId}-content`}
-                    class="spoiler-content hidden text-foreground mt-3 text-lg md:text-xl"
+                    class="spoiler-content text-foreground mt-3 hidden text-lg md:text-xl"
                   >
                     {t("gag.answer")} {randomGag.data.description}
                   </p>
@@ -142,7 +142,7 @@ const description = t("random.subtitle");
           <div class="text-center">
             <a
               href={getLocalizedUrl(`/gags/${randomGag.data.slug}`, lang)}
-              class="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
+              class="text-muted-foreground hover:text-primary inline-flex items-center text-sm transition-colors"
             >
               {t("gag.backToList")}
               <svg
@@ -168,10 +168,10 @@ const description = t("random.subtitle");
   </section>
 
   <!-- 액션 버튼들 -->
-  <div class="py-8 px-4 text-center">
+  <div class="px-4 py-8 text-center">
     <button
       type="button"
-      class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg"
+      class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
       onclick="window.location.reload()"
     >
       {t("random.nextBtn")}

@@ -19,22 +19,22 @@ const t = useTranslations(lang);
 
 <Layout title={t("saved.title")} currentPage="saved" lang={lang}>
   <!-- 헤더 섹션 -->
-  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
-    <div class="container mx-auto text-center max-w-4xl">
-      <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
         🔖 {t("saved.title")}
       </h1>
-      <p class="text-lg text-muted-foreground">{t("saved.subtitle")}</p>
+      <p class="text-muted-foreground text-lg">{t("saved.subtitle")}</p>
     </div>
   </section>
 
   <!-- 저장된 개그 섹션 -->
-  <section class="py-8 px-4">
+  <section class="px-4 py-8">
     <div class="container mx-auto max-w-6xl">
-      <div class="flex justify-end mb-6">
+      <div class="mb-6 flex justify-end">
         <button
           id="clear-all-btn"
-          class="hidden px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors"
+          class="bg-destructive text-destructive-foreground hover:bg-destructive/90 hidden rounded-lg px-4 py-2 transition-colors"
         >
           모두 삭제
         </button>
@@ -47,18 +47,18 @@ const t = useTranslations(lang);
       <!-- 저장된 개그가 없을 때 표시할 템플릿 -->
       <template id="empty-template">
         <div
-          class="card bg-card border border-border rounded-lg p-12 text-center"
+          class="card bg-card border-border rounded-lg border p-12 text-center"
         >
-          <div class="text-4xl mb-4">🔖</div>
-          <p class="text-xl text-muted-foreground mb-2">
+          <div class="mb-4 text-4xl">🔖</div>
+          <p class="text-muted-foreground mb-2 text-xl">
             아직 저장한 개그가 없습니다
           </p>
-          <p class="text-sm text-muted-foreground mb-6">
+          <p class="text-muted-foreground mb-6 text-sm">
             마음에 드는 개그를 저장해보세요
           </p>
           <a
             href="/"
-            class="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-lg px-6 py-3 transition-colors"
           >
             개그 둘러보기
           </a>
@@ -68,16 +68,16 @@ const t = useTranslations(lang);
       <!-- 개그 카드 템플릿 -->
       <template id="gag-card-template">
         <div
-          class="card bg-card border border-border rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+          class="card bg-card border-border rounded-lg border transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
         >
           <div class="p-6">
-            <div class="flex items-start justify-between mb-4">
+            <div class="mb-4 flex items-start justify-between">
               <div class="gag-tags flex flex-wrap gap-2">
                 <!-- 태그들이 여기에 추가됩니다 -->
               </div>
               <div class="flex items-center space-x-2">
                 <button
-                  class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+                  class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
                   aria-label="공유"
                 >
                   <svg
@@ -99,7 +99,7 @@ const t = useTranslations(lang);
                   </svg>
                 </button>
                 <button
-                  class="delete-btn p-2 hover:bg-accent rounded-md transition-colors text-destructive"
+                  class="delete-btn hover:bg-accent text-destructive rounded-md p-2 transition-colors"
                   aria-label="삭제"
                 >
                   <svg
@@ -121,7 +121,7 @@ const t = useTranslations(lang);
 
             <div class="mb-4">
               <a href="#" class="gag-link">
-                <p class="gag-title text-lg font-semibold text-foreground mb-2">
+                <p class="gag-title text-foreground mb-2 text-lg font-semibold">
                   <!-- 제목 -->
                 </p>
               </a>

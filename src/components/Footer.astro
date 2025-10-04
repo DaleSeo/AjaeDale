@@ -12,18 +12,18 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<footer class="bg-muted/50 py-12 px-4" data-pagefind-ignore="all">
+<footer class="bg-muted/50 px-4 py-12" data-pagefind-ignore="all">
   <div class="container mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
       <!-- 로고 및 설명 -->
       <div class="col-span-1 md:col-span-2">
-        <div class="flex items-center space-x-2 mb-4">
+        <div class="mb-4 flex items-center space-x-2">
           <img
             src="/logo.png"
             alt={t("home.hero.title")}
-            class="w-8 h-8 rounded-full"
+            class="h-8 w-8 rounded-full"
           />
-          <h3 class="text-xl font-bold text-foreground">
+          <h3 class="text-foreground text-xl font-bold">
             {t("home.hero.title")}
           </h3>
         </div>
@@ -35,7 +35,7 @@ const t = useTranslations(lang);
             href="https://github.com/DaleSeo/AjaeDale"
             target="_blank"
             rel="noopener noreferrer"
-            class="p-2 hover:bg-accent rounded-md transition-colors"
+            class="hover:bg-accent rounded-md p-2 transition-colors"
             aria-label="GitHub"
           >
             <GithubIcon size={16} />
@@ -44,7 +44,7 @@ const t = useTranslations(lang);
             href="https://www.buymeacoffee.com/daleseo"
             target="_blank"
             rel="noopener noreferrer"
-            class="p-2 hover:bg-accent rounded-md transition-colors"
+            class="hover:bg-accent rounded-md p-2 transition-colors"
             title="Buy me a coffee"
           >
             <CoffeeIcon size={16} />
@@ -54,7 +54,7 @@ const t = useTranslations(lang);
 
       <!-- 바로가기 -->
       <div>
-        <h4 class="font-semibold text-foreground mb-4">
+        <h4 class="text-foreground mb-4 font-semibold">
           {t("footer.quickLinks")}
         </h4>
         <ul class="space-y-2">
@@ -63,7 +63,7 @@ const t = useTranslations(lang);
               href={getLocalizedUrl("/latest", lang)}
               class="text-muted-foreground hover:text-primary transition-colors"
             >
-              {t("nav.latest")}
+              {t("footer.nav.latest")}
             </a>
           </li>
           <li>
@@ -71,7 +71,7 @@ const t = useTranslations(lang);
               href={getLocalizedUrl("/popular", lang)}
               class="text-muted-foreground hover:text-primary transition-colors"
             >
-              {t("nav.popular")}
+              {t("footer.nav.popular")}
             </a>
           </li>
           <li>
@@ -79,7 +79,7 @@ const t = useTranslations(lang);
               href={getLocalizedUrl("/random", lang)}
               class="text-muted-foreground hover:text-primary transition-colors"
             >
-              {t("nav.random")}
+              {t("footer.nav.random")}
             </a>
           </li>
           <li>
@@ -87,7 +87,7 @@ const t = useTranslations(lang);
               href={getLocalizedUrl("/tags", lang)}
               class="text-muted-foreground hover:text-primary transition-colors"
             >
-              {t("nav.tags")}
+              {t("footer.nav.tags")}
             </a>
           </li>
           <li>
@@ -95,7 +95,23 @@ const t = useTranslations(lang);
               href={getLocalizedUrl("/search", lang)}
               class="text-muted-foreground hover:text-primary transition-colors"
             >
-              {t("nav.search")}
+              {t("footer.nav.search")}
+            </a>
+          </li>
+          <li>
+            <a
+              href={getLocalizedUrl("/saved", lang)}
+              class="text-muted-foreground hover:text-primary transition-colors"
+            >
+              {t("footer.nav.saved")}
+            </a>
+          </li>
+          <li>
+            <a
+              href={getLocalizedUrl("/submit", lang)}
+              class="text-muted-foreground hover:text-primary transition-colors"
+            >
+              {t("footer.nav.submit")}
             </a>
           </li>
         </ul>
@@ -104,12 +120,12 @@ const t = useTranslations(lang);
 
     <!-- 하단 저작권 -->
     <div
-      class="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground"
+      class="border-border text-muted-foreground mt-12 border-t pt-8 text-center text-sm"
     >
       <p>{t("footer.copyright")}</p>
       <p class="mt-2 flex items-center justify-center gap-1">
         {t("footer.madeWith").split("❤️")[0]}
-        <HeartIcon size={14} class="text-red-500 inline" fill="currentColor" />
+        <HeartIcon size={14} class="inline text-red-500" fill="currentColor" />
         {t("footer.madeWith").split("❤️")[1]}
       </p>
     </div>

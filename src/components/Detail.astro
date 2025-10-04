@@ -15,24 +15,24 @@ const t = useTranslations(lang);
 ---
 
 <div
-  class="card bg-card border border-border rounded-lg"
+  class="card bg-card border-border rounded-lg border"
   data-gag-slug={gag.data.slug}
 >
   <div class="p-6 md:p-8">
-    <div class="flex items-start justify-between mb-4">
+    <div class="mb-4 flex items-start justify-between">
       <div class="flex flex-wrap gap-2">
         {
           gag.data.tags.map((tag: string) => (
             <a
               href={getLocalizedUrl(`/tags/${tag}`, lang)}
-              class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
+              class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
             >
               #{tag}
             </a>
           ))
         }
         <span
-          class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+          class="inline-block rounded-full px-3 py-1 text-sm font-medium"
           class:list={[
             gag.data.lang === "ko"
               ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
@@ -44,7 +44,7 @@ const t = useTranslations(lang);
       </div>
       <div class="flex items-center space-x-2">
         <button
-          class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
+          class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-gag={JSON.stringify({
             slug: gag.data.slug,
             title: gag.data.title,
@@ -53,14 +53,14 @@ const t = useTranslations(lang);
           })}
           aria-label={t("gag.save")}
         >
-          <BookmarkIcon class="bookmark-icon w-4 h-4" />
+          <BookmarkIcon class="bookmark-icon h-4 w-4" />
           <BookmarkIcon
-            class="bookmark-check-icon w-4 h-4 hidden text-primary"
+            class="bookmark-check-icon text-primary hidden h-4 w-4"
             fill="currentColor"
           />
         </button>
         <button
-          class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
+          class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
           data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
           data-slug={gag.data.slug}
           aria-label={t("gag.share")}
@@ -71,14 +71,14 @@ const t = useTranslations(lang);
     </div>
 
     <div class="mb-4">
-      <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-4">
+      <h1 class="text-foreground mb-4 text-2xl font-bold md:text-3xl">
         {t("gag.question")}
         {gag.data.title}
       </h1>
 
       {
         gag.data.description && (
-          <p class="text-lg md:text-xl text-foreground">
+          <p class="text-foreground text-lg md:text-xl">
             {t("gag.answer")} {gag.data.description}
           </p>
         )
@@ -87,7 +87,7 @@ const t = useTranslations(lang);
 
     {
       gag.data.createdAt && (
-        <div class="text-sm text-muted-foreground">
+        <div class="text-muted-foreground text-sm">
           {new Date(gag.data.createdAt).toLocaleDateString(
             lang === "ko" ? "ko-KR" : "en-US",
             {

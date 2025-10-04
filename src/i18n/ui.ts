@@ -15,8 +15,10 @@ export const ui = {
     "nav.random": "랜덤",
     "nav.tags": "분류",
     "nav.search": "검색",
-    "nav.saved": "북마크",
-    "nav.submit": "개그 제보",
+    "nav.saved": "개그 저장",
+    "nav.submit": "제보",
+    "nav.toggleTheme": "테마 전환",
+    "nav.toggleLanguage": "언어 전환",
 
     // 홈페이지
     "home.title": "홈",
@@ -93,6 +95,13 @@ export const ui = {
       "한국 아저씨들의 아재개그를 사랑하는 모든 분들을 위한 공간입니다. 매일 새로운 웃음을 선사해드립니다.",
     "footer.quickLinks": "바로가기",
     "footer.community": "커뮤니티",
+    "footer.nav.latest": "최신 개그",
+    "footer.nav.popular": "인기 개그",
+    "footer.nav.random": "랜덤 개그",
+    "footer.nav.tags": "개그 분류",
+    "footer.nav.search": "개그 검색",
+    "footer.nav.saved": "개그 저장",
+    "footer.nav.submit": "개그 제보",
 
     // 공통
     "common.loading": "로딩 중...",
@@ -109,6 +118,8 @@ export const ui = {
     "nav.search": "Search",
     "nav.saved": "Saved",
     "nav.submit": "Submit",
+    "nav.toggleTheme": "Toggle theme",
+    "nav.toggleLanguage": "Switch language",
 
     // Homepage
     "home.title": "Home",
@@ -185,6 +196,13 @@ export const ui = {
       "A space for everyone who loves Korean dad jokes. We bring you new laughs every day.",
     "footer.quickLinks": "Quick Links",
     "footer.community": "Community",
+    "footer.nav.latest": "Latest",
+    "footer.nav.popular": "Popular",
+    "footer.nav.random": "Random",
+    "footer.nav.tags": "Tags",
+    "footer.nav.search": "Search",
+    "footer.nav.saved": "Saved",
+    "footer.nav.submit": "Submit",
 
     // Common
     "common.loading": "Loading...",

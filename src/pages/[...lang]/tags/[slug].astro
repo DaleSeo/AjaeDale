@@ -71,14 +71,14 @@ const pageDescription = translate(lang, "tags.totalGags", {
   <div class="container mx-auto px-4 py-8">
     <!-- 태그 헤더 -->
     <section class="mb-8" data-pagefind-ignore>
-      <h1 class="text-3xl font-bold text-foreground mb-2">#{tag}</h1>
+      <h1 class="text-foreground mb-2 text-3xl font-bold">#{tag}</h1>
       <p class="text-muted-foreground">
         이 태그가 포함된 개그 <strong>{gags.length}개</strong>
       </p>
     </section>
 
     <!-- 개그 목록 -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {gags.map((gag: GagEntry) => <Card gag={gag} lang={lang} />)}
     </section>
   </div>
