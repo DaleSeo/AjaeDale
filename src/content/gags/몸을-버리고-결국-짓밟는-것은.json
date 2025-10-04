@@ -1,19 +1,11 @@
 {
   "slug": "sacrifices-body-stepped",
-  "title": {
-    "ko": "몸을 버리고 결국 짓밟는 것은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "담배꽁초",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "몸을 버리고 결국 짓밟는 것은?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
+  "description": "담배꽁초",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

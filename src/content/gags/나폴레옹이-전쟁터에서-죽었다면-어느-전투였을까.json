@@ -1,19 +1,11 @@
 {
   "slug": "napoleon-last-battle",
-  "title": {
-    "ko": "나폴레옹이 전쟁터에서 죽었다면 어느 전투였을까?",
-    "en": ""
-  },
-  "description": {
-    "ko": "마지막 전투",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["나폴레옹"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "나폴레옹이 전쟁터에서 죽었다면 어느 전투였을까?",
+  "tags": ["나폴레옹"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
+  "description": "마지막 전투",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

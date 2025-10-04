@@ -1,18 +1,10 @@
 {
   "slug": "pet-rock",
-  "title": {
-    "ko": "키우는 돌은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "반려암",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["동물"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "키우는 돌은?",
+  "tags": ["동물"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "반려암"
 }

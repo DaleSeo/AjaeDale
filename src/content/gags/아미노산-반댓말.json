@@ -1,18 +1,10 @@
 {
   "slug": "amino-acid-opposite",
-  "title": {
-    "ko": "아미노산의 반댓말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "방탄예스바다",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "아미노산의 반댓말은?",
+  "tags": [],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "방탄예스바다"
 }

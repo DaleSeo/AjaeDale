@@ -1,18 +1,10 @@
 {
   "slug": "gourd-dead",
-  "title": {
-    "ko": "바가지가 죽으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "해골바가지",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "바가지가 죽으면?",
+  "tags": [],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "해골바가지"
 }

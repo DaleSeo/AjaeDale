@@ -1,19 +1,11 @@
 {
   "slug": "most-expensive-fish",
-  "title": {
-    "ko": "세상에서 가장 비싼 물고기는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "금붕어",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["물고기"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "세상에서 가장 비싼 물고기는?",
+  "tags": ["물고기"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
+  "description": "금붕어",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

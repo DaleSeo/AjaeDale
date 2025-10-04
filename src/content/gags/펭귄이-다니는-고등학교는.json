@@ -1,19 +1,11 @@
 {
   "slug": "penguin-high-school",
-  "title": {
-    "ko": "펭귄이 다니는 고등학교는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "냉장고",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["펭귄", "고등학교"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "펭귄이 다니는 고등학교는?",
+  "tags": ["펭귄", "고등학교"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.632Z",
+  "description": "냉장고",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

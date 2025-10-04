@@ -1,18 +1,10 @@
 {
   "slug": "d-twenty",
-  "title": {
-    "ko": "D가 20개면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "스무디",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["숫자"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "D가 20개면?",
+  "tags": ["숫자"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "스무디"
 }

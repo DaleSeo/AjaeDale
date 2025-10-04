@@ -1,18 +1,10 @@
 {
   "slug": "bill-gates-singing",
-  "title": {
-    "ko": "빌 게이츠가 노래를 부르는 방법은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "마이크로 소프트하게",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["인물"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "빌 게이츠가 노래를 부르는 방법은?",
+  "tags": ["인물"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "마이크로 소프트하게"
 }

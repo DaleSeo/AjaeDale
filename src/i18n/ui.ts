@@ -4,15 +4,16 @@ export const languages = {
 };
 
 export const defaultLang = "ko";
+export const showDefaultLang = false;
 
 export const ui = {
   ko: {
     // 네비게이션
     "nav.home": "홈",
-    "nav.latest": "최신 개그",
-    "nav.popular": "인기 개그",
-    "nav.random": "랜덤 개그",
-    "nav.tags": "태그",
+    "nav.latest": "최신",
+    "nav.popular": "인기",
+    "nav.random": "랜덤",
+    "nav.tags": "분류",
     "nav.search": "검색",
     "nav.saved": "북마크",
     "nav.submit": "개그 제보",
@@ -88,6 +89,10 @@ export const ui = {
     // 푸터
     "footer.copyright": "© 2025 아재달레. All rights reserved.",
     "footer.madeWith": "Made with ❤️ by DaleSeo",
+    "footer.description":
+      "한국 아저씨들의 아재개그를 사랑하는 모든 분들을 위한 공간입니다. 매일 새로운 웃음을 선사해드립니다.",
+    "footer.quickLinks": "바로가기",
+    "footer.community": "커뮤니티",
 
     // 공통
     "common.loading": "로딩 중...",
@@ -176,6 +181,10 @@ export const ui = {
     // Footer
     "footer.copyright": "© 2025 AjaeDale. All rights reserved.",
     "footer.madeWith": "Made with ❤️ by DaleSeo",
+    "footer.description":
+      "A space for everyone who loves Korean dad jokes. We bring you new laughs every day.",
+    "footer.quickLinks": "Quick Links",
+    "footer.community": "Community",
 
     // Common
     "common.loading": "Loading...",

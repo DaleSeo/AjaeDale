@@ -1,19 +1,11 @@
 {
   "slug": "water-plant-director",
-  "title": {
-    "ko": "수자원 발전소 소장 이름은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "무라까와 쓰지마",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["수자원", "발전소", "소장"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "수자원 발전소 소장 이름은?",
+  "tags": ["수자원", "발전소", "소장"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "무라까와 쓰지마",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

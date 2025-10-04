@@ -1,19 +1,11 @@
 {
   "slug": "rescue-team-bankruptcy",
-  "title": {
-    "ko": "119구조대가 파산한 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "사람들이 자꾸 구조를 요구해서",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["119", "파산"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "119구조대가 파산한 이유는?",
+  "tags": ["119", "파산"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
+  "description": "사람들이 자꾸 구조를 요구해서",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

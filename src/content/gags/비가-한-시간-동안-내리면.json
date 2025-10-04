@@ -1,19 +1,11 @@
 {
   "slug": "rain-one-hour",
-  "title": {
-    "ko": "비가 한 시간 동안 내리면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "추적 60분",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["비", "시간"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "비가 한 시간 동안 내리면?",
+  "tags": ["비", "시간"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
+  "description": "추적 60분",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

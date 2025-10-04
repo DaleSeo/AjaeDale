@@ -1,18 +1,10 @@
 {
   "slug": "mountain-goes-up",
-  "title": {
-    "ko": "산이 올라가면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "산업",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["산"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "산이 올라가면?",
+  "tags": ["산"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "산업"
 }

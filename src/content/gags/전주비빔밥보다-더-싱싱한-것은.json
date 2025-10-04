@@ -1,19 +1,11 @@
 {
   "slug": "fresher-than-jeonju-bibimbap",
-  "title": {
-    "ko": "전주비빔밥보다 더 싱싱한 것은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "이번주비빔밥",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["전주"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "전주비빔밥보다 더 싱싱한 것은?",
+  "tags": ["전주"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
+  "description": "이번주비빔밥",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

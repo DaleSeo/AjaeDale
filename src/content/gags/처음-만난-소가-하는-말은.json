@@ -1,19 +1,11 @@
 {
   "slug": "cow-first-meeting",
-  "title": {
-    "ko": "처음 만난 소가 하는 말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "반갑소",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["인사"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "처음 만난 소가 하는 말은?",
+  "tags": ["인사"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
+  "description": "반갑소",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

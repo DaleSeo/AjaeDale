@@ -9,20 +9,22 @@ const { showLabel = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const alternateLang = lang === "ko" ? "en" : "ko";
 const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+const flagCode = alternateLang === "ko" ? "kr" : "us";
 ---
 
 <a
   href={alternateUrl}
   class={showLabel
-    ? "text-center py-2 px-3 bg-primary/5 text-primary font-medium rounded-md inline-block w-full"
-    : "px-3 py-2 text-sm font-medium hover:bg-accent rounded-md transition-colors"}
+    ? "text-foreground hover:text-primary px-3 py-2 rounded-md hover:bg-accent transition-colors flex items-center gap-2"
+    : "px-3 py-2 text-sm font-medium hover:bg-accent rounded-md transition-colors flex items-center gap-2"}
   title={alternateLang === "ko" ? "한국어" : "English"}
 >
-  {
-    showLabel
-      ? alternateLang === "ko"
-        ? "🇰🇷 한국어"
-        : "🇺🇸 English"
-      : alternateLang.toUpperCase()
-  }
+  <img
+    src={`https://hatscripts.github.io/circle-flags/flags/${flagCode}.svg`}
+    alt={alternateLang === "ko" ? "한국 국기" : "미국 국기"}
+    width="16"
+    height="16"
+    class="inline-block"
+  />
+  {showLabel && <span>{alternateLang === "ko" ? "한국어" : "English"}</span>}
 </a>

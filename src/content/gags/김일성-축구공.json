@@ -1,18 +1,10 @@
 {
   "slug": "kim-il-sung-soccer-ball",
-  "title": {
-    "ko": "김일성이 축구공을 사면서 하는 말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "나 공산당",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["인물"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "김일성이 축구공을 사면서 하는 말은?",
+  "tags": ["인물"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "나 공산당"
 }

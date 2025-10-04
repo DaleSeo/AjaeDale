@@ -1,19 +1,11 @@
 {
   "slug": "korea-windy-city",
-  "title": {
-    "ko": "우리나라에서 바람이 많이 부는 도시는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "분당",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["바람", "도시"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "우리나라에서 바람이 많이 부는 도시는?",
+  "tags": ["바람", "도시"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "분당",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

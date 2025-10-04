@@ -1,18 +1,10 @@
 {
   "slug": "monk-sees-nine",
-  "title": {
-    "ko": "길을 가다 9를 본 스님은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "구본승",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "길을 가다 9를 본 스님은?",
+  "tags": [],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "구본승"
 }

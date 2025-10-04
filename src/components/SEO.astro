@@ -21,6 +21,11 @@ const {
 
 // Get current URL without query params or hash
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
+
+// Convert relative alternateUrl to absolute URL
+const absoluteAlternateUrl = alternateUrl
+  ? new URL(alternateUrl, Astro.url.origin).href
+  : undefined;
 ---
 
 <meta name="description" content={description} />
@@ -30,13 +35,13 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 
 <!-- Multilingual hreflang tags -->
 {
-  alternateUrl && (
+  absoluteAlternateUrl && (
     <>
       <link rel="alternate" hreflang={lang} href={canonicalUrl} />
       <link
         rel="alternate"
         hreflang={lang === "ko" ? "en" : "ko"}
-        href={alternateUrl}
+        href={absoluteAlternateUrl}
       />
       <link
         rel="alternate"

@@ -1,18 +1,10 @@
 {
   "slug": "liposuction-opposite",
-  "title": {
-    "ko": "지방흡입의 반댓말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "수도권배출",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "지방흡입의 반댓말은?",
+  "tags": [],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "수도권배출"
 }

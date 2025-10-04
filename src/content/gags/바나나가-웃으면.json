@@ -1,19 +1,11 @@
 {
   "slug": "banana-smile-kick",
-  "title": {
-    "ko": "바나나가 웃으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "바나나킥",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["웃음"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "바나나가 웃으면?",
+  "tags": ["웃음"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
+  "description": "바나나킥",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

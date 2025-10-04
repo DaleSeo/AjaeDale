@@ -1,19 +1,11 @@
 {
   "slug": "woman-hits-pumpkin",
-  "title": {
-    "ko": "호박을 때리는 여자. 3글자",
-    "en": ""
-  },
-  "description": {
-    "ko": "박팽년",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["호박", "여자"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "호박을 때리는 여자. 3글자",
+  "tags": ["호박", "여자"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.919Z",
+  "description": "박팽년",
   "updatedAt": "2025-09-23T23:47:52.919Z"
 }

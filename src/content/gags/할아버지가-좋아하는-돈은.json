@@ -1,19 +1,11 @@
 {
   "slug": "grandpa-favorite-money",
-  "title": {
-    "ko": "할아버지가 좋아하는 돈은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "할머니",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["할아버지", "돈"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "할아버지가 좋아하는 돈은?",
+  "tags": ["할아버지", "돈"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.630Z",
+  "description": "할머니",
   "updatedAt": "2025-09-23T01:59:05.598Z"
 }

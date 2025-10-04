@@ -1,19 +1,11 @@
 {
   "slug": "nine-dogs-lay-eggs",
-  "title": {
-    "ko": "아홉 마리 강아지가 알을 낳으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "구독알람",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["강아지"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "아홉 마리 강아지가 알을 낳으면?",
+  "tags": ["강아지"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "구독알람",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

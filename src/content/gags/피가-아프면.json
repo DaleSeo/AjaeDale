@@ -1,19 +1,11 @@
 {
   "slug": "when-blood-hurts",
-  "title": {
-    "ko": "피가 아프면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "피식",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "피가 아프면?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
+  "description": "피식",
   "updatedAt": "2025-09-23T01:59:05.598Z"
 }

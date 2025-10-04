@@ -1,19 +1,11 @@
 {
   "slug": "bigger-loach",
-  "title": {
-    "ko": "일반 미꾸라지보다 더 큰 미꾸라지는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "미꾸엑스라지",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["미꾸라지"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "일반 미꾸라지보다 더 큰 미꾸라지는?",
+  "tags": ["미꾸라지"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "미꾸엑스라지",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

@@ -1,19 +1,11 @@
 {
   "slug": "snack-introduction",
-  "title": {
-    "ko": "과자가 자기소개를 하면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "전과자",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "과자가 자기소개를 하면?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
+  "description": "전과자",
   "updatedAt": "2025-09-23T01:59:05.591Z"
 }

@@ -1,19 +1,11 @@
 {
   "slug": "cat-goes-to-hell-hello-kitty",
-  "title": {
-    "ko": "고양이가 지옥에 가면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "헬로키티",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["고양이", "지옥"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "고양이가 지옥에 가면?",
+  "tags": ["고양이", "지옥"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.630Z",
+  "description": "헬로키티",
   "updatedAt": "2025-09-23T00:17:31.630Z"
 }

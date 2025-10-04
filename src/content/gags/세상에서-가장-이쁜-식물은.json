@@ -1,19 +1,11 @@
 {
   "slug": "prettiest-plant",
-  "title": {
-    "ko": "세상에서 가장 이쁜 식물은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "뷰티풀",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["식물"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "세상에서 가장 이쁜 식물은?",
+  "tags": ["식물"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
+  "description": "뷰티풀",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

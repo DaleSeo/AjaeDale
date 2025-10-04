@@ -1,19 +1,11 @@
 {
   "slug": "napoleon-tomb-name",
-  "title": {
-    "ko": "나폴레옹이 죽어서 능에 묻혔는데, 능 이름은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "불가능",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["나폴레옹"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "나폴레옹이 죽어서 능에 묻혔는데, 능 이름은?",
+  "tags": ["나폴레옹"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "불가능",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

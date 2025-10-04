@@ -1,19 +1,11 @@
 {
   "slug": "artist-introduction",
-  "title": {
-    "ko": "예술가가 자기소개하는 말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "네일 아트",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "예술가가 자기소개하는 말은?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
+  "description": "네일 아트",
   "updatedAt": "2025-09-23T01:59:05.595Z"
 }

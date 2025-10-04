@@ -1,19 +1,11 @@
 {
   "slug": "full-elevator-weight",
-  "title": {
-    "ko": "사람이 가득 찬 엘리베이터는 얼마일까?",
-    "en": ""
-  },
-  "description": {
-    "ko": "만원",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["엘리베이터"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "사람이 가득 찬 엘리베이터는 얼마일까?",
+  "tags": ["엘리베이터"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.632Z",
+  "description": "만원",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

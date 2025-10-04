@@ -1,18 +1,10 @@
 {
   "slug": "fan-opposite",
-  "title": {
-    "ko": "선풍기의 반대는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "후풍기",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "선풍기의 반대는?",
+  "tags": [],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "후풍기"
 }

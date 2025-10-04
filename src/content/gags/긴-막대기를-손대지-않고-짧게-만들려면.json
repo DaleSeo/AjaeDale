@@ -1,19 +1,11 @@
 {
   "slug": "make-stick-shorter",
-  "title": {
-    "ko": "긴 막대기가 있는데, 이것을 손대지 않고 짧게 만들려면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "더 긴 것을 옆에 놓는다",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["막대기", "짧게"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "긴 막대기가 있는데, 이것을 손대지 않고 짧게 만들려면?",
+  "tags": ["막대기", "짧게"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
+  "description": "더 긴 것을 옆에 놓는다",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

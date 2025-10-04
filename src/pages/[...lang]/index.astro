@@ -9,21 +9,22 @@ import { enrichGagsWithLikes } from "../../utils/discussionsApi";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import {
   useTranslations,
-  getLocalizedGag,
   translate,
   getLocalizedUrl,
-  type Lang,
+  getStaticPathsLocales,
+  normalizeLang,
 } from "../../i18n/utils";
 
 export async function getStaticPaths() {
-  return ["ko", "en"].map((lang) => ({
+  return getStaticPathsLocales().map((lang) => ({
     params: { lang },
   }));
 }
 
 type GagEntry = CollectionEntry<"gags">;
 
-const { lang } = Astro.params as { lang: Lang };
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
@@ -42,7 +43,6 @@ function getTodaysGag(gags: GagEntry[]): GagEntry {
 }
 
 const todaysGag = getTodaysGag(allGags);
-const localizedTodaysGag = getLocalizedGag(todaysGag, lang);
 
 // 인기 개그 가져오기
 const gagsWithLikesData = await enrichGagsWithLikes(allGags);
@@ -52,7 +52,12 @@ const topPopularGags = popularGags.slice(0, 6);
 const totalGagsCount = allGags.length;
 ---
 
-<Layout title={t("home.title")} currentPage="home" lang={lang}>
+<Layout
+  title={t("home.title")}
+  description={t("home.hero.description")}
+  currentPage="home"
+  lang={lang}
+>
   <Hero lang={lang} />
 
   <!-- 오늘의 개그 섹션 -->
@@ -73,12 +78,22 @@ const totalGagsCount = allGags.length;
         <div class="flex items-start justify-between mb-6">
           <div class="flex items-center gap-3">
             {
-              localizedTodaysGag.tags.length > 0 && (
+              todaysGag.data.tags.length > 0 && (
                 <span class="inline-block px-4 py-2 bg-primary text-primary-foreground text-sm font-bold rounded-full shadow-md">
-                  #{localizedTodaysGag.tags[0]}
+                  #{todaysGag.data.tags[0]}
                 </span>
               )
             }
+            <span
+              class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+              class:list={[
+                todaysGag.data.lang === "ko"
+                  ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                  : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+              ]}
+            >
+              {todaysGag.data.lang === "ko" ? "🇰🇷 한국어" : "🇺🇸 English"}
+            </span>
             <span
               class="inline-block px-3 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full animate-pulse"
             >
@@ -90,8 +105,8 @@ const totalGagsCount = allGags.length;
               class="save-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
               data-gag={JSON.stringify({
                 slug: todaysGag.data.slug,
-                title: localizedTodaysGag.title,
-                description: localizedTodaysGag.description,
+                title: todaysGag.data.title,
+                description: todaysGag.data.description,
               })}
               aria-label={t("gag.save")}
             >
@@ -103,7 +118,7 @@ const totalGagsCount = allGags.length;
             </button>
             <button
               class="share-btn p-3 hover:bg-background/50 rounded-lg transition-colors"
-              data-content={`${localizedTodaysGag.title}${localizedTodaysGag.description ? " - " + localizedTodaysGag.description : ""}`}
+              data-content={`${todaysGag.data.title}${todaysGag.data.description ? " - " + todaysGag.data.description : ""}`}
               data-slug={todaysGag.data.slug}
               aria-label={t("gag.share")}
             >
@@ -115,12 +130,12 @@ const totalGagsCount = allGags.length;
         <div class="mb-6 text-center">
           <h3 class="text-xl md:text-2xl font-bold text-foreground mb-3">
             {t("gag.question")}
-            {localizedTodaysGag.title}
+            {todaysGag.data.title}
           </h3>
           {
-            localizedTodaysGag.description && (
+            todaysGag.data.description && (
               <p class="text-lg md:text-xl text-foreground">
-                {t("gag.answer")} {localizedTodaysGag.description}
+                {t("gag.answer")} {todaysGag.data.description}
               </p>
             )
           }

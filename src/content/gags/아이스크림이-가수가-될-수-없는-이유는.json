@@ -1,19 +1,11 @@
 {
   "slug": "icecream-cant-sing",
-  "title": {
-    "ko": "아이스크림이 가수가 될 수 없는 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "녹음 안 되니까",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["아이스크림", "가수"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "아이스크림이 가수가 될 수 없는 이유는?",
+  "tags": ["아이스크림", "가수"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "녹음 안 되니까",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }
