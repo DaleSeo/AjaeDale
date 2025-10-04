@@ -2,22 +2,22 @@
 import type { Lang } from "../utils/i18n";
 
 export interface Props {
-  title: string;
+  title?: string;
   description?: string;
-  ogTitle?: string;
-  ogDescription?: string;
   lang?: Lang;
   alternateUrl?: string;
 }
 
-const {
-  title,
-  description = "한국 아저씨들이 사랑하는 개그 총정리! 아재개그 웃어달레 🤣",
-  ogTitle,
-  ogDescription,
-  lang = "ko",
-  alternateUrl,
-} = Astro.props;
+const { title, description, lang = "ko", alternateUrl } = Astro.props;
+
+const defaultTitle = lang === "ko" ? "아재달레" : "AjaeDale";
+const defaultDescription =
+  lang === "ko"
+    ? "한국 아저씨들이 사랑하는 개그 총정리! 아재개그 웃어달레 🤣"
+    : "The ultimate collection of Korean dad jokes! Laugh with us 🤣";
+
+const finalTitle = title || defaultTitle;
+const finalDescription = description || defaultDescription;
 
 // Get current URL without query params or hash
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
@@ -28,7 +28,7 @@ const absoluteAlternateUrl = alternateUrl
   : undefined;
 ---
 
-<meta name="description" content={description} />
+<meta name="description" content={finalDescription} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalUrl} />
@@ -56,8 +56,8 @@ const absoluteAlternateUrl = alternateUrl
 <meta property="og:site_name" content="아재달레" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:title" content={ogTitle || title} />
-<meta property="og:description" content={ogDescription || description} />
+<meta property="og:title" content={finalTitle} />
+<meta property="og:description" content={finalDescription} />
 <meta property="og:locale" content={lang === "ko" ? "ko_KR" : "en_US"} />
 {
   alternateUrl && (
@@ -74,8 +74,8 @@ const absoluteAlternateUrl = alternateUrl
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={ogTitle || title} />
-<meta name="twitter:description" content={ogDescription || description} />
+<meta name="twitter:title" content={finalTitle} />
+<meta name="twitter:description" content={finalDescription} />
 <meta
   name="twitter:image"
   content={new URL("/og-image.png", Astro.url.origin).href}

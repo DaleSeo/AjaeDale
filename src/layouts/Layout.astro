@@ -13,22 +13,18 @@ export interface Props {
   title?: string;
   description?: string;
   currentPage?: string;
-  ogTitle?: string;
-  ogDescription?: string;
   lang?: Lang;
 }
 
-const {
-  title = "아재달레 | 한국 아저씨들의 유머 천국",
-  description,
-  ogTitle,
-  ogDescription,
-  lang = "ko",
-} = Astro.props;
+const { title, description, lang = "ko" } = Astro.props;
 
 // Get alternate language URL for SEO
 const alternateLang = lang === "ko" ? "en" : "ko";
 const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+
+// 사이트 이름 추가
+const siteName = lang === "ko" ? "아재달레" : "AjaeDale";
+const finalTitle = title ? `${title} | ${siteName}` : siteName;
 ---
 
 <!doctype html>
@@ -60,13 +56,11 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <title>{title}</title>
+    <title>{finalTitle}</title>
 
     <SEO
-      title={title}
+      title={finalTitle}
       description={description}
-      ogTitle={ogTitle}
-      ogDescription={ogDescription}
       lang={lang}
       alternateUrl={alternateUrl}
     />
