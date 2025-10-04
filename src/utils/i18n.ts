@@ -1,9 +1,13 @@
-import { ui, defaultLang, showDefaultLang, languages } from "../i18n/ui";
+// 언어 설정
+export const languages = {
+  ko: "한국어",
+  en: "English",
+};
 
-export type Lang = keyof typeof ui;
+export const defaultLang = "ko";
+export const showDefaultLang = false;
 
-// Export for use in other modules
-export { showDefaultLang, defaultLang, languages };
+export type Lang = keyof typeof languages;
 
 // Helper to get all locales for getStaticPaths
 export function getStaticPathsLocales() {
@@ -19,14 +23,8 @@ export function normalizeLang(lang: string | undefined): Lang {
 
 export function getLangFromUrl(url: URL): Lang {
   const [, lang] = url.pathname.split("/");
-  if (lang in ui) return lang as Lang;
+  if (lang in languages) return lang as Lang;
   return defaultLang as Lang;
-}
-
-export function useTranslations(lang: Lang) {
-  return function t(key: keyof (typeof ui)[typeof defaultLang]) {
-    return ui[lang][key] || ui[defaultLang][key];
-  };
 }
 
 // URL 생성 헬퍼
@@ -51,21 +49,4 @@ export function getAlternateUrl(currentUrl: URL, targetLang: Lang): string {
 
   // 대상 언어 prefix 추가
   return getLocalizedUrl(path || "/", targetLang);
-}
-
-// 번역 헬퍼 (변수 치환 지원)
-export function translate(
-  lang: Lang,
-  key: keyof (typeof ui)[typeof defaultLang],
-  vars?: Record<string, string | number>,
-): string {
-  let text: string = ui[lang][key] || ui[defaultLang][key];
-
-  if (vars) {
-    Object.entries(vars).forEach(([varKey, value]) => {
-      text = text.replace(`{${varKey}}`, String(value));
-    });
-  }
-
-  return text;
 }

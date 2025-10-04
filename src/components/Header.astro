@@ -4,19 +4,48 @@ import XIcon from "../icons/X.astro";
 import Star from "../icons/Star.astro";
 import Flame from "../icons/Flame.astro";
 import Dice from "../icons/Dice.astro";
-import FolderOpen from "../icons/FolderOpen.astro";
+import Folder from "../icons/Folder.astro";
 import Search from "../icons/Search.astro";
 import Bookmark from "../icons/Bookmark.astro";
 import LangToggle from "./LangToggle.astro";
 import ThemeToggle from "./ThemeToggle.astro";
-import {
-  getLangFromUrl,
-  useTranslations,
-  getLocalizedUrl,
-} from "../i18n/utils";
+import { getLangFromUrl, getLocalizedUrl } from "../utils/i18n";
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+
+// 컴포넌트별 메시지 정의
+const messages = {
+  ko: {
+    home: {
+      title: "아재달레",
+      subtitle: "아재개그 웃어달레",
+    },
+    nav: {
+      latest: "최신 개그",
+      popular: "인기 개그",
+      random: "랜덤 개그",
+      tags: "개그 분류",
+      search: "개그 검색",
+      saved: "개그 저장",
+    },
+  },
+  en: {
+    home: {
+      title: "AjaeDale",
+      subtitle: "Korean Puns Collection",
+    },
+    nav: {
+      latest: "Latest",
+      popular: "Popular",
+      random: "Random",
+      tags: "Tags",
+      search: "Search",
+      saved: "Saved",
+    },
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 
 // 현재 페이지 감지
 const currentPath = Astro.url.pathname;
@@ -50,15 +79,15 @@ const getMobileNavStyle = (isActive: boolean) => {
       <a href={getLocalizedUrl("/", lang)} class="flex items-center space-x-2">
         <img
           src="/logo.png"
-          alt={t("home.hero.title")}
+          alt={t.home.title}
           class="h-10 w-10 rounded-full"
         />
         <div>
           <h1 class="text-foreground text-xl font-bold">
-            {t("home.hero.title")}
+            {t.home.title}
           </h1>
           <p class="text-muted-foreground hidden text-xs sm:block">
-            {t("home.hero.subtitle")}
+            {t.home.subtitle}
           </p>
         </div>
       </a>
@@ -70,38 +99,40 @@ const getMobileNavStyle = (isActive: boolean) => {
           class={`${getNavStyle(isLatestPage)} flex items-center gap-1.5`}
         >
           <Star size={16} />
-          <span>{t("nav.latest")}</span>
+          <span>{t.nav.latest}</span>
         </a>
         <a
           href={getLocalizedUrl("/popular", lang)}
           class={`${getNavStyle(isPopularPage)} flex items-center gap-1.5`}
         >
           <Flame size={16} />
-          <span>{t("nav.popular")}</span>
+          <span>{t.nav.popular}</span>
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
           class={`${getNavStyle(isRandomPage)} flex items-center gap-1.5`}
         >
           <Dice size={16} />
-          <span>{t("nav.random")}</span>
-        </a>
-        <a
-          href={getLocalizedUrl("/tags", lang)}
-          class={`${getNavStyle(isTagsPage)} flex items-center gap-1.5`}
-        >
-          <FolderOpen size={16} />
-          <span>{t("nav.tags")}</span>
+          <span>{t.nav.random}</span>
         </a>
       </nav>
 
       <div class="hidden items-center space-x-2 md:flex">
         <a
+          href={getLocalizedUrl("/tags", lang)}
+          class={isTagsPage
+            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
+            : "p-2 hover:bg-accent rounded-md transition-colors"}
+          title={t.nav.tags}
+        >
+          <Folder size={20} />
+        </a>
+        <a
           href={getLocalizedUrl("/search", lang)}
           class={isSearchPage
             ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
             : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title={t("nav.search")}
+          title={t.nav.search}
         >
           <Search size={20} />
         </a>
@@ -135,42 +166,42 @@ const getMobileNavStyle = (isActive: boolean) => {
           class={`${getMobileNavStyle(isLatestPage)} flex items-center gap-2`}
         >
           <Star size={16} />
-          <span>{t("nav.latest")}</span>
+          <span>{t.nav.latest}</span>
         </a>
         <a
           href={getLocalizedUrl("/popular", lang)}
           class={`${getMobileNavStyle(isPopularPage)} flex items-center gap-2`}
         >
           <Flame size={16} />
-          <span>{t("nav.popular")}</span>
+          <span>{t.nav.popular}</span>
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
           class={`${getMobileNavStyle(isRandomPage)} flex items-center gap-2`}
         >
           <Dice size={16} />
-          <span>{t("nav.random")}</span>
+          <span>{t.nav.random}</span>
         </a>
         <a
           href={getLocalizedUrl("/tags", lang)}
           class={`${getMobileNavStyle(isTagsPage)} flex items-center gap-2`}
         >
-          <FolderOpen size={16} />
-          <span>{t("nav.tags")}</span>
+          <Folder size={16} />
+          <span>{t.nav.tags}</span>
         </a>
         <a
           href={getLocalizedUrl("/search", lang)}
           class={`${getMobileNavStyle(isSearchPage)} flex items-center gap-2`}
         >
           <Search size={16} />
-          <span>{t("nav.search")}</span>
+          <span>{t.nav.search}</span>
         </a>
         <a
           href={getLocalizedUrl("/saved", lang)}
           class={`${getMobileNavStyle(isSavedPage)} flex items-center gap-2`}
         >
           <Bookmark size={16} />
-          <span>{t("nav.saved")}</span>
+          <span>{t.nav.saved}</span>
         </a>
 
         <!-- 언어 전환 및 다크모드 토글 (모바일 - 맨 아래) -->

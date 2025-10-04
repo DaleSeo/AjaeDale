@@ -1,11 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import {
-  useTranslations,
-  getStaticPathsLocales,
-  normalizeLang,
-} from "../../i18n/utils";
+import { getStaticPathsLocales, normalizeLang } from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -17,7 +13,20 @@ type GagEntry = CollectionEntry<"gags">;
 
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
-const t = useTranslations(lang);
+
+// 페이지별 메시지 정의
+const messages = {
+  ko: {
+    title: "개그 제보",
+    description: "재미있는 아재개그를 알고 계신가요?",
+  },
+  en: {
+    title: "Submit a Pun",
+    description: "Know a funny Korean pun?",
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 
 // 모든 태그 목록 가져오기
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
@@ -34,8 +43,8 @@ allGags.forEach((gag: GagEntry) => {
 const sortedTags = Array.from(allTags).sort();
 
 // 페이지 메타 정보
-const title = t("submit.title");
-const description = t("submit.description");
+const title = t.title;
+const description = t.description;
 ---
 
 <Layout title={title} description={description} currentPage="submit">

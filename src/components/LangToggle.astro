@@ -1,12 +1,20 @@
 ---
-import {
-  getLangFromUrl,
-  getAlternateUrl,
-  useTranslations,
-} from "../i18n/utils";
+import { getLangFromUrl, getAlternateUrl } from "../utils/i18n";
 
 const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+
+// 컴포넌트별 메시지 정의
+const messages = {
+  ko: {
+    toggleLanguage: "언어 전환",
+  },
+  en: {
+    toggleLanguage: "Switch language",
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
+
 const alternateLang = lang === "ko" ? "en" : "ko";
 const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
 const displayText = alternateLang.toUpperCase();
@@ -15,8 +23,8 @@ const displayText = alternateLang.toUpperCase();
 <a
   href={alternateUrl}
   class="hover:bg-accent rounded-md p-2 text-sm font-medium transition-colors"
-  title={t("nav.toggleLanguage")}
-  aria-label={t("nav.toggleLanguage")}
+  title={t.toggleLanguage}
+  aria-label={t.toggleLanguage}
 >
   {displayText}
 </a>

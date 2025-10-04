@@ -8,12 +8,10 @@ import Share2Icon from "../../icons/Share2.astro";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import {
-  useTranslations,
-  translate,
   getLocalizedUrl,
   getStaticPathsLocales,
   normalizeLang,
-} from "../../i18n/utils";
+} from "../../utils/i18n";
 
 export async function getStaticPaths() {
   return getStaticPathsLocales().map((lang) => ({
@@ -25,7 +23,70 @@ type GagEntry = CollectionEntry<"gags">;
 
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
-const t = useTranslations(lang);
+
+// 페이지별 메시지 정의
+const messages = {
+  ko: {
+    title: "홈",
+    hero: {
+      description:
+        "매일 새로운 아재개그를 만나보세요. 재미있는 개그부터 황당한 개그까지!",
+    },
+    today: {
+      title: "오늘의 개그",
+      subtitle: "매일 바뀌는 특별한 개그를 만나보세요",
+      badge: "TODAY",
+      viewMore: "자세히 보기",
+    },
+    popular: {
+      title: "인기 아재개그",
+      subtitle: "가장 많은 사랑을 받고 있는 개그들이에요",
+      viewMore: "인기 개그 더보기",
+    },
+    stats: {
+      total: "총 {count}개의 재미있는 개그가 기다리고 있어요!",
+      randomBtn: "🎲 랜덤 개그 보기",
+      searchBtn: "🔍 개그 검색하기",
+    },
+    gag: {
+      question: "Q.",
+      answer: "A.",
+      save: "저장",
+      share: "공유",
+    },
+  },
+  en: {
+    title: "Home",
+    hero: {
+      description:
+        "Discover new Korean puns every day. From hilarious to absurd!",
+    },
+    today: {
+      title: "Today's Pun",
+      subtitle: "Discover a special pun that changes daily",
+      badge: "TODAY",
+      viewMore: "View More",
+    },
+    popular: {
+      title: "Popular Puns",
+      subtitle: "The most loved puns by our community",
+      viewMore: "View More Popular Puns",
+    },
+    stats: {
+      total: "{count} funny puns waiting for you!",
+      randomBtn: "🎲 Random Pun",
+      searchBtn: "🔍 Search Puns",
+    },
+    gag: {
+      question: "Q.",
+      answer: "A.",
+      save: "Save",
+      share: "Share",
+    },
+  },
+};
+
+const t = messages[lang as keyof typeof messages] || messages.ko;
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
@@ -53,8 +114,8 @@ const totalGagsCount = allGags.length;
 ---
 
 <Layout
-  title={t("home.title")}
-  description={t("home.hero.description")}
+  title={t.title}
+  description={t.hero.description}
   currentPage="home"
   lang={lang}
 >
@@ -65,10 +126,10 @@ const totalGagsCount = allGags.length;
     <div class="container mx-auto max-w-4xl">
       <div class="mb-8 text-center">
         <h2 class="text-foreground mb-2 text-3xl font-bold">
-          ✨ {t("home.today.title")}
+          ✨ {t.today.title}
         </h2>
         <p class="text-muted-foreground">
-          {t("home.today.subtitle")}
+          {t.today.subtitle}
         </p>
       </div>
 
@@ -97,7 +158,7 @@ const totalGagsCount = allGags.length;
             <span
               class="inline-block animate-pulse rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-yellow-900"
             >
-              {t("home.today.badge")}
+              {t.today.badge}
             </span>
           </div>
           <div class="flex items-center space-x-2">
@@ -108,7 +169,7 @@ const totalGagsCount = allGags.length;
                 title: todaysGag.data.title,
                 description: todaysGag.data.description,
               })}
-              aria-label={t("gag.save")}
+              aria-label={t.gag.save}
             >
               <BookmarkIcon class="bookmark-icon h-6 w-6" />
               <BookmarkIcon
@@ -120,7 +181,7 @@ const totalGagsCount = allGags.length;
               class="share-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
               data-content={`${todaysGag.data.title}${todaysGag.data.description ? " - " + todaysGag.data.description : ""}`}
               data-slug={todaysGag.data.slug}
-              aria-label={t("gag.share")}
+              aria-label={t.gag.share}
             >
               <Share2Icon size={24} />
             </button>
@@ -129,13 +190,13 @@ const totalGagsCount = allGags.length;
 
         <div class="mb-6 text-center">
           <h3 class="text-foreground mb-3 text-xl font-bold md:text-2xl">
-            {t("gag.question")}
+            {t.gag.question}
             {todaysGag.data.title}
           </h3>
           {
             todaysGag.data.description && (
               <p class="text-foreground text-lg md:text-xl">
-                {t("gag.answer")} {todaysGag.data.description}
+                {t.gag.answer} {todaysGag.data.description}
               </p>
             )
           }
@@ -146,7 +207,7 @@ const totalGagsCount = allGags.length;
             href={getLocalizedUrl(`/gags/${todaysGag.data.slug}`, lang)}
             class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
           >
-            {t("home.today.viewMore")}
+            {t.today.viewMore}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -173,10 +234,10 @@ const totalGagsCount = allGags.length;
     <div class="container mx-auto max-w-6xl">
       <div class="mb-12 text-center">
         <h2 class="text-foreground mb-2 text-3xl font-bold">
-          🔥 {t("home.popular.title")}
+          🔥 {t.popular.title}
         </h2>
         <p class="text-muted-foreground">
-          {t("home.popular.subtitle")}
+          {t.popular.subtitle}
         </p>
       </div>
 
@@ -189,7 +250,7 @@ const totalGagsCount = allGags.length;
           href={getLocalizedUrl("/popular", lang)}
           class="border-border hover:bg-accent inline-flex items-center rounded-lg border px-6 py-3 transition-colors"
         >
-          {t("home.popular.viewMore")}
+          {t.popular.viewMore}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -213,12 +274,9 @@ const totalGagsCount = allGags.length;
   <!-- 통계 섹션 -->
   <section class="from-background to-primary/5 bg-gradient-to-b px-4 py-16">
     <div class="container mx-auto text-center">
-      <p
-        class="text-muted-foreground mb-8 text-xl"
-        set:html={translate(lang, "home.stats.total", {
-          count: String(totalGagsCount),
-        })}
-      />
+      <p class="text-muted-foreground mb-8 text-xl">
+        {t.stats.total.replace("{count}", String(totalGagsCount))}
+      </p>
     </div>
 
     <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -226,13 +284,13 @@ const totalGagsCount = allGags.length;
         href={getLocalizedUrl("/random", lang)}
         class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
       >
-        {t("home.stats.randomBtn")}
+        {t.stats.randomBtn}
       </a>
       <a
         href={getLocalizedUrl("/search", lang)}
         class="border-border hover:bg-accent rounded-lg border px-8 py-3 text-lg font-medium shadow-sm transition-colors hover:shadow-md"
       >
-        {t("home.stats.searchBtn")}
+        {t.stats.searchBtn}
       </a>
     </div>
   </section>
