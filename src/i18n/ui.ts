@@ -90,7 +90,7 @@ export const ui = {
 
     // 푸터
     "footer.copyright": "© 2025 아재달레. All rights reserved.",
-    "footer.madeWith": "Made with ❤️ by DaleSeo",
+    "footer.madeWith": "Made with ❤️ for 아재",
     "footer.description":
       "한국 아저씨들의 아재개그를 사랑하는 모든 분들을 위한 공간입니다. 매일 새로운 웃음을 선사해드립니다.",
     "footer.quickLinks": "바로가기",
@@ -191,7 +191,7 @@ export const ui = {
 
     // Footer
     "footer.copyright": "© 2025 AjaeDale. All rights reserved.",
-    "footer.madeWith": "Made with ❤️ by DaleSeo",
+    "footer.madeWith": "Made with ❤️ for Dads",
     "footer.description":
       "A space for everyone who loves Korean dad jokes. We bring you new laughs every day.",
     "footer.quickLinks": "Quick Links",
