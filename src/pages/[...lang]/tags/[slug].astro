@@ -41,12 +41,12 @@ export async function getStaticPaths() {
   return paths;
 }
 
-interface Props {
+type Props = {
   tag: string;
   gags: GagEntry[];
-}
+};
 
-const { tag, gags } = Astro.props;
+const { tag, gags } = Astro.props as Props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 
