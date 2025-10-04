@@ -1,0 +1,22 @@
+---
+import {
+  getLangFromUrl,
+  getAlternateUrl,
+  useTranslations,
+} from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const alternateLang = lang === "ko" ? "en" : "ko";
+const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
+const displayText = alternateLang.toUpperCase();
+---
+
+<a
+  href={alternateUrl}
+  class="hover:bg-accent rounded-md p-2 text-sm font-medium transition-colors"
+  title={t("nav.toggleLanguage")}
+  aria-label={t("nav.toggleLanguage")}
+>
+  {displayText}
+</a>

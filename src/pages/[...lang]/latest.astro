@@ -70,28 +70,28 @@ function getRelativeTime(date: Date): string {
   lang={lang}
 >
   <!-- 헤더 섹션 -->
-  <section class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background">
-    <div class="container mx-auto text-center max-w-4xl">
-      <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
         🌟 {title}
       </h1>
-      <p class="text-lg text-muted-foreground">
+      <p class="text-muted-foreground text-lg">
         {description}
       </p>
     </div>
   </section>
 
   <!-- 최신 개그 섹션 -->
-  <section class="py-8 px-4">
+  <section class="px-4 py-8">
     <div class="container mx-auto max-w-6xl">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
           displayGags.map((gag: GagEntry, index: number) => (
             <div class="relative">
-              <div class="absolute -top-3 -left-3 z-10 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+              <div class="bg-primary text-primary-foreground absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold shadow-md">
                 #{index + 1}
               </div>
-              <div class="absolute -top-3 -right-3 z-10 px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium shadow-md">
+              <div class="bg-secondary text-secondary-foreground absolute -top-3 -right-3 z-10 rounded-full px-3 py-1 text-xs font-medium shadow-md">
                 {getRelativeTime(new Date(gag.data.createdAt))}
               </div>
               <Card gag={gag} lang={lang} />

@@ -10,14 +10,14 @@ const { lang = "ko" } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="home" class="py-20 px-4">
+<section id="home" class="px-4 py-20">
   <div class="container mx-auto text-center">
-    <div class="max-w-4xl mx-auto">
+    <div class="mx-auto max-w-4xl">
       <div class="mb-8">
         <img
           src="/og-image.png"
           alt={t("home.hero.title")}
-          class="w-full max-w-lg md:max-w-2xl h-auto mx-auto"
+          class="mx-auto h-auto w-full max-w-lg md:max-w-2xl"
           width="1200"
           height="630"
           fetchpriority="high"
@@ -26,43 +26,43 @@ const t = useTranslations(lang);
       </div>
 
       <p
-        class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty"
+        class="text-muted-foreground mx-auto mb-8 max-w-2xl text-xl text-pretty"
       >
         {t("home.hero.description")}
       </p>
 
       <div
-        class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+        class="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
       >
         <a
           href={getLocalizedUrl("/popular", lang)}
-          class="text-lg font-medium px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium transition-colors"
         >
           {t("nav.popular")}
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
-          class="text-lg font-medium px-8 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
+          class="border-border hover:bg-accent rounded-lg border px-8 py-3 text-lg font-medium transition-colors"
         >
           {t("nav.random")}
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div class="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
         <div class="p-6">
-          <div class="text-3xl font-bold text-primary mb-2">160+</div>
+          <div class="text-primary mb-2 text-3xl font-bold">160+</div>
           <div class="text-muted-foreground">
             {lang === "ko" ? "레전드 아재개그" : "Dad Jokes"}
           </div>
         </div>
         <div class="p-6">
-          <div class="text-3xl font-bold text-primary mb-2">50+</div>
+          <div class="text-primary mb-2 text-3xl font-bold">50+</div>
           <div class="text-muted-foreground">
             {lang === "ko" ? "다양한 카테고리" : "Categories"}
           </div>
         </div>
         <div class="p-6">
-          <div class="text-3xl font-bold text-primary mb-2">
+          <div class="text-primary mb-2 text-3xl font-bold">
             {lang === "ko" ? "매일" : "Daily"}
           </div>
           <div class="text-muted-foreground">

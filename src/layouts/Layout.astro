@@ -35,6 +35,20 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Theme script - must run before page renders to prevent flash -->
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+        if (isDark) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <meta
       name="keywords"
       content="아재개그, 유머, 개그, 아저씨, 웃긴이야기, 한국유머"
@@ -65,7 +79,7 @@ const alternateUrl = getAlternateUrl(Astro.url, alternateLang);
       rel="stylesheet"
     />
   </head>
-  <body class="font-sans korean-text">
+  <body class="korean-text font-sans">
     <Header />
     <main>
       <slot />

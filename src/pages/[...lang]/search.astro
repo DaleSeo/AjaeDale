@@ -31,44 +31,44 @@ const description = t("search.description");
 >
   <!-- 헤더 섹션 -->
   <section
-    class="py-12 px-4 bg-gradient-to-b from-primary/5 to-background"
+    class="from-primary/5 to-background bg-gradient-to-b px-4 py-12"
     data-pagefind-ignore
   >
-    <div class="container mx-auto text-center max-w-4xl">
-      <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+    <div class="container mx-auto max-w-4xl text-center">
+      <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
         🔍 {title}
       </h1>
-      <p class="text-lg text-muted-foreground">{description}</p>
+      <p class="text-muted-foreground text-lg">{description}</p>
     </div>
   </section>
 
   <!-- 검색 섹션 -->
-  <section class="py-8 px-4" data-pagefind-ignore>
+  <section class="px-4 py-8" data-pagefind-ignore>
     <div class="container mx-auto max-w-4xl">
       <!-- 검색 입력 -->
       <div class="mb-8">
         <div class="relative">
           <div
-            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4"
           >
             <SearchIcon size={20} class="text-muted-foreground" />
           </div>
           <input
             type="text"
             id="search-input"
-            class="w-full pl-12 pr-12 py-4 bg-card border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-foreground placeholder-muted-foreground text-lg"
+            class="bg-card border-border focus:ring-primary focus:border-primary text-foreground placeholder-muted-foreground w-full rounded-xl border-2 py-4 pr-12 pl-12 text-lg transition-all focus:ring-2 focus:outline-none"
             placeholder={t("search.placeholder")}
             autofocus
           />
           <button
             id="clear-button"
-            class="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors hidden"
+            class="text-muted-foreground hover:text-foreground absolute inset-y-0 right-0 flex hidden items-center pr-4 transition-colors"
             aria-label={t("search.clearButton")}
           >
             <XIcon size={20} />
           </button>
         </div>
-        <p class="text-sm text-muted-foreground mt-2 ml-1">
+        <p class="text-muted-foreground mt-2 ml-1 text-sm">
           {t("search.hint")}
         </p>
       </div>
@@ -79,13 +79,13 @@ const description = t("search.description");
       <!-- 검색 결과 없음 -->
       <div
         id="no-results"
-        class="hidden text-center py-12 bg-card border border-border rounded-xl"
+        class="bg-card border-border hidden rounded-xl border py-12 text-center"
       >
-        <div class="text-4xl mb-4">🔍</div>
-        <p class="text-xl text-muted-foreground mb-2">
+        <div class="mb-4 text-4xl">🔍</div>
+        <p class="text-muted-foreground mb-2 text-xl">
           {t("search.noResults")}
         </p>
-        <p class="text-sm text-muted-foreground">
+        <p class="text-muted-foreground text-sm">
           {t("search.tryAgain")}
         </p>
       </div>

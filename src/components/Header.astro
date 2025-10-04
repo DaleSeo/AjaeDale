@@ -7,7 +7,8 @@ import Dice from "../icons/Dice.astro";
 import FolderOpen from "../icons/FolderOpen.astro";
 import Search from "../icons/Search.astro";
 import Bookmark from "../icons/Bookmark.astro";
-import LanguagePicker from "./LanguagePicker.astro";
+import LangToggle from "./LangToggle.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 import {
   getLangFromUrl,
   useTranslations,
@@ -42,7 +43,7 @@ const getMobileNavStyle = (isActive: boolean) => {
 ---
 
 <header
-  class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+  class="bg-background/80 border-border sticky top-0 z-50 border-b backdrop-blur-md"
 >
   <div class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
@@ -50,20 +51,20 @@ const getMobileNavStyle = (isActive: boolean) => {
         <img
           src="/logo.png"
           alt={t("home.hero.title")}
-          class="w-10 h-10 rounded-full"
+          class="h-10 w-10 rounded-full"
         />
         <div>
-          <h1 class="text-xl font-bold text-foreground">
+          <h1 class="text-foreground text-xl font-bold">
             {t("home.hero.title")}
           </h1>
-          <p class="text-xs text-muted-foreground hidden sm:block">
+          <p class="text-muted-foreground hidden text-xs sm:block">
             {t("home.hero.subtitle")}
           </p>
         </div>
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-6">
+      <nav class="hidden items-center space-x-6 md:flex">
         <a
           href={getLocalizedUrl("/latest", lang)}
           class={`${getNavStyle(isLatestPage)} flex items-center gap-1.5`}
@@ -92,34 +93,30 @@ const getMobileNavStyle = (isActive: boolean) => {
           <FolderOpen size={16} />
           <span>{t("nav.tags")}</span>
         </a>
-        <a
-          href={getLocalizedUrl("/search", lang)}
-          class={`${getNavStyle(isSearchPage)} flex items-center gap-1.5`}
-        >
-          <Search size={16} />
-          <span>{t("nav.search")}</span>
-        </a>
       </nav>
 
-      <div class="hidden md:flex items-center space-x-2">
+      <div class="hidden items-center space-x-2 md:flex">
         <a
-          href={getLocalizedUrl("/saved", lang)}
-          class={isSavedPage
+          href={getLocalizedUrl("/search", lang)}
+          class={isSearchPage
             ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
             : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title={t("nav.saved")}
+          title={t("nav.search")}
         >
-          <Bookmark size={20} />
+          <Search size={20} />
         </a>
 
+        <!-- 다크모드 토글 -->
+        <ThemeToggle />
+
         <!-- 언어 전환기 -->
-        <LanguagePicker />
+        <LangToggle />
       </div>
 
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-btn"
-        class="md:hidden p-2 hover:bg-accent rounded-md transition-colors"
+        class="hover:bg-accent rounded-md p-2 transition-colors md:hidden"
         aria-label="메뉴"
       >
         <MenuIcon id="menu-icon" size={20} />
@@ -130,7 +127,7 @@ const getMobileNavStyle = (isActive: boolean) => {
     <!-- Mobile Navigation -->
     <nav
       id="mobile-menu"
-      class="hidden md:hidden mt-4 pb-4 border-t border-border pt-4"
+      class="border-border mt-4 hidden border-t pt-4 pb-4 md:hidden"
     >
       <div class="flex flex-col space-y-2">
         <a
@@ -176,9 +173,12 @@ const getMobileNavStyle = (isActive: boolean) => {
           <span>{t("nav.saved")}</span>
         </a>
 
-        <!-- 언어 전환 (모바일 - 맨 아래) -->
-        <div class="pt-2 border-t border-border">
-          <LanguagePicker showLabel={true} />
+        <!-- 언어 전환 및 다크모드 토글 (모바일 - 맨 아래) -->
+        <div
+          class="border-border flex items-center justify-end gap-2 border-t pt-2"
+        >
+          <ThemeToggle />
+          <LangToggle />
         </div>
       </div>
     </nav>

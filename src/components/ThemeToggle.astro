@@ -1,0 +1,53 @@
+---
+import Moon from "../icons/Moon.astro";
+import Sun from "../icons/Sun.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<button
+  class="theme-toggle hover:bg-accent rounded-md p-2 transition-colors"
+  aria-label={t("nav.toggleTheme")}
+  title={t("nav.toggleTheme")}
+>
+  <Sun size={20} class="sun-icon hidden dark:block" />
+  <Moon size={20} class="moon-icon block dark:hidden" />
+</button>
+
+<script>
+  // 테마 초기화 및 토글 로직
+  const initTheme = () => {
+    const themeToggles = document.querySelectorAll(".theme-toggle");
+    if (themeToggles.length === 0) return;
+
+    // 저장된 테마 또는 시스템 선호도 확인
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+    // 초기 테마 적용
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    // 모든 토글 버튼에 클릭 이벤트 연결
+    themeToggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const isDarkMode = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+      });
+    });
+  };
+
+  // 페이지 로드 시 실행
+  document.addEventListener("DOMContentLoaded", initTheme);
+
+  // Astro의 페이지 전환 후에도 실행 (View Transitions 사용 시)
+  document.addEventListener("astro:after-swap", initTheme);
+</script>

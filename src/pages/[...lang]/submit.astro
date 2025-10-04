@@ -39,24 +39,24 @@ const description = t("submit.description");
 ---
 
 <Layout title={title} description={description} currentPage="submit">
-  <section class="py-16 px-4">
+  <section class="px-4 py-16">
     <div class="container mx-auto max-w-2xl">
       <!-- 페이지 헤더 -->
-      <div class="text-center mb-12">
-        <h1 class="text-3xl font-bold text-foreground mb-4">📝 {title}</h1>
+      <div class="mb-12 text-center">
+        <h1 class="text-foreground mb-4 text-3xl font-bold">📝 {title}</h1>
         <p class="text-muted-foreground text-lg">
           {description}
         </p>
       </div>
 
       <!-- 제출 폼 -->
-      <div class="bg-card border border-border rounded-xl p-8">
+      <div class="bg-card border-border rounded-xl border p-8">
         <form id="submit-form" class="space-y-6">
           <!-- 개그 질문 -->
           <div>
             <label
               for="title"
-              class="block text-sm font-medium text-foreground mb-2"
+              class="text-foreground mb-2 block text-sm font-medium"
             >
               개그 질문 <span class="text-destructive">*</span>
             </label>
@@ -66,9 +66,9 @@ const description = t("submit.description");
               name="title"
               required
               placeholder="예: 왕이 넘어지면?"
-              class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+              class="border-border focus:ring-primary bg-background w-full rounded-md border px-3 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
             />
-            <p class="text-xs text-muted-foreground mt-1">
+            <p class="text-muted-foreground mt-1 text-xs">
               질문 형식으로 입력해주세요.
             </p>
           </div>
@@ -77,7 +77,7 @@ const description = t("submit.description");
           <div>
             <label
               for="body"
-              class="block text-sm font-medium text-foreground mb-2"
+              class="text-foreground mb-2 block text-sm font-medium"
             >
               개그 답변 <span class="text-destructive">*</span>
             </label>
@@ -87,9 +87,9 @@ const description = t("submit.description");
               name="body"
               required
               placeholder="예: 킹콩"
-              class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+              class="border-border focus:ring-primary bg-background w-full rounded-md border px-3 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
             />
-            <p class="text-xs text-muted-foreground mt-1">
+            <p class="text-muted-foreground mt-1 text-xs">
               재치있는 답변을 입력해주세요.
             </p>
           </div>
@@ -98,7 +98,7 @@ const description = t("submit.description");
           <div>
             <label
               for="tags"
-              class="block text-sm font-medium text-foreground mb-2"
+              class="text-foreground mb-2 block text-sm font-medium"
             >
               태그 <span class="text-muted-foreground">(선택사항)</span>
             </label>
@@ -107,19 +107,19 @@ const description = t("submit.description");
               id="tags"
               name="tags"
               placeholder="예: 왕, 동물"
-              class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+              class="border-border focus:ring-primary bg-background w-full rounded-md border px-3 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
             />
-            <p class="text-xs text-muted-foreground mt-1">
+            <p class="text-muted-foreground mt-1 text-xs">
               쉼표(,)로 구분하여 여러 태그를 입력할 수 있습니다.
             </p>
             <div class="mt-2">
-              <p class="text-xs text-muted-foreground mb-1">인기 태그:</p>
+              <p class="text-muted-foreground mb-1 text-xs">인기 태그:</p>
               <div class="flex flex-wrap gap-1">
                 {
                   sortedTags.slice(0, 10).map((tag) => (
                     <button
                       type="button"
-                      class="tag-suggestion text-xs px-2 py-1 bg-muted text-muted-foreground rounded hover:bg-primary/10 hover:text-primary transition-colors"
+                      class="tag-suggestion bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary rounded px-2 py-1 text-xs transition-colors"
                       data-tag={tag}
                     >
                       #{tag}
@@ -134,7 +134,7 @@ const description = t("submit.description");
           <div>
             <label
               for="author"
-              class="block text-sm font-medium text-foreground mb-2"
+              class="text-foreground mb-2 block text-sm font-medium"
             >
               작성자 닉네임 <span class="text-destructive">*</span>
             </label>
@@ -144,10 +144,10 @@ const description = t("submit.description");
               name="author"
               required
               placeholder="닉네임을 입력해주세요"
-              class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-background"
+              class="border-border focus:ring-primary bg-background w-full rounded-md border px-3 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
               maxlength="20"
             />
-            <p class="text-xs text-muted-foreground mt-1">
+            <p class="text-muted-foreground mt-1 text-xs">
               최대 20자까지 입력 가능합니다.
             </p>
           </div>
@@ -156,7 +156,7 @@ const description = t("submit.description");
           <div class="pt-4">
             <button
               type="submit"
-              class="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+              class="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-lg px-6 py-3 font-medium transition-colors"
             >
               개그 제출하기
             </button>
@@ -166,13 +166,13 @@ const description = t("submit.description");
         <!-- 성공 메시지 -->
         <div
           id="success-message"
-          class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg"
+          class="mt-6 hidden rounded-lg border border-green-200 bg-green-50 p-4"
         >
           <div class="flex items-center">
-            <div class="text-green-600 text-xl mr-3">✅</div>
+            <div class="mr-3 text-xl text-green-600">✅</div>
             <div>
-              <h3 class="text-green-800 font-medium">제출 완료!</h3>
-              <p class="text-green-700 text-sm">
+              <h3 class="font-medium text-green-800">제출 완료!</h3>
+              <p class="text-sm text-green-700">
                 개그가 성공적으로 제출되었습니다. 검토 후 사이트에 추가됩니다.
               </p>
             </div>
@@ -181,11 +181,11 @@ const description = t("submit.description");
       </div>
 
       <!-- 제출 가이드라인 -->
-      <div class="mt-8 bg-muted/50 rounded-xl p-6">
-        <h3 class="text-lg font-semibold text-foreground mb-4">
+      <div class="bg-muted/50 mt-8 rounded-xl p-6">
+        <h3 class="text-foreground mb-4 text-lg font-semibold">
           📋 제출 가이드라인
         </h3>
-        <ul class="space-y-2 text-muted-foreground">
+        <ul class="text-muted-foreground space-y-2">
           <li class="flex items-start">
             <span class="text-primary mr-2">•</span>
             건전하고 재미있는 아재개그만 제출해주세요
@@ -209,7 +209,7 @@ const description = t("submit.description");
       <div class="mt-8 text-center">
         <a
           href="/"
-          class="inline-block px-6 py-3 border border-border rounded-lg hover:bg-accent transition-colors"
+          class="border-border hover:bg-accent inline-block rounded-lg border px-6 py-3 transition-colors"
         >
           ← 홈으로 돌아가기
         </a>
