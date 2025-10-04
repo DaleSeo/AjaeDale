@@ -1,26 +1,10 @@
 ---
-const gaId = import.meta.env.PUBLIC_GA_ID;
+const gaId = "G-7PHMLMM88X";
 ---
 
+<!-- Google Analytics -->
 <script
   is:inline
   async
   src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-<script is:inline data-ga-id={gaId}>
-  const gaId = document.currentScript.dataset.gaId;
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    window.dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
-  gtag("config", gaId);
-
-  // View Transitions 지원
-  document.addEventListener("astro:after-swap", () => {
-    if (typeof gtag !== "undefined" && gaId) {
-      gtag("config", gaId, {
-        page_path: window.location.pathname + window.location.search,
-      });
-    }
-  });
-</script>
+<script is:inline src="/ga.js" data-ga-id={gaId}></script>
