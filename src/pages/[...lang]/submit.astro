@@ -1,17 +1,22 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { useTranslations, type Lang } from "../../i18n/utils";
+import {
+  useTranslations,
+  getStaticPathsLocales,
+  normalizeLang,
+} from "../../i18n/utils";
 
 export async function getStaticPaths() {
-  return ["ko", "en"].map((lang) => ({
+  return getStaticPathsLocales().map((lang) => ({
     params: { lang },
   }));
 }
 
 type GagEntry = CollectionEntry<"gags">;
 
-const { lang } = Astro.params as { lang: Lang };
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
 
 // 모든 태그 목록 가져오기
@@ -21,9 +26,7 @@ const allGags = await getCollection("gags", ({ data }: GagEntry) => {
 
 const allTags = new Set<string>();
 allGags.forEach((gag: GagEntry) => {
-  // tags는 이제 {ko: string[], en: string[]} 구조
-  const tags = gag.data.tags[lang] || gag.data.tags.ko;
-  tags.forEach((tag: string) => {
+  gag.data.tags.forEach((tag: string) => {
     allTags.add(tag);
   });
 });

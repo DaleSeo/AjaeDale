@@ -1,18 +1,10 @@
 {
   "slug": "maratang-eat-or-not",
-  "title": {
-    "ko": "마라탕을 먹을거니?",
-    "en": ""
-  },
-  "description": {
-    "ko": "마라지 마라",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["음식"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "마라탕을 먹을거니?",
+  "tags": ["음식"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "마라지 마라"
 }

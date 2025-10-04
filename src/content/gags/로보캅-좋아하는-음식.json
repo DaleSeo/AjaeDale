@@ -1,18 +1,10 @@
 {
   "slug": "robocop-favorite-food",
-  "title": {
-    "ko": "로보캅이 좋아하는 음식은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "치킨이에요. 음~ 치킨!",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["영화"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "로보캅이 좋아하는 음식은?",
+  "tags": ["영화"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "치킨이에요. 음~ 치킨!"
 }

@@ -1,18 +1,10 @@
 {
   "slug": "flower-hospital",
-  "title": {
-    "ko": "꽃이 병원에 가는 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "수술이 있어서",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["꽃"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "꽃이 병원에 가는 이유는?",
+  "tags": ["꽃"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "수술이 있어서"
 }

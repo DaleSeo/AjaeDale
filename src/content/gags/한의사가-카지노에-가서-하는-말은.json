@@ -1,19 +1,11 @@
 {
   "slug": "oriental-doctor-casino",
-  "title": {
-    "ko": "한의사가 카지노에 가서 하는 말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "인생은 한방",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["한의사", "카지노"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "한의사가 카지노에 가서 하는 말은?",
+  "tags": ["한의사", "카지노"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
+  "description": "인생은 한방",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

@@ -1,18 +1,10 @@
 {
   "slug": "cart-only-dumplings",
-  "title": {
-    "ko": "카트에 만두만 있으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "카트만두",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["음식"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "카트에 만두만 있으면?",
+  "tags": ["음식"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "카트만두"
 }

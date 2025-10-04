@@ -1,19 +1,11 @@
 {
   "slug": "couple-sunrise-reason",
-  "title": {
-    "ko": "남녀가 해돋이를 가는 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "해버러",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["해돋이", "남녀"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "남녀가 해돋이를 가는 이유는?",
+  "tags": ["해돋이", "남녀"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
+  "description": "해버러",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

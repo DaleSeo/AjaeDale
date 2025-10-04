@@ -1,19 +1,11 @@
 {
   "slug": "famous-foot-person",
-  "title": {
-    "ko": "발이 유명하고 인기가 많은 사람은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "바리스타",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["발", "유명"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "발이 유명하고 인기가 많은 사람은?",
+  "tags": ["발", "유명"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.919Z",
+  "description": "바리스타",
   "updatedAt": "2025-09-23T23:47:52.919Z"
 }

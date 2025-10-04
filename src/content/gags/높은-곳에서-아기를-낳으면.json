@@ -1,19 +1,11 @@
 {
   "slug": "baby-born-high-place",
-  "title": {
-    "ko": "높은 곳에서 아기를 낳으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "하이에나",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["높은곳"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "높은 곳에서 아기를 낳으면?",
+  "tags": ["높은곳"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.634Z",
+  "description": "하이에나",
   "updatedAt": "2025-09-23T01:59:05.592Z"
 }

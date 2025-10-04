@@ -1,19 +1,11 @@
 {
   "slug": "drunk-shout-idiom",
-  "title": {
-    "ko": "술이 취해서 큰 소리를 지르거나 노래를 부르는 것을 사자성어로 하면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "아빠인가",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["술", "사자성어"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "술이 취해서 큰 소리를 지르거나 노래를 부르는 것을 사자성어로 하면?",
+  "tags": ["술", "사자성어"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.924Z",
+  "description": "아빠인가",
   "updatedAt": "2025-09-23T23:47:52.924Z"
 }

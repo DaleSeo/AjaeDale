@@ -1,19 +1,11 @@
 {
   "slug": "sky-no-moon",
-  "title": {
-    "ko": "하늘에 달이 없으면 어떻게 되나?",
-    "en": ""
-  },
-  "description": {
-    "ko": "날 샜다",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["하늘", "달"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "하늘에 달이 없으면 어떻게 되나?",
+  "tags": ["하늘", "달"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
+  "description": "날 샜다",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

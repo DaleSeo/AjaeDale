@@ -1,18 +1,10 @@
 {
   "slug": "grape-introduction",
-  "title": {
-    "ko": "포도가 자기소개를 할 때 하는 말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "포도당",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["과일"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "포도가 자기소개를 할 때 하는 말은?",
+  "tags": ["과일"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "포도당"
 }

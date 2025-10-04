@@ -1,19 +1,11 @@
 {
   "slug": "shindong-next-person",
-  "title": {
-    "ko": "슈퍼주니어 신동 옆에 있는 사람은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "신동엽",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["슈퍼주니어"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "슈퍼주니어 신동 옆에 있는 사람은?",
+  "tags": ["슈퍼주니어"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "신동엽",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

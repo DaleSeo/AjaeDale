@@ -1,19 +1,11 @@
 {
   "slug": "human-greed-one-letter",
-  "title": {
-    "ko": "사람의 욕심을 1글자로 줄이면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "더",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["욕심"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "사람의 욕심을 1글자로 줄이면?",
+  "tags": ["욕심"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.923Z",
+  "description": "더",
   "updatedAt": "2025-09-23T23:47:52.923Z"
 }

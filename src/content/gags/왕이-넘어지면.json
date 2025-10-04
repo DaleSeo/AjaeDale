@@ -1,18 +1,11 @@
 {
   "slug": "king-falls-kingkong",
-  "title": {
-    "ko": "왕이 넘어지면?",
-    "en": "What happens when a king falls?"
-  },
-  "description": {
-    "ko": "킹콩",
-    "en": "King Kong"
-  },
-  "tags": {
-    "ko": ["왕"],
-    "en": ["king"]
-  },
+  "lang": "ko",
+  "title": "왕이 넘어지면?",
+  "tags": ["왕"],
   "published": true,
+  "featured": false,
   "createdAt": "2025-09-23T00:17:31.623Z",
+  "description": "킹콩",
   "updatedAt": "2025-09-23T00:17:31.624Z"
 }

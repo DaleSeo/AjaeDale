@@ -1,19 +1,11 @@
 {
   "slug": "cow-with-two-feet",
-  "title": {
-    "ko": "발이 두개 달린 소는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "이발소",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "발이 두개 달린 소는?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
+  "description": "이발소",
   "updatedAt": "2025-09-23T01:59:05.593Z"
 }

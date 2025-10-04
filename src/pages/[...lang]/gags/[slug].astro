@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import Detail from "../../../components/Detail.astro";
 import Giscus from "../../../components/Giscus.astro";
-import { getLocalizedGag, type Lang } from "../../../i18n/utils";
+import { getStaticPathsLocales, normalizeLang } from "../../../i18n/utils";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   });
 
   const paths = [];
-  for (const lang of ["ko", "en"]) {
+  for (const lang of getStaticPathsLocales()) {
     for (const gag of allGags) {
       paths.push({
         params: {
@@ -32,13 +32,13 @@ interface Props {
 }
 
 const { gag }: Props = Astro.props;
-const { lang } = Astro.params as { lang: Lang };
-const localizedGag = getLocalizedGag(gag, lang);
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 ---
 
-<Layout title={localizedGag.title} currentPage="gag" lang={lang}>
+<Layout title={gag.data.title} currentPage="gag" lang={lang}>
   <article class="container mx-auto max-w-4xl px-4 py-8">
-    <h1 class="sr-only" data-pagefind-body>{localizedGag.title}</h1>
+    <h1 class="sr-only" data-pagefind-body>{gag.data.title}</h1>
 
     <Detail gag={gag} lang={lang} />
 

@@ -1,7 +1,21 @@
-import { ui, defaultLang } from "../i18n/ui";
-import type { CollectionEntry } from "astro:content";
+import { ui, defaultLang, showDefaultLang, languages } from "../i18n/ui";
 
 export type Lang = keyof typeof ui;
+
+// Export for use in other modules
+export { showDefaultLang, defaultLang, languages };
+
+// Helper to get all locales for getStaticPaths
+export function getStaticPathsLocales() {
+  return Object.keys(languages).map((lang) =>
+    !showDefaultLang && lang === defaultLang ? undefined : lang,
+  );
+}
+
+// Helper to normalize lang param (undefined -> defaultLang)
+export function normalizeLang(lang: string | undefined): Lang {
+  return (lang || defaultLang) as Lang;
+}
 
 export function getLangFromUrl(url: URL): Lang {
   const [, lang] = url.pathname.split("/");
@@ -15,24 +29,9 @@ export function useTranslations(lang: Lang) {
   };
 }
 
-export function getLocalizedGag(
-  gag: CollectionEntry<"gags">,
-  lang: Lang,
-): {
-  title: string;
-  description?: string;
-  tags: string[];
-} {
-  return {
-    title: gag.data.title[lang] || gag.data.title.ko,
-    description: gag.data.description?.[lang] || gag.data.description?.ko,
-    tags: gag.data.tags[lang] || gag.data.tags.ko,
-  };
-}
-
 // URL 생성 헬퍼
 export function getLocalizedUrl(path: string, lang: Lang): string {
-  if (lang === defaultLang) {
+  if (!showDefaultLang && lang === defaultLang) {
     return path;
   }
   return `/${lang}${path}`;
@@ -44,7 +43,9 @@ export function getAlternateUrl(currentUrl: URL, targetLang: Lang): string {
   let path = currentUrl.pathname;
 
   // 현재 언어 prefix 제거
-  if (currentLang !== defaultLang) {
+  if (!showDefaultLang && currentLang === defaultLang) {
+    // 기본 언어는 prefix 없음 - path 그대로 유지
+  } else if (currentLang !== defaultLang) {
     path = path.replace(new RegExp(`^/${currentLang}`), "");
   }
 

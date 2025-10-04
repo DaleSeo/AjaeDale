@@ -1,19 +1,11 @@
 {
   "slug": "best-business-animal",
-  "title": {
-    "ko": "세상에서 가장 장사를 잘 하는 동물은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "판다",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["장사"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "세상에서 가장 장사를 잘 하는 동물은?",
+  "tags": ["장사"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.634Z",
+  "description": "판다",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

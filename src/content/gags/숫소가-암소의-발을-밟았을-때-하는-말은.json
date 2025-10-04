@@ -1,19 +1,11 @@
 {
   "slug": "bull-steps-cow",
-  "title": {
-    "ko": "숫소가 암소의 발을 밟았을 때 하는 말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "암소쏘뤼",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["숫소", "미안"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "숫소가 암소의 발을 밟았을 때 하는 말은?",
+  "tags": ["숫소", "미안"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
+  "description": "암소쏘뤼",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

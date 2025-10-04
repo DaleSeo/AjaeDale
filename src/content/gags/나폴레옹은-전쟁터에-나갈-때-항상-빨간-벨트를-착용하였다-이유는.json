@@ -1,19 +1,11 @@
 {
   "slug": "napoleon-red-belt",
-  "title": {
-    "ko": "나폴레옹은 전쟁터에 나갈 때 항상 빨간 벨트를 착용하였다. 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "바지 흘러내릴까봐",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["나폴레옹", "벨트"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "나폴레옹은 전쟁터에 나갈 때 항상 빨간 벨트를 착용하였다. 이유는?",
+  "tags": ["나폴레옹", "벨트"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.920Z",
+  "description": "바지 흘러내릴까봐",
   "updatedAt": "2025-09-23T23:47:52.920Z"
 }

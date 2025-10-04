@@ -1,19 +1,11 @@
 {
   "slug": "monk-leaves-civil-song",
-  "title": {
-    "ko": "머리 빡빡 깎은 중이 떠나가면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "민중가요",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["머리"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "머리 빡빡 깎은 중이 떠나가면?",
+  "tags": ["머리"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.914Z",
+  "description": "민중가요",
   "updatedAt": "2025-09-23T23:47:52.918Z"
 }

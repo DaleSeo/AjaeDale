@@ -1,19 +1,11 @@
 {
   "slug": "car-road-person-jump",
-  "title": {
-    "ko": "차가 다니는 도로에 갑자기 사람이 뛰어들면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "카놀라유",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["차", "도로"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "차가 다니는 도로에 갑자기 사람이 뛰어들면?",
+  "tags": ["차", "도로"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
+  "description": "카놀라유",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

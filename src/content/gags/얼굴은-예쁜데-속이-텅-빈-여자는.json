@@ -1,19 +1,11 @@
 {
   "slug": "pretty-empty-woman",
-  "title": {
-    "ko": "얼굴은 예쁜데 속이 텅 빈 여자는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "마네킹",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["얼굴", "여자"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "얼굴은 예쁜데 속이 텅 빈 여자는?",
+  "tags": ["얼굴", "여자"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "마네킹",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

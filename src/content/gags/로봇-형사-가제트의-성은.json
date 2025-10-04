@@ -1,19 +1,11 @@
 {
   "slug": "robot-gadget-surname",
-  "title": {
-    "ko": "로봇 형사 가제트의 성은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "마징(마징가제트)",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["로봇"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "로봇 형사 가제트의 성은?",
+  "tags": ["로봇"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "마징(마징가제트)",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

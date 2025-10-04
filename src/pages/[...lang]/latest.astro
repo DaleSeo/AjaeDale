@@ -2,17 +2,22 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
-import { useTranslations, type Lang } from "../../i18n/utils";
+import {
+  useTranslations,
+  getStaticPathsLocales,
+  normalizeLang,
+} from "../../i18n/utils";
 
 export async function getStaticPaths() {
-  return ["ko", "en"].map((lang) => ({
+  return getStaticPathsLocales().map((lang) => ({
     params: { lang },
   }));
 }
 
 type GagEntry = CollectionEntry<"gags">;
 
-const { lang } = Astro.params as { lang: Lang };
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {

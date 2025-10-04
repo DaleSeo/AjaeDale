@@ -1,19 +1,11 @@
 {
   "slug": "strawberry-loses-job",
-  "title": {
-    "ko": "딸기가 직장을 잃으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "딸기시럽(실업)",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "딸기가 직장을 잃으면?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.631Z",
+  "description": "딸기시럽(실업)",
   "updatedAt": "2025-09-23T01:59:05.592Z"
 }

@@ -1,19 +1,11 @@
 {
   "slug": "hundred-multiply-ten",
-  "title": {
-    "ko": "백곱하기를 10번 하면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "배꼽에서 피가 난다",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["백곱하기"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "백곱하기를 10번 하면?",
+  "tags": ["백곱하기"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
+  "description": "배꼽에서 피가 난다",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

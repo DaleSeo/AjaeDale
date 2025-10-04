@@ -5,18 +5,20 @@ import { tagToSlug } from "../../../utils/tagUtils";
 import {
   useTranslations,
   getLocalizedUrl,
-  type Lang,
+  getStaticPathsLocales,
+  normalizeLang,
 } from "../../../i18n/utils";
 
 export async function getStaticPaths() {
-  return ["ko", "en"].map((lang) => ({
+  return getStaticPathsLocales().map((lang) => ({
     params: { lang },
   }));
 }
 
 type GagEntry = CollectionEntry<"gags">;
 
-const { lang } = Astro.params as { lang: Lang };
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
@@ -26,8 +28,7 @@ const allGags = await getCollection("gags", ({ data }: GagEntry) => {
 // 모든 태그와 개그 개수 계산
 const tagCounts = new Map<string, number>();
 allGags.forEach((gag: GagEntry) => {
-  const tags = gag.data.tags[lang] || [];
-  tags.forEach((tag: string) => {
+  gag.data.tags.forEach((tag: string) => {
     tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
   });
 });

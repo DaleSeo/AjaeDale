@@ -1,19 +1,11 @@
 {
   "slug": "japan-cruelest-person",
-  "title": {
-    "ko": "일본에서 가장 잔인한 사람은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "도끼로 이마까",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["일본"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "일본에서 가장 잔인한 사람은?",
+  "tags": ["일본"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "도끼로 이마까",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

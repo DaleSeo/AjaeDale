@@ -1,18 +1,10 @@
 {
   "slug": "king-pho",
-  "title": {
-    "ko": "왕이 쌀국수를 먹으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "퍼킹",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["왕", "음식"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "왕이 쌀국수를 먹으면?",
+  "tags": ["왕", "음식"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "퍼킹"
 }

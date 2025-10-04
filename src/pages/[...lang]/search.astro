@@ -2,15 +2,20 @@
 import Layout from "../../layouts/Layout.astro";
 import SearchIcon from "../../icons/Search.astro";
 import XIcon from "../../icons/X.astro";
-import { useTranslations, type Lang } from "../../i18n/utils";
+import {
+  useTranslations,
+  getStaticPathsLocales,
+  normalizeLang,
+} from "../../i18n/utils";
 
 export async function getStaticPaths() {
-  return ["ko", "en"].map((lang) => ({
+  return getStaticPathsLocales().map((lang) => ({
     params: { lang },
   }));
 }
 
-const { lang } = Astro.params as { lang: Lang };
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
 
 // 페이지 메타 정보

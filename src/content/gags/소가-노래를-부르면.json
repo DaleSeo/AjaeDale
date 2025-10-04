@@ -1,19 +1,11 @@
 {
   "slug": "cow-singing",
-  "title": {
-    "ko": "소가 노래를 부르면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "소송",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["노래"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "소가 노래를 부르면?",
+  "tags": ["노래"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.632Z",
+  "description": "소송",
   "updatedAt": "2025-09-23T01:59:05.594Z"
 }

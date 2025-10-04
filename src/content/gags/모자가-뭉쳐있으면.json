@@ -1,19 +1,11 @@
 {
   "slug": "hats-together-mosaic",
-  "title": {
-    "ko": "모자가 뭉쳐있으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "모자이크",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "모자가 뭉쳐있으면?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.630Z",
+  "description": "모자이크",
   "updatedAt": "2025-09-23T00:17:31.630Z"
 }

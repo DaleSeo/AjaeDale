@@ -1,19 +1,11 @@
 {
   "slug": "berlin-food-restriction",
-  "title": {
-    "ko": "베를린에서 음식을 먹으면 안 되는 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "독일수도",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["베를린"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "베를린에서 음식을 먹으면 안 되는 이유는?",
+  "tags": ["베를린"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.632Z",
+  "description": "독일수도",
   "updatedAt": "2025-09-23T01:59:05.593Z"
 }

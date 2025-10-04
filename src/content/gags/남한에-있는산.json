@@ -1,18 +1,10 @@
 {
   "slug": "south-korea-mountain",
-  "title": {
-    "ko": "남한에 있는 산은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "남한산",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["산"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "남한에 있는 산은?",
+  "tags": ["산"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "남한산"
 }

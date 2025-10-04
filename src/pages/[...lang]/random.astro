@@ -5,20 +5,21 @@ import BookmarkIcon from "../../icons/Bookmark.astro";
 import Share2Icon from "../../icons/Share2.astro";
 import {
   useTranslations,
-  getLocalizedGag,
   getLocalizedUrl,
-  type Lang,
+  getStaticPathsLocales,
+  normalizeLang,
 } from "../../i18n/utils";
 
 export async function getStaticPaths() {
-  return ["ko", "en"].map((lang) => ({
+  return getStaticPathsLocales().map((lang) => ({
     params: { lang },
   }));
 }
 
 type GagEntry = CollectionEntry<"gags">;
 
-const { lang } = Astro.params as { lang: Lang };
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
 
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
@@ -32,7 +33,6 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 }
 
 const randomGag = getRandomGag(allGags);
-const localizedRandomGag = getLocalizedGag(randomGag, lang);
 const spoilerId = "random-gag";
 
 // 페이지 메타 정보
@@ -64,7 +64,7 @@ const description = t("random.subtitle");
           <div class="flex items-start justify-between mb-4">
             <div class="flex flex-wrap gap-2">
               {
-                localizedRandomGag.tags.map((tag: string) => (
+                randomGag.data.tags.map((tag: string) => (
                   <a
                     href={getLocalizedUrl(`/tags/${tag}`, lang)}
                     class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full hover:bg-primary/20 transition-colors"
@@ -73,15 +73,25 @@ const description = t("random.subtitle");
                   </a>
                 ))
               }
+              <span
+                class="inline-block px-3 py-1 text-sm font-medium rounded-full"
+                class:list={[
+                  randomGag.data.lang === "ko"
+                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                    : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+                ]}
+              >
+                {randomGag.data.lang === "ko" ? "🇰🇷 한국어" : "🇺🇸 English"}
+              </span>
             </div>
             <div class="flex items-center space-x-2">
               <button
                 class="save-btn p-2 hover:bg-accent rounded-md transition-colors"
                 data-gag={JSON.stringify({
                   slug: randomGag.data.slug,
-                  title: localizedRandomGag.title,
-                  description: localizedRandomGag.description,
-                  tags: localizedRandomGag.tags,
+                  title: randomGag.data.title,
+                  description: randomGag.data.description,
+                  tags: randomGag.data.tags,
                 })}
                 aria-label={t("gag.save")}
               >
@@ -93,7 +103,7 @@ const description = t("random.subtitle");
               </button>
               <button
                 class="share-btn p-2 hover:bg-accent rounded-md transition-colors"
-                data-content={`${localizedRandomGag.title}${localizedRandomGag.description ? " - " + localizedRandomGag.description : ""}`}
+                data-content={`${randomGag.data.title}${randomGag.data.description ? " - " + randomGag.data.description : ""}`}
                 data-slug={randomGag.data.slug}
                 aria-label={t("gag.share")}
               >
@@ -105,11 +115,11 @@ const description = t("random.subtitle");
           <div class="mb-6">
             <h3 class="text-xl md:text-2xl font-bold text-foreground mb-4">
               {t("gag.question")}
-              {localizedRandomGag.title}
+              {randomGag.data.title}
             </h3>
 
             {
-              localizedRandomGag.description && (
+              randomGag.data.description && (
                 <div class="spoiler-container">
                   <button
                     id={spoilerId}
@@ -122,7 +132,7 @@ const description = t("random.subtitle");
                     id={`${spoilerId}-content`}
                     class="spoiler-content hidden text-foreground mt-3 text-lg md:text-xl"
                   >
-                    {t("gag.answer")} {localizedRandomGag.description}
+                    {t("gag.answer")} {randomGag.data.description}
                   </p>
                 </div>
               )

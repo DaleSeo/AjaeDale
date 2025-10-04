@@ -1,19 +1,11 @@
 {
   "slug": "rice-cake-shop-stocks",
-  "title": {
-    "ko": "떡집 사장이 주식을 안 하는 이유는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "떡상할까봐",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["떡집", "주식"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "떡집 사장이 주식을 안 하는 이유는?",
+  "tags": ["떡집", "주식"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "떡상할까봐",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

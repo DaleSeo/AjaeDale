@@ -1,19 +1,11 @@
 {
   "slug": "fish-opposite-word",
-  "title": {
-    "ko": "물고기의 반대말은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "불고기",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["물고기"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "물고기의 반대말은?",
+  "tags": ["물고기"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
+  "description": "불고기",
   "updatedAt": "2025-09-23T01:59:05.593Z"
 }

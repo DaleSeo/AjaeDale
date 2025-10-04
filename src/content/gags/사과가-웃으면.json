@@ -1,18 +1,10 @@
 {
   "slug": "apple-laughs",
-  "title": {
-    "ko": "사과가 웃으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "풋사과",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["과일"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "사과가 웃으면?",
+  "tags": ["과일"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "풋사과"
 }

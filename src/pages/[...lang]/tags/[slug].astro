@@ -3,7 +3,11 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import Card from "../../../components/Card.astro";
 import { tagToSlug } from "../../../utils/tagUtils";
-import { useTranslations, translate, type Lang } from "../../../i18n/utils";
+import {
+  translate,
+  getStaticPathsLocales,
+  normalizeLang,
+} from "../../../i18n/utils";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -14,11 +18,10 @@ export async function getStaticPaths() {
 
   const paths = [];
 
-  for (const lang of ["ko", "en"] as const) {
+  for (const lang of getStaticPathsLocales()) {
     const allTags = new Set<string>();
     allGags.forEach((gag: GagEntry) => {
-      const tags = gag.data.tags[lang] || [];
-      tags.forEach((tag: string) => {
+      gag.data.tags.forEach((tag: string) => {
         allTags.add(tag);
       });
     });
@@ -32,8 +35,7 @@ export async function getStaticPaths() {
         props: {
           tag,
           gags: allGags.filter((gag: GagEntry) => {
-            const tags = gag.data.tags[lang] || [];
-            return tags.includes(tag);
+            return gag.data.tags.includes(tag);
           }),
         },
       });
@@ -49,8 +51,8 @@ interface Props {
 }
 
 const { tag, gags } = Astro.props;
-const { lang } = Astro.params as { lang: Lang };
-const t = useTranslations(lang);
+const { lang: langParam } = Astro.params;
+const lang = normalizeLang(langParam);
 
 // SEO를 위한 메타 데이터
 const pageTitle = translate(lang, "tags.filterByTag", { tag });

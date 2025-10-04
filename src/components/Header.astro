@@ -1,9 +1,12 @@
 ---
-import BookmarkIcon from "../icons/Bookmark.astro";
-import SearchIcon from "../icons/Search.astro";
 import MenuIcon from "../icons/Menu.astro";
 import XIcon from "../icons/X.astro";
-import TagIcon from "../icons/Tag.astro";
+import Star from "../icons/Star.astro";
+import Flame from "../icons/Flame.astro";
+import Dice from "../icons/Dice.astro";
+import FolderOpen from "../icons/FolderOpen.astro";
+import Search from "../icons/Search.astro";
+import Bookmark from "../icons/Bookmark.astro";
 import LanguagePicker from "./LanguagePicker.astro";
 import {
   getLangFromUrl,
@@ -63,46 +66,42 @@ const getMobileNavStyle = (isActive: boolean) => {
       <nav class="hidden md:flex items-center space-x-6">
         <a
           href={getLocalizedUrl("/latest", lang)}
-          class={getNavStyle(isLatestPage)}
+          class={`${getNavStyle(isLatestPage)} flex items-center gap-1.5`}
         >
-          🌟 {t("nav.latest")}
+          <Star size={16} />
+          <span>{t("nav.latest")}</span>
         </a>
         <a
           href={getLocalizedUrl("/popular", lang)}
-          class={getNavStyle(isPopularPage)}
+          class={`${getNavStyle(isPopularPage)} flex items-center gap-1.5`}
         >
-          🔥 {t("nav.popular")}
+          <Flame size={16} />
+          <span>{t("nav.popular")}</span>
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
-          class={getNavStyle(isRandomPage)}
+          class={`${getNavStyle(isRandomPage)} flex items-center gap-1.5`}
         >
-          🎲 {t("nav.random")}
+          <Dice size={16} />
+          <span>{t("nav.random")}</span>
+        </a>
+        <a
+          href={getLocalizedUrl("/tags", lang)}
+          class={`${getNavStyle(isTagsPage)} flex items-center gap-1.5`}
+        >
+          <FolderOpen size={16} />
+          <span>{t("nav.tags")}</span>
+        </a>
+        <a
+          href={getLocalizedUrl("/search", lang)}
+          class={`${getNavStyle(isSearchPage)} flex items-center gap-1.5`}
+        >
+          <Search size={16} />
+          <span>{t("nav.search")}</span>
         </a>
       </nav>
 
       <div class="hidden md:flex items-center space-x-2">
-        <!-- 언어 전환기 -->
-        <LanguagePicker />
-
-        <a
-          href={getLocalizedUrl("/tags", lang)}
-          class={isTagsPage
-            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
-            : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title={t("nav.tags")}
-        >
-          <TagIcon size={20} />
-        </a>
-        <a
-          href={getLocalizedUrl("/search", lang)}
-          class={isSearchPage
-            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
-            : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title={t("nav.search")}
-        >
-          <SearchIcon size={20} />
-        </a>
         <a
           href={getLocalizedUrl("/saved", lang)}
           class={isSavedPage
@@ -110,8 +109,11 @@ const getMobileNavStyle = (isActive: boolean) => {
             : "p-2 hover:bg-accent rounded-md transition-colors"}
           title={t("nav.saved")}
         >
-          <BookmarkIcon size={20} />
+          <Bookmark size={20} />
         </a>
+
+        <!-- 언어 전환기 -->
+        <LanguagePicker />
       </div>
 
       <!-- Mobile Menu Button -->
@@ -131,48 +133,53 @@ const getMobileNavStyle = (isActive: boolean) => {
       class="hidden md:hidden mt-4 pb-4 border-t border-border pt-4"
     >
       <div class="flex flex-col space-y-2">
-        <!-- 언어 전환 (모바일) -->
-        <LanguagePicker showLabel={true} />
-
         <a
           href={getLocalizedUrl("/latest", lang)}
-          class={getMobileNavStyle(isLatestPage)}
+          class={`${getMobileNavStyle(isLatestPage)} flex items-center gap-2`}
         >
-          🌟 {t("nav.latest")}
+          <Star size={16} />
+          <span>{t("nav.latest")}</span>
         </a>
         <a
           href={getLocalizedUrl("/popular", lang)}
-          class={getMobileNavStyle(isPopularPage)}
+          class={`${getMobileNavStyle(isPopularPage)} flex items-center gap-2`}
         >
-          🔥 {t("nav.popular")}
+          <Flame size={16} />
+          <span>{t("nav.popular")}</span>
         </a>
         <a
           href={getLocalizedUrl("/random", lang)}
-          class={getMobileNavStyle(isRandomPage)}
+          class={`${getMobileNavStyle(isRandomPage)} flex items-center gap-2`}
         >
-          🎲 {t("nav.random")}
+          <Dice size={16} />
+          <span>{t("nav.random")}</span>
         </a>
         <a
           href={getLocalizedUrl("/tags", lang)}
-          class={getMobileNavStyle(isTagsPage)}
+          class={`${getMobileNavStyle(isTagsPage)} flex items-center gap-2`}
         >
-          <TagIcon size={16} class="inline mr-2" />
-          {t("nav.tags")}
+          <FolderOpen size={16} />
+          <span>{t("nav.tags")}</span>
         </a>
         <a
           href={getLocalizedUrl("/search", lang)}
-          class={getMobileNavStyle(isSearchPage)}
+          class={`${getMobileNavStyle(isSearchPage)} flex items-center gap-2`}
         >
-          <SearchIcon size={16} class="inline mr-2" />
-          {t("nav.search")}
+          <Search size={16} />
+          <span>{t("nav.search")}</span>
         </a>
         <a
           href={getLocalizedUrl("/saved", lang)}
-          class={getMobileNavStyle(isSavedPage)}
+          class={`${getMobileNavStyle(isSavedPage)} flex items-center gap-2`}
         >
-          <BookmarkIcon size={16} class="inline mr-2" />
-          {t("nav.saved")}
+          <Bookmark size={16} />
+          <span>{t("nav.saved")}</span>
         </a>
+
+        <!-- 언어 전환 (모바일 - 맨 아래) -->
+        <div class="pt-2 border-t border-border">
+          <LanguagePicker showLabel={true} />
+        </div>
       </div>
     </nav>
   </div>

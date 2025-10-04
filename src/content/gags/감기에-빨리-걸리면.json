@@ -1,19 +1,11 @@
 {
   "slug": "quick-cold-recovery",
-  "title": {
-    "ko": "감기에 빨리 걸리면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "빨리감기",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "감기에 빨리 걸리면?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
+  "description": "빨리감기",
   "updatedAt": "2025-09-23T01:59:05.590Z"
 }

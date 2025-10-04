@@ -1,19 +1,11 @@
 {
   "slug": "crane-spits",
-  "title": {
-    "ko": "학이 침을 뱉으면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "퇴학",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["침"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "학이 침을 뱉으면?",
+  "tags": ["침"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.921Z",
+  "description": "퇴학",
   "updatedAt": "2025-09-23T23:47:52.921Z"
 }

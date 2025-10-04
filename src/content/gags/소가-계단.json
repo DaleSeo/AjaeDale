@@ -1,18 +1,10 @@
 {
   "slug": "cow-stairs",
-  "title": {
-    "ko": "소가 계단을 오르면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "소오름",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["소"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "소가 계단을 오르면?",
+  "tags": ["소"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "소오름"
 }

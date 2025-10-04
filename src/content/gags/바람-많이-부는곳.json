@@ -1,18 +1,10 @@
 {
   "slug": "windy-place-korea",
-  "title": {
-    "ko": "우리나라에서 바람이 제일 많이 부는 곳은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "분당",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["지역"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "우리나라에서 바람이 제일 많이 부는 곳은?",
+  "tags": ["지역"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "분당"
 }

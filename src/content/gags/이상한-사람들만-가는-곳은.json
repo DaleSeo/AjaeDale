@@ -1,19 +1,11 @@
 {
   "slug": "weird-people-place",
-  "title": {
-    "ko": "이상한 사람들만 가는 곳은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "치과",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["이상한", "치아"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "이상한 사람들만 가는 곳은?",
+  "tags": ["이상한", "치아"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.635Z",
+  "description": "치과",
   "updatedAt": "2025-09-23T01:59:05.597Z"
 }

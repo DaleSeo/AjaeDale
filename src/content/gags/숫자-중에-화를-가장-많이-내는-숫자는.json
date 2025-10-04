@@ -1,19 +1,11 @@
 {
   "slug": "angriest-number",
-  "title": {
-    "ko": "숫자 중에 화를 가장 많이 내는 숫자는?",
-    "en": ""
-  },
-  "description": {
-    "ko": "에잇(8)",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["숫자", "화"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "숫자 중에 화를 가장 많이 내는 숫자는?",
+  "tags": ["숫자", "화"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "에잇(8)",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

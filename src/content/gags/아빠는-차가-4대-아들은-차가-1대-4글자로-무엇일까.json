@@ -1,19 +1,11 @@
 {
   "slug": "father-4-cars-son-1-car",
-  "title": {
-    "ko": "아빠는 차가 4대 아들은 차가 1대 4글자로 무엇일까?",
-    "en": ""
-  },
-  "description": {
-    "ko": "세대차이",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "아빠는 차가 4대 아들은 차가 1대 4글자로 무엇일까?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.633Z",
+  "description": "세대차이",
   "updatedAt": "2025-09-23T01:59:05.595Z"
 }

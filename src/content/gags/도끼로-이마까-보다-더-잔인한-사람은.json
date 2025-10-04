@@ -1,19 +1,11 @@
 {
   "slug": "crueler-than-axe",
-  "title": {
-    "ko": "도끼로 이마까 보다 더 잔인한 사람은?",
-    "en": ""
-  },
-  "description": {
-    "ko": "깐데도까",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["도끼", "잔인"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "도끼로 이마까 보다 더 잔인한 사람은?",
+  "tags": ["도끼", "잔인"],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T23:47:52.922Z",
+  "description": "깐데도까",
   "updatedAt": "2025-09-23T23:47:52.922Z"
 }

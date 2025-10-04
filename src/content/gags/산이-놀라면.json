@@ -1,18 +1,10 @@
 {
   "slug": "mountain-surprised",
-  "title": {
-    "ko": "산이 놀라면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "와우산",
-    "en": ""
-  },
-  "tags": {
-    "ko": ["산"],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "산이 놀라면?",
+  "tags": ["산"],
   "published": true,
   "featured": false,
-  "createdAt": "2025-09-24T00:00:00.000Z"
+  "createdAt": "2025-09-24T00:00:00.000Z",
+  "description": "와우산"
 }

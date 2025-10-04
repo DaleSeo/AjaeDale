@@ -1,19 +1,11 @@
 {
   "slug": "radish-tears",
-  "title": {
-    "ko": "무가 눈물을 흘리면?",
-    "en": ""
-  },
-  "description": {
-    "ko": "무뚝뚝",
-    "en": ""
-  },
-  "tags": {
-    "ko": [],
-    "en": []
-  },
+  "lang": "ko",
+  "title": "무가 눈물을 흘리면?",
+  "tags": [],
   "published": true,
   "featured": false,
   "createdAt": "2025-09-23T00:17:31.630Z",
+  "description": "무뚝뚝",
   "updatedAt": "2025-09-23T01:59:05.593Z"
 }
