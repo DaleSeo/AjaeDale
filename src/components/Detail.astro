@@ -48,16 +48,6 @@ const t = messages[lang as keyof typeof messages] || messages.ko;
             </a>
           ))
         }
-        <span
-          class="inline-block rounded-full px-3 py-1 text-sm font-medium"
-          class:list={[
-            gag.data.lang === "ko"
-              ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
-              : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-          ]}
-        >
-          {gag.data.lang === "ko" ? "🇰🇷 한국어" : "🇺🇸 English"}
-        </span>
       </div>
       <div class="flex items-center space-x-2">
         <button
