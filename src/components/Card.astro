@@ -14,85 +14,160 @@ interface Props {
   lang?: Lang;
 }
 
-// If lang prop is not provided, detect from URL
+// lang prop이 제공되지 않으면 URL에서 언어 감지
 const detectedLang = getLangFromUrl(Astro.url);
 const { gag, lang = detectedLang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
 <div
-  class="card bg-card border-border hover-lift group rounded-lg border"
+  class="group relative cursor-pointer"
+  style="perspective: 1000px;"
   data-gag-slug={gag.data.slug}
 >
-  <div class="p-6">
-    <div class="mb-4 flex items-start justify-between">
-      <div class="flex flex-wrap gap-2">
-        {
-          gag.data.tags.map((tag: string) => (
-            <a
-              href={getLocalizedUrl(`/tags/${tag}`, lang)}
-              class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
-            >
-              #{tag}
-            </a>
-          ))
-        }
-      </div>
-      <div class="flex items-center space-x-2">
-        <button
-          class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
-          data-gag={JSON.stringify({
-            slug: gag.data.slug,
-            title: gag.data.title,
-            description: gag.data.description,
-            tags: gag.data.tags,
-          })}
-          aria-label={t("저장", "Save")}
-        >
-          <BookmarkIcon class="bookmark-icon h-4 w-4" />
-          <BookmarkIcon
-            class="bookmark-check-icon text-primary hidden h-4 w-4"
-            fill="currentColor"
-          />
-        </button>
-        <button
-          class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
-          data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
-          data-slug={gag.data.slug}
-          aria-label={t("공유", "Share")}
-        >
-          <Share2Icon size={16} />
-        </button>
+  <div
+    class="card-flipper relative h-full w-full transition-transform duration-700 transform-3d group-[.flipped]:rotate-y-180"
+  >
+    <!-- 카드 앞면 -->
+    <div class="card-front absolute inset-0 h-full w-full backface-hidden">
+      <div class="bg-card border-border h-full rounded-lg border">
+        <div class="p-6">
+          <div class="mb-4 flex items-start justify-between">
+            <div class="flex flex-wrap gap-2">
+              {
+                gag.data.tags.map((tag: string) => (
+                  <a
+                    href={getLocalizedUrl(`/tags/${tag}`, lang)}
+                    class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                    data-no-flip="true"
+                  >
+                    #{tag}
+                  </a>
+                ))
+              }
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+                data-gag={JSON.stringify({
+                  slug: gag.data.slug,
+                  title: gag.data.title,
+                  description: gag.data.description,
+                  tags: gag.data.tags,
+                })}
+                aria-label={t("저장", "Save")}
+                data-no-flip="true"
+              >
+                <BookmarkIcon class="bookmark-icon h-4 w-4" />
+                <BookmarkIcon
+                  class="bookmark-check-icon text-primary hidden h-4 w-4"
+                  fill="currentColor"
+                />
+              </button>
+              <button
+                class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+                data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+                data-slug={gag.data.slug}
+                aria-label={t("공유", "Share")}
+                data-no-flip="true"
+              >
+                <Share2Icon size={16} />
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h2 class="text-foreground mb-2 text-lg font-bold">
+              {gag.data.title}
+            </h2>
+            {
+              gag.data.description && (
+                <p class="text-muted-foreground mt-3 font-mono text-base tracking-wider opacity-50 transition-opacity hover:opacity-70">
+                  {gag.data.description.replace(
+                    /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
+                    "●",
+                  )}
+                </p>
+              )
+            }
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="mb-4">
-      <a href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}>
-        <h2
-          class="text-foreground hover:text-primary mb-2 cursor-pointer text-lg font-bold transition-colors"
-        >
-          {gag.data.title}
-        </h2>
-      </a>
+    <!-- 카드 뒷면 -->
+    <div
+      class="card-back absolute inset-0 h-full w-full rotate-y-180 backface-hidden"
+    >
+      <div class="bg-card border-border h-full rounded-lg border">
+        <div class="p-6">
+          <div class="mb-4">
+            <h2 class="text-foreground mb-2 text-lg font-bold">
+              {gag.data.title}
+            </h2>
+            {
+              gag.data.description && (
+                <p class="text-primary mt-4 text-xl font-semibold">
+                  {gag.data.description}
+                </p>
+              )
+            }
+          </div>
+          <div class="mt-6 flex justify-center">
+            <a
+              href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
+              class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm font-medium transition-colors"
+              data-no-flip="true"
+            >
+              {t("자세히 보기", "View Details")}
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<style>
-  .hover-lift {
-    transition:
-      transform 0.2s ease-in-out,
-      box-shadow 0.2s ease-in-out;
-  }
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
-</style>
-
 <script>
   import { initGagInteractions } from "../scripts/gagInteractions";
 
-  // 페이지 로드 시 초기화
+  // 개그 상호작용 초기화 (북마크, 공유 등)
   initGagInteractions();
+
+  // 플립 카드 상호작용
+  document.addEventListener("DOMContentLoaded", () => {
+    const initCardFlip = () => {
+      const cards = document.querySelectorAll("[data-gag-slug]");
+
+      cards.forEach((card) => {
+        // 중복 방지를 위해 기존 리스너 제거
+        const newCard = card.cloneNode(true) as HTMLElement;
+        card.parentNode?.replaceChild(newCard, card);
+
+        newCard.addEventListener("click", (e) => {
+          const target = e.target as HTMLElement;
+
+          // 버튼이나 링크 등 상호작용 요소를 클릭한 경우 플립하지 않음
+          if (
+            target.closest("[data-no-flip]") ||
+            target.closest("button") ||
+            target.closest("a") ||
+            target.tagName === "BUTTON" ||
+            target.tagName === "A"
+          ) {
+            return;
+          }
+
+          // 카드 뒤집기 토글
+          newCard.classList.toggle("flipped");
+        });
+      });
+    };
+
+    // 첫 로드 시 초기화
+    initCardFlip();
+
+    // Astro View Transitions 사용 시 재초기화
+    document.addEventListener("astro:after-swap", initCardFlip);
+  });
 </script>

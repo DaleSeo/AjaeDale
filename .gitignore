@@ -1,4 +1,6 @@
-# Spec folder - private project specifications
+# Temp
+AGENTS.md
+CLAUDE.md
 spec/
 best-ui/
 
@@ -54,6 +56,3 @@ logs
 # Temporary folders
 tmp/
 temp/
-
-# Claude Code configuration
-CLAUDE.md
