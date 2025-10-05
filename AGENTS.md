@@ -19,6 +19,7 @@ Astro SSG와 로컬 Content Collections를 사용한 순수 정적 사이트로 
 - TypeScript 파일 실행: `bun` 명령어로 직접 실행 (node는 .ts 파일 실행 불가)
 - 패키지 관리: `bun install`, `bun add` 사용 (npm/yarn 대신)
 - 스크립트 실행: package.json 스크립트에서도 node 대신 bun 사용
+- 개발 서버 실행: `bun dev` (npm run dev 대신)
 
 ## 스타일링 규칙
 

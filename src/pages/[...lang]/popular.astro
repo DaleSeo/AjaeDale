@@ -50,7 +50,12 @@ const displayGags = popularGags.slice(0, 12);
         🔥 {t("인기 개그", "Popular Puns")}
       </h1>
       <p class="text-muted-foreground text-lg">
-        {t("가장 많은 사랑을 받고 있는 개그들", "The most loved puns")}
+        {
+          t(
+            "가장 뜨거운 반응을 얻고 있는 개그들",
+            "The hottest puns getting the most reactions",
+          )
+        }
       </p>
     </div>
   </section>
@@ -58,18 +63,63 @@ const displayGags = popularGags.slice(0, 12);
   <!-- 인기 개그 섹션 -->
   <section class="px-4 py-8">
     <div class="container mx-auto max-w-6xl">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {
-          displayGags.map((gag, index) => (
-            <div class="relative">
-              <div class="bg-primary text-primary-foreground absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold shadow-md">
-                #{index + 1}
-              </div>
-              <Card gag={gag} lang={lang} />
+      <!-- TOP 3 섹션 -->
+      {
+        displayGags.length > 0 && (
+          <div class="mb-8 rounded-2xl bg-gradient-to-r from-primary/10 to-primary/5 p-6">
+            <div class="mb-4">
+              <h2 class="text-foreground flex items-center text-xl font-bold">
+                🏆 {t("이번 주 TOP 3", "Top 3 This Week")}
+              </h2>
             </div>
-          ))
-        }
-      </div>
+
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {displayGags.slice(0, 3).map((gag, index) => (
+                <div class="group relative">
+                  {/* 순위 배지 */}
+                  <div
+                    class={`absolute -top-3 -left-3 z-10 flex h-11 w-11 items-center justify-center rounded-full text-base font-bold text-white shadow-md transition-transform group-hover:scale-110 ${
+                      index === 0
+                        ? "bg-gradient-to-br from-yellow-400 to-amber-500"
+                        : index === 1
+                          ? "bg-gradient-to-br from-slate-400 to-gray-500"
+                          : "bg-gradient-to-br from-amber-600 to-orange-700"
+                    }`}
+                  >
+                    {index + 1}
+                  </div>
+
+                  {/* 카드 강조 효과 */}
+                  <div class="relative">
+                    {index === 0 && (
+                      <div class="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-yellow-400/30 to-orange-400/30 opacity-50 blur transition-opacity group-hover:opacity-75" />
+                    )}
+                    <div class="relative">
+                      <Card gag={gag} lang={lang} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      <!-- 나머지 개그들 -->
+      {
+        displayGags.length > 3 && (
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {displayGags.slice(3).map((gag, index) => (
+              <div class="relative">
+                <div class="bg-primary text-primary-foreground absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold shadow-md">
+                  {index + 4}
+                </div>
+                <Card gag={gag} lang={lang} />
+              </div>
+            ))}
+          </div>
+        )
+      }
     </div>
   </section>
 </Layout>
