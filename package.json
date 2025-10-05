@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check && prettier . --check",
-    "validate": "astro check && node src/scripts/validateGags.ts",
+    "validate": "astro check && bun src/scripts/validateGags.ts",
     "prebuild": "bun run validate",
     "serve": "bun run build && bun run preview",
     "lighthouse": "bun run preview & bunx lhci autorun --config=./.github/lighthouse/lighthouserc.json",
