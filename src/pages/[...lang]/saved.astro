@@ -137,13 +137,9 @@ const t = useTranslations(lang);
 </Layout>
 
 <script>
-  const STORAGE_KEY = "ajae-gag-saved";
+  import { getSavedGags } from "../../scripts/gagInteractions";
 
-  // 저장된 개그 가져오기
-  function getSavedGags() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [];
-  }
+  const STORAGE_KEY = "ajae-gag-saved";
 
   // 개그 삭제
   function removeGag(gagSlug: string) {
@@ -261,21 +257,33 @@ const t = useTranslations(lang);
     }
   }
 
-  // 초기 렌더링
-  document.addEventListener("DOMContentLoaded", () => {
+  function setupSavedPage() {
     renderGags();
 
     // 모두 삭제 버튼 이벤트
     const clearAllBtn = document.getElementById("clear-all-btn");
     if (clearAllBtn) {
-      clearAllBtn.addEventListener("click", clearAll);
+      // 중복 등록 방지
+      if (!(clearAllBtn as any)._clearListenerAttached) {
+        (clearAllBtn as any)._clearListenerAttached = true;
+        clearAllBtn.addEventListener("click", clearAll);
+      }
     }
+  }
 
-    // storage 이벤트 리스너 (다른 탭에서 변경 감지)
+  // astro:page-load 이벤트에만 연결 (View Transitions 호환)
+  document.addEventListener("astro:page-load", setupSavedPage);
+
+  // storage 이벤트 리스너 (다른 탭에서 변경 감지, 한 번만 등록)
+  if (
+    typeof window !== "undefined" &&
+    !(window as any)._savedPageStorageListener
+  ) {
+    (window as any)._savedPageStorageListener = true;
     window.addEventListener("storage", (e) => {
       if (e.key === STORAGE_KEY) {
         renderGags();
       }
     });
-  });
+  }
 </script>

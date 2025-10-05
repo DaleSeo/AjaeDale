@@ -223,15 +223,21 @@ const description = t(
 </Layout>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function setupSubmitPage() {
     const form = document.getElementById("submit-form") as HTMLFormElement;
     const successMessage = document.getElementById(
       "success-message",
     ) as HTMLElement;
     const tagsInput = document.getElementById("tags") as HTMLInputElement;
 
+    if (!form) return;
+
     // 태그 제안 버튼 클릭 시
     document.querySelectorAll(".tag-suggestion").forEach((btn) => {
+      // 중복 등록 방지
+      if ((btn as any)._tagSuggestionAttached) return;
+      (btn as any)._tagSuggestionAttached = true;
+
       btn.addEventListener("click", () => {
         const tag = btn.getAttribute("data-tag");
         if (tag && tagsInput) {
@@ -247,58 +253,66 @@ const description = t(
       });
     });
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    // 폼 제출 이벤트 (중복 등록 방지)
+    if (!(form as any)._submitListenerAttached) {
+      (form as any)._submitListenerAttached = true;
 
-      // 폼 데이터 수집
-      const formData = new FormData(form);
-      const title = formData.get("title") as string;
-      const body = formData.get("body") as string;
-      const tags = formData.get("tags") as string;
-      const author = formData.get("author") as string;
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-      // 기본 유효성 검사
-      if (!title || title.length < 2) {
-        alert("개그 질문을 2자 이상 입력해주세요.");
-        return;
-      }
+        // 폼 데이터 수집
+        const formData = new FormData(form);
+        const title = formData.get("title") as string;
+        const body = formData.get("body") as string;
+        const tags = formData.get("tags") as string;
+        const author = formData.get("author") as string;
 
-      if (!body || body.length < 1) {
-        alert("개그 답변을 입력해주세요.");
-        return;
-      }
+        // 기본 유효성 검사
+        if (!title || title.length < 2) {
+          alert("개그 질문을 2자 이상 입력해주세요.");
+          return;
+        }
 
-      if (!author || author.length < 1) {
-        alert("작성자 닉네임을 입력해주세요.");
-        return;
-      }
+        if (!body || body.length < 1) {
+          alert("개그 답변을 입력해주세요.");
+          return;
+        }
 
-      // 태그 처리
-      const tagList = tags
-        ? tags
-            .split(",")
-            .map((t) => t.trim())
-            .filter((t) => t)
-        : [];
+        if (!author || author.length < 1) {
+          alert("작성자 닉네임을 입력해주세요.");
+          return;
+        }
 
-      // 여기서 실제로는 서버로 데이터를 전송해야 하지만,
-      // 현재는 데모 버전이므로 성공 메시지만 표시
-      console.log("제출된 개그:", {
-        title,
-        body,
-        tags: tagList,
-        author,
-        date: new Date().toISOString().split("T")[0],
+        // 태그 처리
+        const tagList = tags
+          ? tags
+              .split(",")
+              .map((t) => t.trim())
+              .filter((t) => t)
+          : [];
+
+        // 여기서 실제로는 서버로 데이터를 전송해야 하지만,
+        // 현재는 데모 버전이므로 성공 메시지만 표시
+        console.log("제출된 개그:", {
+          title,
+          body,
+          tags: tagList,
+          author,
+          date: new Date().toISOString().split("T")[0],
+        });
+
+        // 폼 숨기기 및 성공 메시지 표시
+        form.style.display = "none";
+        successMessage.classList.remove("hidden");
+
+        // 3초 후 페이지 새로고침 (폼 초기화)
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       });
+    }
+  }
 
-      // 폼 숨기기 및 성공 메시지 표시
-      form.style.display = "none";
-      successMessage.classList.remove("hidden");
-
-      // 3초 후 페이지 새로고침 (폼 초기화)
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    });
-  });
+  // astro:page-load 이벤트에만 연결 (View Transitions 호환)
+  document.addEventListener("astro:page-load", setupSubmitPage);
 </script>
