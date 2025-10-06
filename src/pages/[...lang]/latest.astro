@@ -83,16 +83,8 @@ function getRelativeTime(date: Date): string {
     <div class="container mx-auto max-w-6xl">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
-          displayGags.map((gag: GagEntry, index: number) => (
-            <div class="relative">
-              <div class="bg-primary text-primary-foreground absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold shadow-md">
-                #{index + 1}
-              </div>
-              <div class="bg-secondary text-secondary-foreground absolute -top-3 -right-3 z-10 rounded-full px-3 py-1 text-xs font-medium shadow-md">
-                {getRelativeTime(new Date(gag.data.createdAt))}
-              </div>
-              <Card gag={gag} lang={lang} />
-            </div>
+          displayGags.map((gag: GagEntry) => (
+            <Card gag={gag} lang={lang} />
           ))
         }
       </div>
