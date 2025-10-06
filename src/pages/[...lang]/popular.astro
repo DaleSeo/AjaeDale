@@ -77,15 +77,7 @@ const displayGags = popularGags.slice(0, 12);
               {displayGags.slice(0, 3).map((gag, index) => (
                 <div class="group relative">
                   {/* 순위 배지 */}
-                  <div
-                    class={`absolute -top-3 -left-3 z-10 flex h-11 w-11 items-center justify-center rounded-full text-base font-bold text-white shadow-md transition-transform group-hover:scale-110 ${
-                      index === 0
-                        ? "bg-gradient-to-br from-yellow-400 to-amber-500"
-                        : index === 1
-                          ? "bg-gradient-to-br from-slate-400 to-gray-500"
-                          : "bg-gradient-to-br from-amber-600 to-orange-700"
-                    }`}
-                  >
+                  <div class="bg-primary text-primary-foreground absolute -top-3 -left-3 z-10 flex h-11 w-11 items-center justify-center rounded-full text-base font-bold">
                     {index + 1}
                   </div>
 
@@ -111,7 +103,7 @@ const displayGags = popularGags.slice(0, 12);
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {displayGags.slice(3).map((gag, index) => (
               <div class="relative">
-                <div class="bg-primary text-primary-foreground absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold shadow-md">
+                <div class="absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-500 text-sm font-bold text-white">
                   {index + 4}
                 </div>
                 <Card gag={gag} lang={lang} />
