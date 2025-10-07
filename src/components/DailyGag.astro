@@ -17,97 +17,175 @@ const t = useTranslations(lang);
   <div class="container mx-auto max-w-3xl">
     <header class="mb-8 text-center">
       <h2 class="text-foreground mb-2 text-3xl font-bold">
-        🤣 {t("오늘의 아재개그", "Pun of the Day")}
+        🤣 {t("오늘의 개그", "Pun of the Day")}
       </h2>
       <p class="text-muted-foreground">
         {
           t(
-            "매일 바뀌는 특별한 개그를 만나보세요",
-            "Discover a special pun that changes daily",
+            "매일 먹는 웃음 영양제, 하루 종일 유쾌한 기분!",
+            "Take your daily dose of humor for all-day joy!",
           )
         }
       </p>
     </header>
 
-    <div
-      class="from-primary/10 via-background to-primary/5 border-primary/20 rounded-2xl border-2 bg-gradient-to-br p-8 shadow-lg transition-all duration-300 hover:shadow-xl md:p-12"
-    >
-      <div class="mb-6 flex items-start justify-between">
-        {
-          gag.data.tags.length > 0 && (
-            <div class="flex flex-wrap gap-2">
-              {gag.data.tags.map((tag: string) => (
-                <span class="bg-primary/10 text-foreground inline-block rounded-full px-4 py-2 text-sm font-medium">
-                  #{tag}
-                </span>
-              ))}
+    <div class="mx-auto max-w-2xl">
+      <div
+        class="group cursor-pointer"
+        style="perspective: 1000px;"
+        data-gag-slug={gag.data.slug}
+      >
+        <div
+          class="card-flipper relative min-h-[300px] transition-transform duration-700 transform-3d group-[.flipped]:rotate-y-180"
+          style="transform-style: preserve-3d;"
+        >
+          <!-- 카드 앞면 -->
+          <div class="card-front absolute inset-0 backface-hidden">
+            <div
+              class="bg-card border-border h-full rounded-2xl border-2 p-8 shadow-lg md:p-12"
+            >
+              <div class="mb-6 flex items-start justify-between">
+                {
+                  gag.data.tags.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      {gag.data.tags.map((tag: string) => (
+                        <a
+                          href={getLocalizedUrl(`/tags/${tag}`, lang)}
+                          class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                          data-no-flip="true"
+                        >
+                          #{tag}
+                        </a>
+                      ))}
+                    </div>
+                  )
+                }
+                <div class="flex items-center space-x-2">
+                  <button
+                    class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+                    data-gag={JSON.stringify({
+                      slug: gag.data.slug,
+                      title: gag.data.title,
+                      description: gag.data.description,
+                      tags: gag.data.tags,
+                    })}
+                    aria-label={t("저장", "Save")}
+                    data-no-flip="true"
+                  >
+                    <BookmarkIcon class="bookmark-icon h-5 w-5" />
+                    <BookmarkIcon
+                      class="bookmark-check-icon text-primary hidden h-5 w-5"
+                      fill="currentColor"
+                    />
+                  </button>
+                  <button
+                    class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+                    data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+                    data-slug={gag.data.slug}
+                    aria-label={t("공유", "Share")}
+                    data-no-flip="true"
+                  >
+                    <Share2Icon size={20} />
+                  </button>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <h3 class="text-foreground mb-3 text-xl font-bold md:text-2xl">
+                  {gag.data.title}
+                </h3>
+                {
+                  gag.data.description && (
+                    <p class="text-muted-foreground mt-4 font-mono text-lg tracking-wider opacity-50 transition-opacity hover:opacity-70">
+                      {gag.data.description.replace(
+                        /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
+                        "●",
+                      )}
+                    </p>
+                  )
+                }
+              </div>
             </div>
-          )
-        }
-        <div class="flex items-center space-x-2">
-          <button
-            class="save-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
-            data-gag={JSON.stringify({
-              slug: gag.data.slug,
-              title: gag.data.title,
-              description: gag.data.description,
-            })}
-            aria-label={t("저장", "Save")}
-          >
-            <BookmarkIcon class="bookmark-icon h-6 w-6" />
-            <BookmarkIcon
-              class="bookmark-check-icon text-primary hidden h-6 w-6"
-              fill="currentColor"
-            />
-          </button>
-          <button
-            class="share-btn hover:bg-background/50 rounded-lg p-3 transition-colors"
-            data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
-            data-slug={gag.data.slug}
-            aria-label={t("공유", "Share")}
-          >
-            <Share2Icon size={24} />
-          </button>
+          </div>
+
+          <!-- 카드 뒷면 -->
+          <div class="card-back absolute inset-0 rotate-y-180 backface-hidden">
+            <div
+              class="bg-card border-border h-full rounded-2xl border-2 p-8 shadow-lg md:p-12"
+            >
+              <div class="mb-6 flex items-start justify-between">
+                <div class="flex-1">
+                  <h3
+                    class="text-foreground mb-3 text-xl font-bold md:text-2xl"
+                  >
+                    {gag.data.title}
+                  </h3>
+                  {
+                    gag.data.description && (
+                      <p class="text-primary mt-4 text-xl font-semibold md:text-2xl">
+                        {gag.data.description}
+                      </p>
+                    )
+                  }
+                </div>
+                <div class="flex items-center space-x-2">
+                  <button
+                    class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+                    data-gag={JSON.stringify({
+                      slug: gag.data.slug,
+                      title: gag.data.title,
+                      description: gag.data.description,
+                      tags: gag.data.tags,
+                    })}
+                    aria-label={t("저장", "Save")}
+                    data-no-flip="true"
+                  >
+                    <BookmarkIcon class="bookmark-icon h-5 w-5" />
+                    <BookmarkIcon
+                      class="bookmark-check-icon text-primary hidden h-5 w-5"
+                      fill="currentColor"
+                    />
+                  </button>
+                  <button
+                    class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+                    data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+                    data-slug={gag.data.slug}
+                    aria-label={t("공유", "Share")}
+                    data-no-flip="true"
+                  >
+                    <Share2Icon size={20} />
+                  </button>
+                </div>
+              </div>
+
+              <footer class="mt-8 text-center">
+                <a
+                  href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
+                  class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
+                  data-no-flip="true"
+                >
+                  {t("자세히 보기", "View More")}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="ml-2"
+                  >
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
+              </footer>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="mb-6 text-center">
-        <h3 class="text-foreground mb-3 text-xl font-bold md:text-2xl">
-          {t("Q.", "Q.")}
-          {gag.data.title}
-        </h3>
-        {
-          gag.data.description && (
-            <p class="text-foreground text-lg md:text-xl">
-              {t("A.", "A.")} {gag.data.description}
-            </p>
-          )
-        }
-      </div>
-
-      <footer class="mt-6 text-center">
-        <a
-          href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
-          class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors"
-        >
-          {t("자세히 보기", "View More")}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="ml-2"
-          >
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
-        </a>
-      </footer>
     </div>
   </div>
 </article>
@@ -117,4 +195,41 @@ const t = useTranslations(lang);
 
   // 페이지 로드 시 초기화
   initGagInteractions();
+
+  // 플립 카드 상호작용
+  document.addEventListener("DOMContentLoaded", () => {
+    const initCardFlip = () => {
+      const cards = document.querySelectorAll("[data-gag-slug]");
+
+      cards.forEach((card) => {
+        // 중복 방지를 위해 기존 리스너 제거
+        const newCard = card.cloneNode(true) as HTMLElement;
+        card.parentNode?.replaceChild(newCard, card);
+
+        newCard.addEventListener("click", (e) => {
+          const target = e.target as HTMLElement;
+
+          // 버튼이나 링크 등 상호작용 요소를 클릭한 경우 플립하지 않음
+          if (
+            target.closest("[data-no-flip]") ||
+            target.closest("button") ||
+            target.closest("a") ||
+            target.tagName === "BUTTON" ||
+            target.tagName === "A"
+          ) {
+            return;
+          }
+
+          // 카드 뒤집기 토글
+          newCard.classList.toggle("flipped");
+        });
+      });
+    };
+
+    // 첫 로드 시 초기화
+    initCardFlip();
+
+    // Astro View Transitions 사용 시 재초기화
+    document.addEventListener("astro:after-swap", initCardFlip);
+  });
 </script>

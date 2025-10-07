@@ -34,30 +34,6 @@ const sortedGags = allGags.sort((a: GagEntry, b: GagEntry) => {
 
 // 표시할 개수 제한 (12개)
 const displayGags = sortedGags.slice(0, 12);
-
-// 상대적 시간 계산 함수
-function getRelativeTime(date: Date): string {
-  const now = new Date();
-  const diffInMs = now.getTime() - date.getTime();
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-  if (diffInDays === 0) {
-    return "오늘";
-  } else if (diffInDays === 1) {
-    return "1일 전";
-  } else if (diffInDays < 7) {
-    return `${diffInDays}일 전`;
-  } else if (diffInDays < 30) {
-    const weeks = Math.floor(diffInDays / 7);
-    return `${weeks}주 전`;
-  } else if (diffInDays < 365) {
-    const months = Math.floor(diffInDays / 30);
-    return `${months}개월 전`;
-  } else {
-    const years = Math.floor(diffInDays / 365);
-    return `${years}년 전`;
-  }
-}
 ---
 
 <Layout
@@ -82,11 +58,7 @@ function getRelativeTime(date: Date): string {
   <section class="px-4 py-8">
     <div class="container mx-auto max-w-6xl">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {
-          displayGags.map((gag: GagEntry) => (
-            <Card gag={gag} lang={lang} />
-          ))
-        }
+        {displayGags.map((gag: GagEntry) => <Card gag={gag} lang={lang} />)}
       </div>
     </div>
   </section>

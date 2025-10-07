@@ -100,17 +100,47 @@ const t = useTranslations(lang);
     <div class="card-back absolute inset-0 rotate-y-180 backface-hidden">
       <div class="bg-card border-border h-full rounded-lg border">
         <div class="p-6">
-          <div class="mb-4">
-            <h2 class="text-foreground mb-2 text-lg font-bold">
-              {gag.data.title}
-            </h2>
-            {
-              gag.data.description && (
-                <p class="text-primary mt-4 text-xl font-semibold">
-                  {gag.data.description}
-                </p>
-              )
-            }
+          <div class="mb-4 flex items-start justify-between">
+            <div class="flex-1">
+              <h2 class="text-foreground mb-2 text-lg font-bold">
+                {gag.data.title}
+              </h2>
+              {
+                gag.data.description && (
+                  <p class="text-primary mt-4 text-xl font-semibold">
+                    {gag.data.description}
+                  </p>
+                )
+              }
+            </div>
+            <div class="flex items-center space-x-2">
+              <button
+                class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+                data-gag={JSON.stringify({
+                  slug: gag.data.slug,
+                  title: gag.data.title,
+                  description: gag.data.description,
+                  tags: gag.data.tags,
+                })}
+                aria-label={t("저장", "Save")}
+                data-no-flip="true"
+              >
+                <BookmarkIcon class="bookmark-icon h-4 w-4" />
+                <BookmarkIcon
+                  class="bookmark-check-icon text-primary hidden h-4 w-4"
+                  fill="currentColor"
+                />
+              </button>
+              <button
+                class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+                data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+                data-slug={gag.data.slug}
+                aria-label={t("공유", "Share")}
+                data-no-flip="true"
+              >
+                <Share2Icon size={16} />
+              </button>
+            </div>
           </div>
           <div class="mt-6 flex justify-center">
             <a
