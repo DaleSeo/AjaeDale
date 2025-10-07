@@ -3,7 +3,6 @@ import MenuIcon from "../icons/Menu.astro";
 import XIcon from "../icons/X.astro";
 import Star from "../icons/Star.astro";
 import Flame from "../icons/Flame.astro";
-import Dice from "../icons/Dice.astro";
 import Folder from "../icons/Folder.astro";
 import Search from "../icons/Search.astro";
 import Bookmark from "../icons/Bookmark.astro";
@@ -23,7 +22,6 @@ const currentPath = Astro.url.pathname;
 const isTagsPage = currentPath.includes("/tags");
 const isPopularPage = currentPath.includes("/popular");
 const isLatestPage = currentPath.includes("/latest");
-const isRandomPage = currentPath.includes("/random");
 const isSearchPage = currentPath.includes("/search");
 const isSavedPage = currentPath.includes("/saved");
 
@@ -78,13 +76,6 @@ const getMobileNavStyle = (isActive: boolean) => {
         >
           <Flame size={16} />
           <span>{t("인기 개그", "Popular")}</span>
-        </a>
-        <a
-          href={getLocalizedUrl("/random", lang)}
-          class={`${getNavStyle(isRandomPage)} flex items-center gap-1.5`}
-        >
-          <Dice size={16} />
-          <span>{t("랜덤 개그", "Random")}</span>
         </a>
       </nav>
 
@@ -145,13 +136,6 @@ const getMobileNavStyle = (isActive: boolean) => {
         >
           <Flame size={16} />
           <span>{t("인기 개그", "Popular")}</span>
-        </a>
-        <a
-          href={getLocalizedUrl("/random", lang)}
-          class={`${getMobileNavStyle(isRandomPage)} flex items-center gap-2`}
-        >
-          <Dice size={16} />
-          <span>{t("랜덤 개그", "Random")}</span>
         </a>
         <a
           href={getLocalizedUrl("/tags", lang)}

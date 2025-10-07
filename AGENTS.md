@@ -24,7 +24,7 @@ Astro SSG와 로컬 Content Collections를 사용한 순수 정적 사이트로 
 ## 스타일링 규칙
 
 - 모든 스타일링은 Tailwind 클래스로 구현
-- Vanila CSS나 글로벌 스타일시트 수정 피하기
+- Vanilla CSS나 글로벌 스타일시트 수정 피하기
 
 ### 상태 관리
 

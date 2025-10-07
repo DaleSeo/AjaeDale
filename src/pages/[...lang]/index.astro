@@ -2,7 +2,6 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Card from "../../components/Card.astro";
-import DailyGag from "../../components/DailyGag.astro";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import {
@@ -38,7 +37,14 @@ function getTodaysGag(gags: GagEntry[]): GagEntry {
   return gags[index];
 }
 
+// 랜덤 개그 선택
+function getRandomGag(gags: GagEntry[]): GagEntry {
+  const randomIndex = Math.floor(Math.random() * gags.length);
+  return gags[randomIndex];
+}
+
 const todaysGag = getTodaysGag(allGags);
+const randomGag = getRandomGag(allGags);
 
 // 인기 개그 가져오기
 const gagsWithLikesData = await enrichGagsWithLikes(allGags);
@@ -51,8 +57,36 @@ const t = useTranslations(lang);
 ---
 
 <Layout title={t("홈", "Home")} currentPage="home" lang={lang}>
-  <!-- 오늘의 개그 섹션 -->
-  <DailyGag gag={todaysGag} lang={lang} />
+  <!-- 오늘의 개그 & 랜덤 개그 섹션 -->
+  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-16">
+    <div class="container mx-auto max-w-6xl">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div>
+          <h2 class="text-foreground mb-2 text-center text-3xl font-bold">
+            🤣 {t("오늘의 개그", "Pun of the Day")}
+          </h2>
+          <p class="text-muted-foreground mb-4 text-center text-sm">
+            {
+              t(
+                "매일 먹는 웃음 영양제, 하루 종일 유쾌한 기분!",
+                "Take your daily dose of humor for all-day joy!",
+              )
+            }
+          </p>
+          <Card gag={todaysGag} lang={lang} variant="featured" />
+        </div>
+        <div>
+          <h2 class="text-foreground mb-2 text-center text-3xl font-bold">
+            🎴 {t("운명의 개그", "Destined Pun")}
+          </h2>
+          <p class="text-muted-foreground mb-4 text-center text-sm">
+            {t("운명이 선택한 개그를 만나보세요!", "Meet your destined pun!")}
+          </p>
+          <Card gag={randomGag} lang={lang} variant="featured" />
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- 인기 개그 섹션 -->
   <section class="px-4 py-16">
