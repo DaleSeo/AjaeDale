@@ -22,12 +22,8 @@ const t = useTranslations(lang);
 
 // variant에 따른 스타일 설정
 const isFeatured = variant === "featured";
-const containerClasses = isFeatured
-  ? "min-h-[220px]"
-  : "min-h-[200px]";
-const cardClasses = isFeatured
-  ? "border-2 p-6 shadow-lg md:p-8"
-  : "border p-6";
+const containerClasses = isFeatured ? "min-h-[220px]" : "min-h-[200px]";
+const cardClasses = isFeatured ? "border-2 p-6 shadow-lg md:p-8" : "border p-6";
 const iconSize = isFeatured ? 20 : 16;
 const iconClass = isFeatured ? "h-5 w-5" : "h-4 w-4";
 const titleClass = isFeatured
@@ -59,122 +55,122 @@ const detailBtnClass = isFeatured
     <!-- 카드 앞면 -->
     <div class="card-front absolute inset-0 backface-hidden">
       <div class={`bg-card border-border h-full rounded-lg ${cardClasses}`}>
-          <div class="mb-4 flex items-start justify-between">
-            <div class="flex flex-wrap gap-2">
-              {
-                gag.data.tags.map((tag: string) => (
-                  <a
-                    href={getLocalizedUrl(`/tags/${tag}`, lang)}
-                    class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
-                    data-no-flip="true"
-                  >
-                    #{tag}
-                  </a>
-                ))
-              }
-            </div>
-            <div class="flex items-center space-x-2">
-              <button
-                class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
-                data-gag={JSON.stringify({
-                  slug: gag.data.slug,
-                  title: gag.data.title,
-                  description: gag.data.description,
-                  tags: gag.data.tags,
-                })}
-                aria-label={t("저장", "Save")}
-                data-no-flip="true"
-              >
-                <BookmarkIcon class={`bookmark-icon ${iconClass}`} />
-                <BookmarkIcon
-                  class={`bookmark-check-icon text-primary hidden ${iconClass}`}
-                  fill="currentColor"
-                />
-              </button>
-              <button
-                class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
-                data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
-                data-slug={gag.data.slug}
-                aria-label={t("공유", "Share")}
-                data-no-flip="true"
-              >
-                <Share2Icon size={iconSize} />
-              </button>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <h3 class={`text-foreground mb-2 ${titleClass}`}>
-              {gag.data.title}
-            </h3>
+        <div class="mb-4 flex items-start justify-between">
+          <div class="flex flex-wrap gap-2">
             {
-              gag.data.description && (
-                <p class={`text-muted-foreground mt-3 font-mono ${descClass}`}>
-                  {gag.data.description.replace(
-                    /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
-                    "●",
-                  )}
-                </p>
-              )
+              gag.data.tags.map((tag: string) => (
+                <a
+                  href={getLocalizedUrl(`/tags/${tag}`, lang)}
+                  class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
+                  data-no-flip="true"
+                >
+                  #{tag}
+                </a>
+              ))
             }
           </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+              data-gag={JSON.stringify({
+                slug: gag.data.slug,
+                title: gag.data.title,
+                description: gag.data.description,
+                tags: gag.data.tags,
+              })}
+              aria-label={t("저장", "Save")}
+              data-no-flip="true"
+            >
+              <BookmarkIcon class={`bookmark-icon ${iconClass}`} />
+              <BookmarkIcon
+                class={`bookmark-check-icon text-primary hidden ${iconClass}`}
+                fill="currentColor"
+              />
+            </button>
+            <button
+              class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+              data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+              data-slug={gag.data.slug}
+              aria-label={t("공유", "Share")}
+              data-no-flip="true"
+            >
+              <Share2Icon size={iconSize} />
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <h3 class={`text-foreground mb-2 ${titleClass}`}>
+            {gag.data.title}
+          </h3>
+          {
+            gag.data.description && (
+              <p class={`text-muted-foreground mt-3 font-mono ${descClass}`}>
+                {gag.data.description.replace(
+                  /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
+                  "●",
+                )}
+              </p>
+            )
+          }
+        </div>
       </div>
     </div>
 
     <!-- 카드 뒷면 -->
     <div class="card-back absolute inset-0 rotate-y-180 backface-hidden">
       <div class={`bg-card border-border h-full rounded-lg ${cardClasses}`}>
-          <div class="mb-4 flex items-start justify-between">
-            <div class="flex-1">
-              <h3 class={`text-foreground mb-2 ${backTitleClass}`}>
-                {gag.data.title}
-              </h3>
-              {
-                gag.data.description && (
-                  <p class={`text-primary mt-4 ${backDescClass}`}>
-                    {gag.data.description}
-                  </p>
-                )
-              }
-            </div>
-            <div class="flex items-center space-x-2">
-              <button
-                class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
-                data-gag={JSON.stringify({
-                  slug: gag.data.slug,
-                  title: gag.data.title,
-                  description: gag.data.description,
-                  tags: gag.data.tags,
-                })}
-                aria-label={t("저장", "Save")}
-                data-no-flip="true"
-              >
-                <BookmarkIcon class={`bookmark-icon ${iconClass}`} />
-                <BookmarkIcon
-                  class={`bookmark-check-icon text-primary hidden ${iconClass}`}
-                  fill="currentColor"
-                />
-              </button>
-              <button
-                class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
-                data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
-                data-slug={gag.data.slug}
-                aria-label={t("공유", "Share")}
-                data-no-flip="true"
-              >
-                <Share2Icon size={iconSize} />
-              </button>
-            </div>
+        <div class="mb-4 flex items-start justify-between">
+          <div class="flex-1">
+            <h3 class={`text-foreground mb-2 ${backTitleClass}`}>
+              {gag.data.title}
+            </h3>
+            {
+              gag.data.description && (
+                <p class={`text-primary mt-4 ${backDescClass}`}>
+                  {gag.data.description}
+                </p>
+              )
+            }
           </div>
-          <div class="mt-6 flex justify-center">
-            <a
-              href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
-              class={`bg-primary text-primary-foreground hover:bg-primary/90 inline-block transition-colors ${detailBtnClass}`}
+          <div class="flex items-center gap-2">
+            <button
+              class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+              data-gag={JSON.stringify({
+                slug: gag.data.slug,
+                title: gag.data.title,
+                description: gag.data.description,
+                tags: gag.data.tags,
+              })}
+              aria-label={t("저장", "Save")}
               data-no-flip="true"
             >
-              {t("자세히 보기", "View Details")}
-            </a>
+              <BookmarkIcon class={`bookmark-icon ${iconClass}`} />
+              <BookmarkIcon
+                class={`bookmark-check-icon text-primary hidden ${iconClass}`}
+                fill="currentColor"
+              />
+            </button>
+            <button
+              class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+              data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+              data-slug={gag.data.slug}
+              aria-label={t("공유", "Share")}
+              data-no-flip="true"
+            >
+              <Share2Icon size={iconSize} />
+            </button>
           </div>
+        </div>
+        <div class="mt-6 flex justify-center">
+          <a
+            href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
+            class={`bg-primary text-primary-foreground hover:bg-primary/90 inline-block transition-colors ${detailBtnClass}`}
+            data-no-flip="true"
+          >
+            {t("자세히 보기", "View Details")}
+          </a>
+        </div>
       </div>
     </div>
   </div>

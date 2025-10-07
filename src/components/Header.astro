@@ -44,8 +44,8 @@ const getMobileNavStyle = (isActive: boolean) => {
   class="bg-background/80 border-border sticky top-0 z-50 border-b backdrop-blur-md"
 >
   <div class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between">
-      <a href={getLocalizedUrl("/", lang)} class="flex items-center space-x-2">
+    <div class="flex items-center justify-between gap-6">
+      <a href={getLocalizedUrl("/", lang)} class="flex items-center gap-2">
         <img
           src="/logo.png"
           alt={t("아재달레", "AjaeDale")}
@@ -62,7 +62,7 @@ const getMobileNavStyle = (isActive: boolean) => {
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden items-center space-x-6 md:flex">
+      <nav class="hidden items-center gap-6 md:flex">
         <a
           href={getLocalizedUrl("/latest", lang)}
           class={`${getNavStyle(isLatestPage)} flex items-center gap-1.5`}
@@ -77,23 +77,21 @@ const getMobileNavStyle = (isActive: boolean) => {
           <Flame size={16} />
           <span>{t("인기 개그", "Popular")}</span>
         </a>
-      </nav>
-
-      <div class="hidden items-center space-x-2 md:flex">
         <a
           href={getLocalizedUrl("/tags", lang)}
-          class={isTagsPage
-            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
-            : "p-2 hover:bg-accent rounded-md transition-colors"}
-          title={t("개그 분류", "Tags")}
+          class={`${getNavStyle(isTagsPage)} flex items-center gap-1.5`}
         >
-          <Folder size={20} />
+          <Folder size={16} />
+          <span>{t("개그 분류", "Tags")}</span>
         </a>
+      </nav>
+
+      <div class="hidden items-center gap-2 md:flex">
+        <!-- 검색 -->
         <a
           href={getLocalizedUrl("/search", lang)}
-          class={isSearchPage
-            ? "p-2 bg-primary/10 text-primary rounded-md transition-colors"
-            : "p-2 hover:bg-accent rounded-md transition-colors"}
+          class={`${isSearchPage ? "text-primary" : "text-foreground hover:text-primary"} rounded-md p-2 transition-colors hover:bg-accent`}
+          aria-label={t("개그 검색", "Search")}
           title={t("개그 검색", "Search")}
         >
           <Search size={20} />
@@ -122,7 +120,7 @@ const getMobileNavStyle = (isActive: boolean) => {
       id="mobile-menu"
       class="border-border mt-4 hidden border-t pt-4 pb-4 md:hidden"
     >
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col gap-2">
         <a
           href={getLocalizedUrl("/latest", lang)}
           class={`${getMobileNavStyle(isLatestPage)} flex items-center gap-2`}

@@ -108,110 +108,7 @@ const description = t(
 </Layout>
 
 <script>
-  // Get current language from URL
-  const currentPath = window.location.pathname;
-  const currentLang = currentPath.startsWith("/en/") ? "en" : "ko";
-
-  // URL에서 검색어 가져오기
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialQuery = urlParams.get("q") || "";
-
-  const searchInput = document.getElementById(
-    "search-input",
-  ) as HTMLInputElement;
-  const searchResults = document.getElementById("search-results");
-  const noResults = document.getElementById("no-results");
-  const clearButton = document.getElementById("clear-button");
-
   let pagefind: any;
-
-  // Pagefind 초기화
-  async function initPagefind() {
-    try {
-      // @ts-ignore - 동적 import를 사용하여 Vite 분석 우회
-      const pagefindPath = "/pagefind/pagefind.js";
-      pagefind = await import(/* @vite-ignore */ pagefindPath);
-
-      // Set language filter for multilingual search
-      if (pagefind && currentLang) {
-        await pagefind.options({
-          filters: {
-            lang: currentLang,
-          },
-        });
-      }
-    } catch (e) {
-      console.error("Pagefind not available. Run 'bun run build' first.");
-    }
-  }
-
-  // Clear 버튼 표시/숨김 업데이트
-  function updateClearButton() {
-    if (!clearButton) return;
-    if (searchInput.value.trim()) {
-      clearButton.classList.remove("hidden");
-    } else {
-      clearButton.classList.add("hidden");
-    }
-  }
-
-  // 검색 수행
-  async function performSearch(query: string) {
-    updateClearButton();
-
-    if (!query.trim()) {
-      if (searchResults) searchResults.innerHTML = "";
-      if (noResults) noResults.classList.add("hidden");
-      return;
-    }
-
-    // URL 업데이트
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set("q", query);
-    window.history.replaceState({}, "", newUrl);
-
-    if (!pagefind) {
-      await initPagefind();
-    }
-
-    const search = await pagefind.search(query);
-
-    if (!searchResults || !noResults) return;
-
-    if (search.results.length === 0) {
-      searchResults.innerHTML = "";
-      noResults.classList.remove("hidden");
-      return;
-    }
-
-    noResults.classList.add("hidden");
-
-    // 결과 렌더링
-    const resultsHTML = await Promise.all(
-      search.results.map(async (result: any) => {
-        const data = await result.data();
-
-        // content에서 실제 개그 제목 추출 (HTML 태그 제거)
-        const title = data.content || data.meta.title || "제목 없음";
-        const cleanTitle = title.replace(/<[^>]*>/g, "").trim();
-
-        // excerpt 추출 (있는 경우)
-        const excerpt = data.excerpt || "";
-        const cleanExcerpt = excerpt.replace(/<[^>]*>/g, "").trim();
-
-        return `
-          <a href="${data.url}" class="block p-6 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-md transition-all duration-200 group">
-            <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-              ${cleanTitle}
-            </h3>
-            ${cleanExcerpt ? `<p class="text-sm text-muted-foreground line-clamp-2">${cleanExcerpt}</p>` : ""}
-          </a>
-        `;
-      }),
-    );
-
-    searchResults.innerHTML = resultsHTML.join("");
-  }
 
   // Debounce 함수
   function debounce(func: Function, wait: number) {
@@ -226,31 +123,147 @@ const description = t(
     };
   }
 
-  // 이벤트 리스너
-  if (searchInput) {
+  function setupSearchPage() {
+    // Get current language from URL
+    const currentPath = window.location.pathname;
+    const currentLang = currentPath.startsWith("/en/") ? "en" : "ko";
+
+    // URL에서 검색어 가져오기
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get("q") || "";
+
+    const searchInput = document.getElementById(
+      "search-input",
+    ) as HTMLInputElement;
+    const searchResults = document.getElementById("search-results");
+    const noResults = document.getElementById("no-results");
+    const clearButton = document.getElementById("clear-button");
+
+    if (!searchInput || !searchResults || !noResults || !clearButton) return;
+
+    // Pagefind 초기화
+    async function initPagefind() {
+      if (pagefind) return; // 이미 초기화되었으면 스킵
+
+      try {
+        // @ts-ignore - 동적 import를 사용하여 Vite 분석 우회
+        const pagefindPath = "/pagefind/pagefind.js";
+        pagefind = await import(/* @vite-ignore */ pagefindPath);
+
+        // Set language filter for multilingual search
+        if (pagefind && currentLang) {
+          await pagefind.options({
+            filters: {
+              lang: currentLang,
+            },
+          });
+        }
+      } catch (e) {
+        console.error("Pagefind not available. Run 'bun run build' first.");
+      }
+    }
+
+    // Clear 버튼 표시/숨김 업데이트
+    function updateClearButton() {
+      if (!clearButton) return;
+      if (searchInput.value.trim()) {
+        clearButton.classList.remove("hidden");
+      } else {
+        clearButton.classList.add("hidden");
+      }
+    }
+
+    // 검색 수행
+    async function performSearch(query: string) {
+      updateClearButton();
+
+      if (!query.trim()) {
+        if (searchResults) searchResults.innerHTML = "";
+        if (noResults) noResults.classList.add("hidden");
+        return;
+      }
+
+      // URL 업데이트
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.set("q", query);
+      window.history.replaceState({}, "", newUrl);
+
+      if (!pagefind) {
+        await initPagefind();
+      }
+
+      const search = await pagefind.search(query);
+
+      if (!searchResults || !noResults) return;
+
+      if (search.results.length === 0) {
+        searchResults.innerHTML = "";
+        noResults.classList.remove("hidden");
+        return;
+      }
+
+      noResults.classList.add("hidden");
+
+      // 결과 렌더링
+      const resultsHTML = await Promise.all(
+        search.results.map(async (result: any) => {
+          const data = await result.data();
+
+          // content에서 실제 개그 제목 추출 (HTML 태그 제거)
+          const title = data.content || data.meta.title || "제목 없음";
+          const cleanTitle = title.replace(/<[^>]*>/g, "").trim();
+
+          // excerpt 추출 (있는 경우)
+          const excerpt = data.excerpt || "";
+          const cleanExcerpt = excerpt.replace(/<[^>]*>/g, "").trim();
+
+          return `
+            <a href="${data.url}" class="block p-6 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-md transition-all duration-200 group">
+              <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                ${cleanTitle}
+              </h3>
+              ${cleanExcerpt ? `<p class="text-sm text-muted-foreground line-clamp-2">${cleanExcerpt}</p>` : ""}
+            </a>
+          `;
+        }),
+      );
+
+      searchResults.innerHTML = resultsHTML.join("");
+    }
+
     // 초기 검색어가 있으면 검색 수행
     if (initialQuery) {
       searchInput.value = initialQuery;
       performSearch(initialQuery);
     }
 
-    const debouncedSearch = debounce((e: Event) => {
-      const target = e.target as HTMLInputElement;
-      performSearch(target.value);
-    }, 300);
+    // 이벤트 리스너 (중복 등록 방지)
+    if (!(searchInput as any)._searchListenerAttached) {
+      (searchInput as any)._searchListenerAttached = true;
 
-    searchInput.addEventListener("input", debouncedSearch);
+      const debouncedSearch = debounce((e: Event) => {
+        const target = e.target as HTMLInputElement;
+        performSearch(target.value);
+      }, 300);
+
+      searchInput.addEventListener("input", debouncedSearch);
+    }
+
+    // Clear 버튼 클릭 이벤트 (중복 등록 방지)
+    if (!(clearButton as any)._clearListenerAttached) {
+      (clearButton as any)._clearListenerAttached = true;
+
+      clearButton.addEventListener("click", () => {
+        searchInput.value = "";
+        searchInput.focus();
+        performSearch("");
+      });
+    }
+
+    // Pagefind 초기화
+    initPagefind();
   }
 
-  // Clear 버튼 클릭 이벤트
-  if (clearButton) {
-    clearButton.addEventListener("click", () => {
-      searchInput.value = "";
-      searchInput.focus();
-      performSearch("");
-    });
-  }
-
-  // Pagefind 초기화
-  initPagefind();
+  // astro:page-load 이벤트에 연결 (View Transitions 호환)
+  document.addEventListener("astro:page-load", setupSearchPage);
 </script>

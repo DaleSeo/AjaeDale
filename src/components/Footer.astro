@@ -17,7 +17,7 @@ const t = useTranslations(lang);
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
       <!-- 로고 및 설명 -->
       <div class="col-span-1 md:col-span-2">
-        <div class="mb-4 flex items-center space-x-2">
+        <div class="mb-4 flex items-center gap-2">
           <img
             src="/logo.png"
             alt={t("아재달레", "AjaeDale")}
@@ -35,7 +35,7 @@ const t = useTranslations(lang);
             )
           }
         </p>
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center gap-4">
           <a
             href="https://github.com/DaleSeo/AjaeDale"
             target="_blank"
@@ -62,7 +62,7 @@ const t = useTranslations(lang);
         <h4 class="text-foreground mb-4 font-semibold">
           {t("바로가기", "Quick Links")}
         </h4>
-        <ul class="space-y-2">
+        <ul class="flex flex-col gap-2">
           <li>
             <a
               href={getLocalizedUrl("/tags", lang)}
