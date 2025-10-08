@@ -2,8 +2,10 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import Detail from "../../../components/Detail.astro";
+import Recommendation from "../../../components/Recommendation.astro";
 import Giscus from "../../../components/Giscus.astro";
 import { getStaticPathsLocales, normalizeLang } from "../../../utils/i18n";
+import { getRecommendedGags } from "../../../utils/recommendGags";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -15,12 +17,13 @@ export async function getStaticPaths() {
   const paths = [];
   for (const lang of getStaticPathsLocales()) {
     for (const gag of allGags) {
+      const recommendedGags = getRecommendedGags(gag, allGags, 6);
       paths.push({
         params: {
           lang,
           slug: gag.data.slug,
         },
-        props: { gag },
+        props: { gag, recommendedGags },
       });
     }
   }
@@ -29,9 +32,10 @@ export async function getStaticPaths() {
 
 interface Props {
   gag: GagEntry;
+  recommendedGags: GagEntry[];
 }
 
-const { gag }: Props = Astro.props;
+const { gag, recommendedGags }: Props = Astro.props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 ---
@@ -41,7 +45,11 @@ const lang = normalizeLang(langParam);
     <h1 class="sr-only" data-pagefind-body>{gag.data.title}</h1>
 
     <Detail gag={gag} lang={lang} />
+  </article>
 
+  <Recommendation gags={recommendedGags} lang={lang} />
+
+  <article class="container mx-auto max-w-4xl px-4 py-8">
     <Giscus />
   </article>
 </Layout>

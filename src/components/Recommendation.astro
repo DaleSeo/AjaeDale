@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Card from "./Card.astro";
+import type { Lang } from "../utils/i18n";
+import { useTranslations } from "../utils/i18n";
+
+interface Props {
+  gags: CollectionEntry<"gags">[];
+  lang?: Lang;
+}
+
+const { gags, lang = "ko" } = Astro.props;
+const t = useTranslations(lang);
+
+// 추천 개그가 없으면 섹션을 렌더링하지 않음
+if (gags.length === 0) {
+  return null;
+}
+---
+
+<section class="container mx-auto max-w-4xl px-4 py-8">
+  <h2 class="text-foreground mb-6 text-2xl font-bold">
+    {t("이런 개그는 어때요?", "You might also like")}
+  </h2>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {gags.map((gag) => <Card gag={gag} lang={lang} />)}
+  </div>
+</section>

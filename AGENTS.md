@@ -21,6 +21,11 @@ Astro SSG와 로컬 Content Collections를 사용한 순수 정적 사이트로 
 - 스크립트 실행: package.json 스크립트에서도 node 대신 bun 사용
 - 개발 서버 실행: `bun dev` (npm run dev 대신)
 
+## 코드 품질
+
+- **코드 수정 후 포맷팅 필수**: 모든 코드 수정 후 반드시 `bun format` 실행
+- 포맷팅은 Prettier를 사용하여 일관된 코드 스타일 유지
+
 ## 스타일링 규칙
 
 - 모든 스타일링은 Tailwind 클래스로 구현
