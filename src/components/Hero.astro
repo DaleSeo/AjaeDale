@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import ogImage from "../assets/og-image.png";
 import type { Lang } from "../utils/i18n";
 import { getLocalizedUrl, useTranslations } from "../utils/i18n";
 
@@ -14,12 +16,12 @@ const t = useTranslations(lang);
   <div class="container mx-auto text-center">
     <div class="mx-auto max-w-4xl">
       <div class="mb-8">
-        <img
-          src="/og-image.png"
+        <Image
+          src={ogImage}
           alt={t("아재달레", "AjaeDale")}
           class="mx-auto h-auto w-full max-w-lg md:max-w-2xl"
-          width="1200"
-          height="630"
+          width={1200}
+          height={630}
           fetchpriority="high"
           loading="eager"
         />

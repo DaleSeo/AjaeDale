@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
 import type { Lang } from "../utils/i18n";
-import { getLocalizedUrl, useTranslations } from "../utils/i18n";
+import { useTranslations } from "../utils/i18n";
 
 interface Props {
   gag: CollectionEntry<"gags">;
@@ -19,17 +19,21 @@ const t = useTranslations(lang);
   data-gag-slug={gag.data.slug}
 >
   <div class="p-6 md:p-8">
-    <div class="mb-4 flex items-start justify-between">
-      <div class="flex flex-wrap gap-2">
+    <div class="flex items-center justify-between">
+      <div>
         {
-          gag.data.tags.map((tag: string) => (
-            <a
-              href={getLocalizedUrl(`/tags/${tag}`, lang)}
-              class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
-            >
-              #{tag}
-            </a>
-          ))
+          gag.data.createdAt && (
+            <div class="text-muted-foreground text-sm">
+              {new Date(gag.data.createdAt).toLocaleDateString(
+                lang === "ko" ? "ko-KR" : "en-US",
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
+              )}
+            </div>
+          )
         }
       </div>
       <div class="flex items-center gap-2">
@@ -59,36 +63,6 @@ const t = useTranslations(lang);
         </button>
       </div>
     </div>
-
-    <div class="mb-4">
-      <h1 class="text-foreground mb-4 text-2xl font-bold md:text-3xl">
-        {t("Q.", "Q.")}
-        {gag.data.title}
-      </h1>
-
-      {
-        gag.data.description && (
-          <p class="text-foreground text-lg md:text-xl">
-            {t("A.", "A.")} {gag.data.description}
-          </p>
-        )
-      }
-    </div>
-
-    {
-      gag.data.createdAt && (
-        <div class="text-muted-foreground text-sm">
-          {new Date(gag.data.createdAt).toLocaleDateString(
-            lang === "ko" ? "ko-KR" : "en-US",
-            {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            },
-          )}
-        </div>
-      )
-    }
   </div>
 </div>
 

@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.png";
 import GithubIcon from "../icons/Github.astro";
 import HeartIcon from "../icons/Heart.astro";
 import CoffeeIcon from "../icons/Coffee.astro";
@@ -18,9 +20,12 @@ const t = useTranslations(lang);
       <!-- 로고 및 설명 -->
       <div class="col-span-1 md:col-span-2">
         <div class="mb-4 flex items-center gap-2">
-          <img
-            src="/logo.png"
+          <Image
+            src={logo}
             alt={t("아재달레", "AjaeDale")}
+            width={32}
+            height={32}
+            quality={95}
             class="h-8 w-8 rounded-full"
           />
           <h3 class="text-foreground text-xl font-bold">

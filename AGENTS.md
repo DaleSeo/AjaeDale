@@ -8,6 +8,23 @@
 아재달레(AjaeDale)는 한국인이 공감할 수 있는 아재개그를 제공하는 웹사이트입니다.
 Astro SSG와 로컬 Content Collections를 사용한 순수 정적 사이트로 구축되었습니다.
 
+## Astro 설정
+
+- **View Transitions 사용**: 프로젝트는 Astro의 View Transitions 기능을 사용함
+  - Layout에서 `<ClientRouter />`를 통해 활성화되어 있음
+  - 클라이언트 측 JavaScript에서 이벤트 리스너 등록 시 **반드시 `astro:page-load` 이벤트 사용**
+  - `DOMContentLoaded`는 첫 페이지 로드 시에만 작동하므로 사용 금지
+  - View Transitions로 페이지 이동 시에도 스크립트가 재실행되도록 보장 필요
+  - 예시:
+
+    ```javascript
+    // ❌ 잘못된 방법 (첫 로드만 작동)
+    document.addEventListener("DOMContentLoaded", init);
+
+    // ✅ 올바른 방법 (모든 페이지 전환에서 작동)
+    document.addEventListener("astro:page-load", init);
+    ```
+
 ## 에이전트 지침
 
 - 항상 이 파일을 먼저 확인하여 프로젝트 컨텍스트 파악
