@@ -21,17 +21,17 @@ const t = useTranslations(lang);
 ---
 
 <div
-  class="group relative cursor-pointer"
+  class="group cursor-pointer"
   style="perspective: 1000px;"
   data-gag-slug={gag.data.slug}
 >
   <div
-    class="card-flipper relative min-h-[200px] transition-transform duration-700 transform-3d group-[.flipped]:rotate-y-180"
+    class="card-flipper grid transition-transform duration-700 transform-3d group-[.flipped]:rotate-y-180"
     style="transform-style: preserve-3d;"
   >
     <!-- 카드 앞면 -->
-    <div class="card-front absolute inset-0 backface-hidden">
-      <div class="bg-card border-border h-full rounded-lg border p-6">
+    <div class="card-front backface-hidden" style="grid-area: 1 / 1;">
+      <div class="bg-card border-border rounded-lg border p-6">
         <div class="mb-4 flex items-start justify-between">
           <div class="flex flex-wrap gap-2">
             {
@@ -95,8 +95,11 @@ const t = useTranslations(lang);
     </div>
 
     <!-- 카드 뒷면 -->
-    <div class="card-back absolute inset-0 rotate-y-180 backface-hidden">
-      <div class="bg-card border-border h-full rounded-lg border p-6">
+    <div
+      class="card-back rotate-y-180 backface-hidden"
+      style="grid-area: 1 / 1;"
+    >
+      <div class="bg-card border-border rounded-lg border p-6">
         <div class="mb-4 flex items-start justify-between">
           <div class="flex-1">
             <h3 class="text-foreground mb-2 text-lg font-bold">

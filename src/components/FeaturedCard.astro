@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 import BookmarkIcon from "../icons/Bookmark.astro";
 import Share2Icon from "../icons/Share2.astro";
 import type { Lang } from "../utils/i18n";
@@ -8,37 +9,59 @@ import {
   getLangFromUrl,
   useTranslations,
 } from "../utils/i18n";
-import question1 from "../assets/question1.svg";
-import question2 from "../assets/question2.svg";
-import question3 from "../assets/question3.svg";
-import answer1 from "../assets/answer1.svg";
-import answer2 from "../assets/answer2.svg";
-import answer3 from "../assets/answer3.svg";
-import answer4 from "../assets/answer4.svg";
-import answer5 from "../assets/answer5.svg";
+import Q01 from "../assets/Q01.png";
+import Q02 from "../assets/Q02.png";
+import Q03 from "../assets/Q03.png";
+import Q04 from "../assets/Q04.png";
+import Q05 from "../assets/Q05.png";
+import Q06 from "../assets/Q06.png";
+import Q07 from "../assets/Q07.png";
+import Q08 from "../assets/Q08.png";
+import Q09 from "../assets/Q09.png";
+import Q10 from "../assets/Q10.png";
+import A01 from "../assets/A01.png";
+import A02 from "../assets/A02.png";
+import A03 from "../assets/A03.png";
+import A04 from "../assets/A04.png";
+import A05 from "../assets/A05.png";
+import A06 from "../assets/A06.png";
+import A07 from "../assets/A07.png";
+import A08 from "../assets/A08.png";
+import A09 from "../assets/A09.png";
+import A10 from "../assets/A10.png";
+import A11 from "../assets/A11.png";
+import A12 from "../assets/A12.png";
 
 interface Props {
   gag: CollectionEntry<"gags">;
   lang?: Lang;
-  showRandomButton?: boolean;
 }
 
 // lang prop이 제공되지 않으면 URL에서 언어 감지
 const detectedLang = getLangFromUrl(Astro.url);
-const {
-  gag,
-  lang = detectedLang,
-  showRandomButton = false,
-} = Astro.props;
+const { gag, lang = detectedLang } = Astro.props;
 const t = useTranslations(lang);
 
 // 랜덤 아이콘 선택
-const questionIcons = [question1, question2, question3];
-const answerIcons = [answer1, answer2, answer3, answer4, answer5];
-const randomQuestionIcon =
-  questionIcons[Math.floor(Math.random() * questionIcons.length)];
-const randomAnswerIcon =
-  answerIcons[Math.floor(Math.random() * answerIcons.length)];
+const questionImages = [Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10];
+const answerImages = [
+  A01,
+  A02,
+  A03,
+  A04,
+  A05,
+  A06,
+  A07,
+  A08,
+  A09,
+  A10,
+  A11,
+  A12,
+];
+const randomQuestionImage =
+  questionImages[Math.floor(Math.random() * questionImages.length)];
+const randomAnswerImage =
+  answerImages[Math.floor(Math.random() * answerImages.length)];
 ---
 
 <div
@@ -88,24 +111,24 @@ const randomAnswerIcon =
   </div>
 
   <!-- 질문 제목 -->
-  <h3 class="text-foreground mb-6 text-center text-xl font-bold md:text-2xl">
+  <h3 class="text-foreground mb-6 text-center text-2xl font-bold md:text-3xl">
     {gag.data.title}
   </h3>
 
   <!-- 아이콘 전환 (질문 → 정답) -->
   <div class="mb-6 flex justify-center">
     <div class="relative h-48 w-48 md:h-64 md:w-64">
-      <img
-        src={randomQuestionIcon.src}
+      <Image
+        src={randomQuestionImage}
         alt="Question"
-        class="question-icon absolute inset-0 h-full w-full transition-opacity duration-500"
+        class="question-icon absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
       />
       {
         gag.data.description && (
-          <img
-            src={randomAnswerIcon.src}
+          <Image
+            src={randomAnswerImage}
             alt="Answer"
-            class="answer-icon absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500"
+            class="answer-icon absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500"
           />
         )
       }
@@ -117,7 +140,7 @@ const randomAnswerIcon =
     gag.data.description && (
       <div class="mb-6">
         <p
-          class="answer-text text-foreground cursor-pointer text-center text-lg font-bold transition-all hover:scale-105 md:text-xl"
+          class="answer-text text-foreground cursor-pointer text-center text-2xl font-bold transition-all hover:scale-105 md:text-3xl"
           data-answer={gag.data.description}
           title={t("클릭하여 답변 보기", "Click to reveal answer")}
         >
@@ -133,20 +156,13 @@ const randomAnswerIcon =
   }
 
   <!-- 버튼 -->
-  <div class="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
+  <div class="flex w-full justify-center">
     <a
       href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
-      class="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-lg px-4 py-3 text-center text-sm font-medium transition-colors sm:flex-1 sm:px-6"
+      class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-12 py-3 text-center text-base font-medium transition-colors sm:px-16"
     >
       {t("자세히 보기", "View Details")}
     </a>
-    {
-      showRandomButton && (
-        <button class="random-gag-btn border-border hover:bg-accent w-full rounded-lg border px-4 py-3 text-sm font-medium transition-colors sm:flex-1 sm:px-6">
-          {t("🎲 다른 개그", "🎲 Random")}
-        </button>
-      )
-    }
   </div>
 </div>
 
@@ -226,40 +242,5 @@ const randomAnswerIcon =
     };
 
     initAnswerReveal();
-  });
-
-  // 랜덤 개그 로드 기능
-  document.addEventListener("astro:page-load", () => {
-    const initRandomGag = () => {
-      const randomButtons = document.querySelectorAll(".random-gag-btn");
-
-      randomButtons.forEach((button) => {
-        button.addEventListener("click", async () => {
-          try {
-            const response = await fetch("/api/gags.json");
-            const gags = await response.json();
-
-            if (gags.length === 0) return;
-
-            const cardElement = button.closest("[data-gag-slug]");
-            if (!cardElement) return;
-
-            const currentSlug = cardElement.getAttribute("data-gag-slug");
-            const otherGags = gags.filter(
-              (gag: any) => gag.slug !== currentSlug,
-            );
-            const randomGag =
-              otherGags[Math.floor(Math.random() * otherGags.length)];
-
-            // 페이지 새로고침 또는 동적 업데이트
-            window.location.reload();
-          } catch (error) {
-            console.error("Failed to load random gag:", error);
-          }
-        });
-      });
-    };
-
-    initRandomGag();
   });
 </script>

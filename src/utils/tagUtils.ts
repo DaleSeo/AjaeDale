@@ -206,6 +206,7 @@ const TAG_MAPPING: Record<string, string> = {
   할아버지: "grandfather",
   호박: "pumpkin",
   힘: "strength",
+  학생: "student",
 };
 
 /**

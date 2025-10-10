@@ -3,7 +3,6 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import FeaturedCard from "../../components/FeaturedCard.astro";
 import {
-  getLocalizedUrl,
   getStaticPathsLocales,
   normalizeLang,
   useTranslations,
@@ -44,21 +43,21 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 const todaysGag = getTodaysGag(allGags);
 const randomGag = getRandomGag(allGags);
 
-const totalGagsCount = allGags.length;
-
 const t = useTranslations(lang);
 ---
 
 <Layout title={t("홈", "Home")} currentPage="home" lang={lang}>
   <!-- 오늘의 개그 & 랜덤 개그 섹션 -->
-  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-16">
+  <section
+    class="from-primary/5 to-background bg-gradient-to-b px-4 pt-12 pb-16"
+  >
     <div class="container mx-auto max-w-6xl">
       <div class="grid grid-cols-1 gap-8">
         <div class="mx-auto w-full max-w-2xl">
-          <h2 class="text-foreground mb-2 text-center text-3xl font-bold">
+          <h2 class="text-foreground mb-2 text-center text-4xl font-bold">
             🤣 {t("오늘의 개그", "Pun of the Day")}
           </h2>
-          <p class="text-muted-foreground mb-4 text-center text-sm">
+          <p class="text-muted-foreground mb-4 text-center text-lg">
             {
               t(
                 "매일 먹는 웃음 영양제, 하루 종일 유쾌한 기분!",
@@ -69,44 +68,17 @@ const t = useTranslations(lang);
           <FeaturedCard gag={todaysGag} lang={lang} />
         </div>
 
-        <div class="mx-auto w-full max-w-2xl">
-          <h2 class="text-foreground mb-2 text-center text-3xl font-bold">
+        <div class="mx-auto mt-12 mb-16 w-full max-w-2xl">
+          <h2 class="text-foreground mb-2 text-center text-4xl font-bold">
             🎴 {t("운명의 개그", "Destined Pun")}
           </h2>
-          <p class="text-muted-foreground mb-4 text-center text-sm">
+          <p class="text-muted-foreground mb-4 text-center text-lg">
             {t("운명이 선택한 개그를 만나보세요!", "Meet your destined pun!")}
           </p>
 
-          <FeaturedCard
-            gag={randomGag}
-            lang={lang}
-            showRandomButton={true}
-          />
+          <FeaturedCard gag={randomGag} lang={lang} />
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 통계 섹션 -->
-  <section class="from-background to-primary/5 bg-gradient-to-b px-4 py-16">
-    <div class="container mx-auto text-center">
-      <p class="text-muted-foreground mb-8 text-xl">
-        {
-          t(
-            `총 ${totalGagsCount}개의 재미있는 개그가 기다리고 있어요!`,
-            `${totalGagsCount} funny puns waiting for you!`,
-          )
-        }
-      </p>
-    </div>
-
-    <div class="flex justify-center">
-      <a
-        href={getLocalizedUrl("/search", lang)}
-        class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
-      >
-        {t("🔍 개그 검색하기", "🔍 Search Puns")}
-      </a>
     </div>
   </section>
 </Layout>

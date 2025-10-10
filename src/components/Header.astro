@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import logo from "../assets/logo.png";
 import MenuIcon from "../icons/Menu.astro";
 import XIcon from "../icons/X.astro";
@@ -48,12 +47,11 @@ const getMobileNavStyle = (isActive: boolean) => {
   <div class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between gap-6">
       <a href={getLocalizedUrl("/", lang)} class="flex items-center gap-2">
-        <Image
-          src={logo}
+        <img
+          src={logo.src}
           alt={t("아재달레", "AjaeDale")}
           width={40}
           height={40}
-          quality={100}
           class="h-10 w-10 rounded-full"
         />
         <div>

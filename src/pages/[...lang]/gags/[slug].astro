@@ -1,7 +1,28 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import questionIcon from "../../../assets/question.svg";
-import answerIcon from "../../../assets/answer.svg";
+import { Image } from "astro:assets";
+import Q01 from "../../../assets/Q01.png";
+import Q02 from "../../../assets/Q02.png";
+import Q03 from "../../../assets/Q03.png";
+import Q04 from "../../../assets/Q04.png";
+import Q05 from "../../../assets/Q05.png";
+import Q06 from "../../../assets/Q06.png";
+import Q07 from "../../../assets/Q07.png";
+import Q08 from "../../../assets/Q08.png";
+import Q09 from "../../../assets/Q09.png";
+import Q10 from "../../../assets/Q10.png";
+import A01 from "../../../assets/A01.png";
+import A02 from "../../../assets/A02.png";
+import A03 from "../../../assets/A03.png";
+import A04 from "../../../assets/A04.png";
+import A05 from "../../../assets/A05.png";
+import A06 from "../../../assets/A06.png";
+import A07 from "../../../assets/A07.png";
+import A08 from "../../../assets/A08.png";
+import A09 from "../../../assets/A09.png";
+import A10 from "../../../assets/A10.png";
+import A11 from "../../../assets/A11.png";
+import A12 from "../../../assets/A12.png";
 import Layout from "../../../layouts/Layout.astro";
 import Recommendation from "../../../components/Recommendation.astro";
 import Giscus from "../../../components/Giscus.astro";
@@ -47,26 +68,62 @@ const { gag, recommendedGags }: Props = Astro.props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
+
+// 랜덤 질문/답변 이미지 선택
+const questionImages = [Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10];
+const answerImages = [
+  A01,
+  A02,
+  A03,
+  A04,
+  A05,
+  A06,
+  A07,
+  A08,
+  A09,
+  A10,
+  A11,
+  A12,
+];
+const randomQuestionImage =
+  questionImages[Math.floor(Math.random() * questionImages.length)];
+const randomAnswerImage =
+  answerImages[Math.floor(Math.random() * answerImages.length)];
 ---
 
 <Layout title={gag.data.title} currentPage="gag" lang={lang}>
   <!-- 헤더 섹션 -->
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto max-w-2xl">
+      <!-- 페이지 헤딩 -->
+      <div class="mb-4 text-center">
+        <h2 class="text-foreground mb-2 text-4xl font-bold">
+          😂 {t("아재 개그", "Dad Joke")}
+        </h2>
+        <p class="text-muted-foreground text-lg">
+          {
+            t(
+              "유치하다고 해놓고 피식하면 지는 거다 ㅋㅋ",
+              "So lame you can't help but laugh LOL",
+            )
+          }
+        </p>
+      </div>
+
       <!-- 카드 래퍼 -->
       <div
-        class="border-border bg-card rounded-2xl border p-6 shadow-lg md:p-10"
+        class="border-border bg-card rounded-lg border-2 p-6 shadow-lg md:p-8"
       >
         <!-- 상단 바: 태그(좌측), 저장/공유 버튼(우측) -->
-        <div class="mb-8 flex items-start justify-between gap-6">
+        <div class="mb-6 flex items-start justify-between gap-2">
           <!-- 태그 (좌측 상단) -->
           {
             gag.data.tags && gag.data.tags.length > 0 ? (
-              <div class="flex flex-wrap gap-3">
+              <div class="flex min-w-0 flex-1 flex-wrap gap-2">
                 {gag.data.tags.map((tag: string) => (
                   <a
                     href={getLocalizedUrl(`/tags/${tag}`, lang)}
-                    class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-4 py-2 text-base font-medium transition-colors md:text-lg"
+                    class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
                   >
                     #{tag}
                   </a>
@@ -78,9 +135,12 @@ const t = useTranslations(lang);
           }
 
           <!-- 저장/공유 버튼 (우측 상단) -->
-          <div class="flex items-center gap-3" data-gag-slug={gag.data.slug}>
+          <div
+            class="flex flex-shrink-0 items-center gap-2"
+            data-gag-slug={gag.data.slug}
+          >
             <button
-              class="save-btn hover:bg-accent rounded-md p-3 transition-colors"
+              class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
               data-gag={JSON.stringify({
                 slug: gag.data.slug,
                 title: gag.data.title,
@@ -89,73 +149,85 @@ const t = useTranslations(lang);
               })}
               aria-label={t("저장", "Save")}
             >
-              <BookmarkIcon class="bookmark-icon h-6 w-6" />
+              <BookmarkIcon class="bookmark-icon h-5 w-5" />
               <BookmarkIcon
-                class="bookmark-check-icon text-primary hidden h-6 w-6"
+                class="bookmark-check-icon text-primary hidden h-5 w-5"
                 fill="currentColor"
               />
             </button>
             <button
-              class="share-btn hover:bg-accent rounded-md p-3 transition-colors"
+              class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
               data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
               data-slug={gag.data.slug}
               aria-label={t("공유", "Share")}
             >
-              <Share2Icon size={24} />
+              <Share2Icon size={20} />
             </button>
           </div>
         </div>
 
         <!-- 메인 콘텐츠 (중앙 정렬) -->
         <div class="text-center">
-          <div class="mb-10 flex flex-col items-center justify-center gap-8">
-            <h1
-              class="text-foreground text-3xl font-bold md:text-5xl"
-              data-pagefind-body
-            >
-              {t("질문:", "Question:")}
-              {gag.data.title}
-            </h1>
-            <div class="relative h-72 w-72 md:h-[480px] md:w-[480px]">
-              <img
-                src={questionIcon.src}
+          <!-- 질문 제목 -->
+          <h1
+            class="text-foreground mb-6 text-center text-3xl font-bold"
+            data-pagefind-body
+          >
+            {t("질문:", "Question:")}
+            {gag.data.title}
+          </h1>
+
+          <!-- 아이콘 전환 (질문 → 정답) -->
+          <div class="mb-6 flex justify-center">
+            <div class="relative h-48 w-48 md:h-64 md:w-64">
+              <Image
+                src={randomQuestionImage}
                 alt="Question"
-                class="question-icon absolute inset-0 h-full w-full transition-opacity duration-500"
+                class="question-icon absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
               />
               {
                 gag.data.description && (
-                  <img
-                    src={answerIcon.src}
+                  <Image
+                    src={randomAnswerImage}
                     alt="Answer"
-                    class="answer-icon absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500"
+                    class="answer-icon absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500"
                   />
                 )
               }
             </div>
           </div>
+
+          <!-- 정답 (클릭하면 표시) -->
           {
             gag.data.description && (
-              <div class="mb-4">
-                <div class="flex flex-col items-center justify-center gap-8">
-                  <p
-                    class="answer-text text-foreground cursor-pointer text-3xl font-bold transition-all hover:scale-105 md:text-5xl"
-                    data-answer={gag.data.description}
-                    title={t("클릭하여 답변 보기", "Click to reveal answer")}
-                  >
-                    <span class="answer-label text-muted-foreground">
-                      {t("정답:", "Answer:")}
-                    </span>
-                    <span class="answer-content text-muted-foreground font-mono tracking-wider">
-                      {gag.data.description.replace(
-                        /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
-                        "●",
-                      )}
-                    </span>
-                  </p>
-                </div>
+              <div class="mb-6">
+                <p
+                  class="answer-text text-foreground cursor-pointer text-center text-3xl font-bold transition-all hover:scale-105"
+                  data-answer={gag.data.description}
+                  title={t("클릭하여 답변 보기", "Click to reveal answer")}
+                >
+                  <span class="answer-label text-muted-foreground">
+                    {t("정답:", "Answer:")}
+                  </span>
+                  <span class="answer-content text-muted-foreground font-mono tracking-wider">
+                    {gag.data.description.replace(
+                      /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
+                      "●",
+                    )}
+                  </span>
+                </p>
               </div>
             )
           }
+
+          <!-- 랜덤 개그 보기 버튼 -->
+          <div class="mt-8 flex justify-center">
+            <button
+              class="random-gag-btn bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-12 py-3 text-center text-base font-medium transition-colors sm:px-16"
+            >
+              {t("다른 개그 보기", "Random Gag")}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -252,11 +324,64 @@ const t = useTranslations(lang);
     });
   }
 
+  // 랜덤 개그 보기 기능
+  function initRandomGag() {
+    const randomButton = document.querySelector(".random-gag-btn");
+    if (!randomButton) return;
+
+    randomButton.addEventListener("click", async () => {
+      try {
+        const response = await fetch("/api/gags.json");
+        const gags = await response.json();
+
+        if (gags.length === 0) return;
+
+        // 현재 URL 파싱
+        const pathParts = window.location.pathname
+          .split("/")
+          .filter((part) => part);
+
+        let currentLang = "ko";
+        let currentSlug = "";
+
+        if (pathParts.length >= 2 && pathParts[0] === "gags") {
+          // 한국어: /gags/slug
+          currentLang = "ko";
+          currentSlug = pathParts[1];
+        } else if (pathParts.length >= 3 && pathParts[1] === "gags") {
+          // 영어: /en/gags/slug
+          currentLang = pathParts[0];
+          currentSlug = pathParts[2];
+        }
+
+        // 현재 개그를 제외한 다른 개그들
+        const otherGags = gags.filter((gag: any) => gag.slug !== currentSlug);
+
+        if (otherGags.length === 0) return;
+
+        // 랜덤 개그 선택
+        const randomGag =
+          otherGags[Math.floor(Math.random() * otherGags.length)];
+
+        // 랜덤 개그 페이지로 이동
+        // 한국어: /gags/slug, 영어: /en/gags/slug
+        if (currentLang === "ko") {
+          window.location.href = `/gags/${randomGag.slug}`;
+        } else {
+          window.location.href = `/${currentLang}/gags/${randomGag.slug}`;
+        }
+      } catch (error) {
+        console.error("Failed to load random gag:", error);
+      }
+    });
+  }
+
   // 페이지 초기화 함수
   function init() {
     console.log("Page initialized");
     initGagInteractions();
     initAnswerReveal();
+    initRandomGag();
   }
 
   // Astro View Transitions 이벤트 사용
