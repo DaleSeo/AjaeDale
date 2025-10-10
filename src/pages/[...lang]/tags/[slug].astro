@@ -45,12 +45,12 @@ export async function getStaticPaths() {
   return paths;
 }
 
-type Props = {
+interface Props {
   tag: string;
   gags: GagEntry[];
-};
+}
 
-const { tag, gags } = Astro.props as Props;
+const { tag, gags } = Astro.props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 

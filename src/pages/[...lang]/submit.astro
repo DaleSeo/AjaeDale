@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Heading from "../../components/Heading.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import {
   getStaticPathsLocales,
@@ -46,11 +47,8 @@ const description = t(
   <section class="px-4 py-16">
     <div class="container mx-auto max-w-2xl">
       <!-- 페이지 헤더 -->
-      <div class="mb-12 text-center">
-        <h1 class="text-foreground mb-4 text-3xl font-bold">📝 {title}</h1>
-        <p class="text-muted-foreground text-lg">
-          {description}
-        </p>
+      <div class="mb-12">
+        <Heading title={`📝 ${title}`} subtitle={description} />
       </div>
 
       <!-- 제출 폼 -->

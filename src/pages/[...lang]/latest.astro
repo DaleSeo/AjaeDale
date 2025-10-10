@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Heading from "../../components/Heading.astro";
 import Card from "../../components/Card.astro";
 import {
   getStaticPathsLocales,
@@ -44,13 +45,11 @@ const displayGags = sortedGags.slice(0, 12);
 >
   <!-- 헤더 섹션 -->
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
-    <div class="container mx-auto max-w-4xl text-center">
-      <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
-        🌟 {t("최신 개그", "Latest Puns")}
-      </h1>
-      <p class="text-muted-foreground text-lg">
-        {t("최근에 추가된 신선한 개그들", "Recently added fresh puns")}
-      </p>
+    <div class="container mx-auto max-w-4xl">
+      <Heading
+        title={`🌟 ${t("최신 개그", "Latest Puns")}`}
+        subtitle={t("최근에 추가된 신선한 개그들", "Recently added fresh puns")}
+      />
     </div>
   </section>
 

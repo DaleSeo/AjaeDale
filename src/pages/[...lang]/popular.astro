@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Heading from "../../components/Heading.astro";
 import Card from "../../components/Card.astro";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
@@ -45,18 +46,14 @@ const displayGags = popularGags.slice(0, 12);
 >
   <!-- 헤더 섹션 -->
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
-    <div class="container mx-auto max-w-4xl text-center">
-      <h1 class="text-foreground mb-3 text-3xl font-bold md:text-4xl">
-        🔥 {t("인기 개그", "Popular Puns")}
-      </h1>
-      <p class="text-muted-foreground text-lg">
-        {
-          t(
-            "가장 뜨거운 반응을 얻고 있는 개그들",
-            "The hottest puns getting the most reactions",
-          )
-        }
-      </p>
+    <div class="container mx-auto max-w-4xl">
+      <Heading
+        title={`🔥 ${t("인기 개그", "Popular Puns")}`}
+        subtitle={t(
+          "가장 뜨거운 반응을 얻고 있는 개그들",
+          "The hottest puns getting the most reactions",
+        )}
+      />
     </div>
   </section>
 

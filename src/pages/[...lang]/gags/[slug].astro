@@ -24,6 +24,7 @@ import A10 from "../../../assets/A10.png";
 import A11 from "../../../assets/A11.png";
 import A12 from "../../../assets/A12.png";
 import Layout from "../../../layouts/Layout.astro";
+import Heading from "../../../components/Heading.astro";
 import Recommendation from "../../../components/Recommendation.astro";
 import Giscus from "../../../components/Giscus.astro";
 import BookmarkIcon from "../../../icons/Bookmark.astro";
@@ -96,19 +97,13 @@ const randomAnswerImage =
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
     <div class="container mx-auto max-w-2xl">
       <!-- 페이지 헤딩 -->
-      <div class="mb-4 text-center">
-        <h2 class="text-foreground mb-2 text-4xl font-bold">
-          😂 {t("아재 개그", "Dad Joke")}
-        </h2>
-        <p class="text-muted-foreground text-lg">
-          {
-            t(
-              "유치하다고 해놓고 피식하면 지는 거다 ㅋㅋ",
-              "So lame you can't help but laugh LOL",
-            )
-          }
-        </p>
-      </div>
+      <Heading
+        title={`😂 ${t("아재 개그", "Dad Joke")}`}
+        subtitle={t(
+          "유치하다고 해놓고 피식하면 지는 거다 ㅋㅋ",
+          "So lame you can't help but laugh LOL",
+        )}
+      />
 
       <!-- 카드 래퍼 -->
       <div
