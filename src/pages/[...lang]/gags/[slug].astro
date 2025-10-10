@@ -1,8 +1,7 @@
 ---
-import { Image } from "astro:assets";
-import questionIcon from "../../../assets/question.png";
-import answerIcon from "../../../assets/answer.png";
 import { getCollection, type CollectionEntry } from "astro:content";
+import questionIcon from "../../../assets/question.svg";
+import answerIcon from "../../../assets/answer.svg";
 import Layout from "../../../layouts/Layout.astro";
 import Recommendation from "../../../components/Recommendation.astro";
 import Giscus from "../../../components/Giscus.astro";
@@ -118,22 +117,16 @@ const t = useTranslations(lang);
               {gag.data.title}
             </h1>
             <div class="relative h-72 w-72 md:h-[480px] md:w-[480px]">
-              <Image
-                src={questionIcon}
+              <img
+                src={questionIcon.src}
                 alt="Question"
-                width={960}
-                height={960}
-                quality={95}
                 class="question-icon absolute inset-0 h-full w-full transition-opacity duration-500"
               />
               {
                 gag.data.description && (
-                  <Image
-                    src={answerIcon}
+                  <img
+                    src={answerIcon.src}
                     alt="Answer"
-                    width={960}
-                    height={960}
-                    quality={95}
                     class="answer-icon absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500"
                   />
                 )
@@ -229,7 +222,7 @@ const t = useTranslations(lang);
       answerContent.classList.remove("text-muted-foreground");
       answerContent.classList.add("text-primary");
 
-      // A 레이블 색상도 변경
+      // 레이블 색상도 변경
       if (answerLabel) {
         answerLabel.classList.remove("text-muted-foreground");
         answerLabel.classList.add("text-primary");

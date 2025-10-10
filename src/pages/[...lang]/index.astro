@@ -1,9 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Card from "../../components/Card.astro";
-import { enrichGagsWithLikes } from "../../utils/discussionsApi";
-import { sortGagsByPopularity } from "../../utils/popularityUtils";
+import FeaturedCard from "../../components/FeaturedCard.astro";
 import {
   getLocalizedUrl,
   getStaticPathsLocales,
@@ -46,11 +44,6 @@ function getRandomGag(gags: GagEntry[]): GagEntry {
 const todaysGag = getTodaysGag(allGags);
 const randomGag = getRandomGag(allGags);
 
-// 인기 개그 가져오기
-const gagsWithLikesData = await enrichGagsWithLikes(allGags);
-const popularGags = sortGagsByPopularity(gagsWithLikesData);
-const topPopularGags = popularGags.slice(0, 6);
-
 const totalGagsCount = allGags.length;
 
 const t = useTranslations(lang);
@@ -60,8 +53,8 @@ const t = useTranslations(lang);
   <!-- 오늘의 개그 & 랜덤 개그 섹션 -->
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-16">
     <div class="container mx-auto max-w-6xl">
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <div>
+      <div class="grid grid-cols-1 gap-8">
+        <div class="mx-auto w-full max-w-2xl">
           <h2 class="text-foreground mb-2 text-center text-3xl font-bold">
             🤣 {t("오늘의 개그", "Pun of the Day")}
           </h2>
@@ -73,49 +66,23 @@ const t = useTranslations(lang);
               )
             }
           </p>
-          <Card gag={todaysGag} lang={lang} variant="featured" />
+          <FeaturedCard gag={todaysGag} lang={lang} />
         </div>
-        <div>
+
+        <div class="mx-auto w-full max-w-2xl">
           <h2 class="text-foreground mb-2 text-center text-3xl font-bold">
             🎴 {t("운명의 개그", "Destined Pun")}
           </h2>
           <p class="text-muted-foreground mb-4 text-center text-sm">
             {t("운명이 선택한 개그를 만나보세요!", "Meet your destined pun!")}
           </p>
-          <Card gag={randomGag} lang={lang} variant="featured" />
+
+          <FeaturedCard
+            gag={randomGag}
+            lang={lang}
+            showRandomButton={true}
+          />
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 인기 개그 섹션 -->
-  <section class="px-4 py-16">
-    <div class="container mx-auto max-w-6xl">
-      <div class="mb-12 text-center">
-        <h2 class="text-foreground mb-2 text-3xl font-bold">
-          🔥 {t("인기 개그", "Popular Puns")}
-        </h2>
-        <p class="text-muted-foreground">
-          {
-            t(
-              "가장 많은 사랑을 받고 있는 개그들이에요",
-              "The most loved puns by our community",
-            )
-          }
-        </p>
-      </div>
-
-      <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {topPopularGags.map((gag) => <Card gag={gag} lang={lang} />)}
-      </div>
-
-      <div class="text-center">
-        <a
-          href={getLocalizedUrl("/popular", lang)}
-          class="border-border hover:bg-accent inline-flex items-center rounded-lg border px-6 py-3 transition-colors"
-        >
-          {t("인기 개그 더보기", "View More Popular Puns")}
-        </a>
       </div>
     </div>
   </section>
@@ -133,16 +100,10 @@ const t = useTranslations(lang);
       </p>
     </div>
 
-    <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-      <a
-        href={getLocalizedUrl("/random", lang)}
-        class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
-      >
-        {t("🎲 랜덤 개그 보기", "🎲 Random Pun")}
-      </a>
+    <div class="flex justify-center">
       <a
         href={getLocalizedUrl("/search", lang)}
-        class="border-border hover:bg-accent rounded-lg border px-8 py-3 text-lg font-medium shadow-sm transition-colors hover:shadow-md"
+        class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 text-lg font-medium shadow-md transition-colors hover:shadow-lg"
       >
         {t("🔍 개그 검색하기", "🔍 Search Puns")}
       </a>

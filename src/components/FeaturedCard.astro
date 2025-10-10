@@ -1,0 +1,265 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BookmarkIcon from "../icons/Bookmark.astro";
+import Share2Icon from "../icons/Share2.astro";
+import type { Lang } from "../utils/i18n";
+import {
+  getLocalizedUrl,
+  getLangFromUrl,
+  useTranslations,
+} from "../utils/i18n";
+import question1 from "../assets/question1.svg";
+import question2 from "../assets/question2.svg";
+import question3 from "../assets/question3.svg";
+import answer1 from "../assets/answer1.svg";
+import answer2 from "../assets/answer2.svg";
+import answer3 from "../assets/answer3.svg";
+import answer4 from "../assets/answer4.svg";
+import answer5 from "../assets/answer5.svg";
+
+interface Props {
+  gag: CollectionEntry<"gags">;
+  lang?: Lang;
+  showRandomButton?: boolean;
+}
+
+// lang prop이 제공되지 않으면 URL에서 언어 감지
+const detectedLang = getLangFromUrl(Astro.url);
+const {
+  gag,
+  lang = detectedLang,
+  showRandomButton = false,
+} = Astro.props;
+const t = useTranslations(lang);
+
+// 랜덤 아이콘 선택
+const questionIcons = [question1, question2, question3];
+const answerIcons = [answer1, answer2, answer3, answer4, answer5];
+const randomQuestionIcon =
+  questionIcons[Math.floor(Math.random() * questionIcons.length)];
+const randomAnswerIcon =
+  answerIcons[Math.floor(Math.random() * answerIcons.length)];
+---
+
+<div
+  class="bg-card border-border rounded-lg border-2 p-6 shadow-lg md:p-8"
+  data-gag-slug={gag.data.slug}
+>
+  <!-- 태그와 버튼 -->
+  <div class="mb-6 flex items-start justify-between gap-2">
+    <div class="flex min-w-0 flex-1 flex-wrap gap-2">
+      {
+        gag.data.tags.map((tag: string) => (
+          <a
+            href={getLocalizedUrl(`/tags/${tag}`, lang)}
+            class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
+          >
+            #{tag}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-shrink-0 items-center gap-2">
+      <button
+        class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
+        data-gag={JSON.stringify({
+          slug: gag.data.slug,
+          title: gag.data.title,
+          description: gag.data.description,
+          tags: gag.data.tags,
+        })}
+        aria-label={t("저장", "Save")}
+      >
+        <BookmarkIcon class="bookmark-icon h-5 w-5" />
+        <BookmarkIcon
+          class="bookmark-check-icon text-primary hidden h-5 w-5"
+          fill="currentColor"
+        />
+      </button>
+      <button
+        class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
+        data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
+        data-slug={gag.data.slug}
+        aria-label={t("공유", "Share")}
+      >
+        <Share2Icon size={20} />
+      </button>
+    </div>
+  </div>
+
+  <!-- 질문 제목 -->
+  <h3 class="text-foreground mb-6 text-center text-xl font-bold md:text-2xl">
+    {gag.data.title}
+  </h3>
+
+  <!-- 아이콘 전환 (질문 → 정답) -->
+  <div class="mb-6 flex justify-center">
+    <div class="relative h-48 w-48 md:h-64 md:w-64">
+      <img
+        src={randomQuestionIcon.src}
+        alt="Question"
+        class="question-icon absolute inset-0 h-full w-full transition-opacity duration-500"
+      />
+      {
+        gag.data.description && (
+          <img
+            src={randomAnswerIcon.src}
+            alt="Answer"
+            class="answer-icon absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500"
+          />
+        )
+      }
+    </div>
+  </div>
+
+  <!-- 정답 (클릭하면 표시) -->
+  {
+    gag.data.description && (
+      <div class="mb-6">
+        <p
+          class="answer-text text-foreground cursor-pointer text-center text-lg font-bold transition-all hover:scale-105 md:text-xl"
+          data-answer={gag.data.description}
+          title={t("클릭하여 답변 보기", "Click to reveal answer")}
+        >
+          <span class="answer-label text-muted-foreground">
+            {t("정답:", "Answer:")}
+          </span>
+          <span class="answer-content text-muted-foreground font-mono tracking-wider">
+            {gag.data.description.replace(/[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g, "●")}
+          </span>
+        </p>
+      </div>
+    )
+  }
+
+  <!-- 버튼 -->
+  <div class="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
+    <a
+      href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
+      class="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-lg px-4 py-3 text-center text-sm font-medium transition-colors sm:flex-1 sm:px-6"
+    >
+      {t("자세히 보기", "View Details")}
+    </a>
+    {
+      showRandomButton && (
+        <button class="random-gag-btn border-border hover:bg-accent w-full rounded-lg border px-4 py-3 text-sm font-medium transition-colors sm:flex-1 sm:px-6">
+          {t("🎲 다른 개그", "🎲 Random")}
+        </button>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  import { initGagInteractions } from "../scripts/gagInteractions";
+
+  // 개그 상호작용 초기화 (북마크, 공유 등)
+  initGagInteractions();
+
+  // 정답 공개 기능
+  document.addEventListener("astro:page-load", () => {
+    const initAnswerReveal = () => {
+      const cards = document.querySelectorAll("[data-gag-slug]");
+
+      cards.forEach((card) => {
+        const answerText = card.querySelector(
+          ".answer-text",
+        ) as HTMLParagraphElement;
+        const answerLabel = card.querySelector(
+          ".answer-label",
+        ) as HTMLSpanElement;
+        const answerContent = card.querySelector(
+          ".answer-content",
+        ) as HTMLSpanElement;
+        const questionIcon = card.querySelector(
+          ".question-icon",
+        ) as HTMLImageElement;
+        const answerIcon = card.querySelector(
+          ".answer-icon",
+        ) as HTMLImageElement;
+
+        if (!answerText || !answerContent) {
+          return;
+        }
+
+        // 중복 방지
+        if (answerText.hasAttribute("data-initialized")) {
+          return;
+        }
+        answerText.setAttribute("data-initialized", "true");
+
+        // 답변 텍스트 클릭 시 답변 공개
+        answerText.addEventListener("click", async () => {
+          const fullAnswer = answerText.getAttribute("data-answer");
+          if (!fullAnswer) {
+            return;
+          }
+
+          // 클릭 이벤트 제거 (한 번만 실행)
+          answerText.style.cursor = "default";
+          answerText.style.pointerEvents = "none";
+
+          // 아이콘 전환: question → answer
+          if (questionIcon && answerIcon) {
+            questionIcon.style.opacity = "0";
+            answerIcon.style.opacity = "1";
+          }
+
+          // 타이핑 효과
+          answerContent.textContent = "";
+          answerContent.classList.remove("text-muted-foreground");
+          answerContent.classList.add("text-primary");
+
+          // 레이블 색상도 변경
+          if (answerLabel) {
+            answerLabel.classList.remove("text-muted-foreground");
+            answerLabel.classList.add("text-primary");
+          }
+
+          // 타이핑 효과로 답변 표시
+          for (let i = 0; i < fullAnswer.length; i++) {
+            await new Promise((resolve) => setTimeout(resolve, 50));
+            answerContent.textContent = fullAnswer.substring(0, i + 1);
+          }
+        });
+      });
+    };
+
+    initAnswerReveal();
+  });
+
+  // 랜덤 개그 로드 기능
+  document.addEventListener("astro:page-load", () => {
+    const initRandomGag = () => {
+      const randomButtons = document.querySelectorAll(".random-gag-btn");
+
+      randomButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          try {
+            const response = await fetch("/api/gags.json");
+            const gags = await response.json();
+
+            if (gags.length === 0) return;
+
+            const cardElement = button.closest("[data-gag-slug]");
+            if (!cardElement) return;
+
+            const currentSlug = cardElement.getAttribute("data-gag-slug");
+            const otherGags = gags.filter(
+              (gag: any) => gag.slug !== currentSlug,
+            );
+            const randomGag =
+              otherGags[Math.floor(Math.random() * otherGags.length)];
+
+            // 페이지 새로고침 또는 동적 업데이트
+            window.location.reload();
+          } catch (error) {
+            console.error("Failed to load random gag:", error);
+          }
+        });
+      });
+    };
+
+    initRandomGag();
+  });
+</script>

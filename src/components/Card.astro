@@ -12,35 +12,12 @@ import {
 interface Props {
   gag: CollectionEntry<"gags">;
   lang?: Lang;
-  variant?: "compact" | "featured";
 }
 
 // lang prop이 제공되지 않으면 URL에서 언어 감지
 const detectedLang = getLangFromUrl(Astro.url);
-const { gag, lang = detectedLang, variant = "compact" } = Astro.props;
+const { gag, lang = detectedLang } = Astro.props;
 const t = useTranslations(lang);
-
-// variant에 따른 스타일 설정
-const isFeatured = variant === "featured";
-const containerClasses = isFeatured ? "min-h-[220px]" : "min-h-[200px]";
-const cardClasses = isFeatured ? "border-2 p-6 shadow-lg md:p-8" : "border p-6";
-const iconSize = isFeatured ? 20 : 16;
-const iconClass = isFeatured ? "h-5 w-5" : "h-4 w-4";
-const titleClass = isFeatured
-  ? "text-lg font-bold md:text-xl"
-  : "text-lg font-bold";
-const descClass = isFeatured
-  ? "text-base tracking-wider opacity-50 transition-opacity hover:opacity-70 md:text-lg"
-  : "text-base tracking-wider opacity-50 transition-opacity hover:opacity-70";
-const backTitleClass = isFeatured
-  ? "text-lg font-bold md:text-xl"
-  : "text-lg font-bold";
-const backDescClass = isFeatured
-  ? "text-lg font-semibold md:text-xl"
-  : "text-xl font-semibold";
-const detailBtnClass = isFeatured
-  ? "rounded-lg px-6 py-3 font-medium"
-  : "rounded-md px-4 py-2 text-sm font-medium";
 ---
 
 <div
@@ -49,12 +26,12 @@ const detailBtnClass = isFeatured
   data-gag-slug={gag.data.slug}
 >
   <div
-    class={`card-flipper relative transition-transform duration-700 transform-3d group-[.flipped]:rotate-y-180 ${containerClasses}`}
+    class="card-flipper relative min-h-[200px] transition-transform duration-700 transform-3d group-[.flipped]:rotate-y-180"
     style="transform-style: preserve-3d;"
   >
     <!-- 카드 앞면 -->
     <div class="card-front absolute inset-0 backface-hidden">
-      <div class={`bg-card border-border h-full rounded-lg ${cardClasses}`}>
+      <div class="bg-card border-border h-full rounded-lg border p-6">
         <div class="mb-4 flex items-start justify-between">
           <div class="flex flex-wrap gap-2">
             {
@@ -81,9 +58,9 @@ const detailBtnClass = isFeatured
               aria-label={t("저장", "Save")}
               data-no-flip="true"
             >
-              <BookmarkIcon class={`bookmark-icon ${iconClass}`} />
+              <BookmarkIcon class="bookmark-icon h-4 w-4" />
               <BookmarkIcon
-                class={`bookmark-check-icon text-primary hidden ${iconClass}`}
+                class="bookmark-check-icon text-primary hidden h-4 w-4"
                 fill="currentColor"
               />
             </button>
@@ -94,18 +71,18 @@ const detailBtnClass = isFeatured
               aria-label={t("공유", "Share")}
               data-no-flip="true"
             >
-              <Share2Icon size={iconSize} />
+              <Share2Icon size={16} />
             </button>
           </div>
         </div>
 
         <div class="mb-4">
-          <h3 class={`text-foreground mb-2 ${titleClass}`}>
+          <h3 class="text-foreground mb-2 text-lg font-bold">
             {gag.data.title}
           </h3>
           {
             gag.data.description && (
-              <p class={`text-muted-foreground mt-3 font-mono ${descClass}`}>
+              <p class="text-muted-foreground mt-3 font-mono text-base tracking-wider opacity-50 transition-opacity hover:opacity-70">
                 {gag.data.description.replace(
                   /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
                   "●",
@@ -119,15 +96,15 @@ const detailBtnClass = isFeatured
 
     <!-- 카드 뒷면 -->
     <div class="card-back absolute inset-0 rotate-y-180 backface-hidden">
-      <div class={`bg-card border-border h-full rounded-lg ${cardClasses}`}>
+      <div class="bg-card border-border h-full rounded-lg border p-6">
         <div class="mb-4 flex items-start justify-between">
           <div class="flex-1">
-            <h3 class={`text-foreground mb-2 ${backTitleClass}`}>
+            <h3 class="text-foreground mb-2 text-lg font-bold">
               {gag.data.title}
             </h3>
             {
               gag.data.description && (
-                <p class={`text-primary mt-4 ${backDescClass}`}>
+                <p class="text-primary mt-4 text-xl font-semibold">
                   {gag.data.description}
                 </p>
               )
@@ -145,9 +122,9 @@ const detailBtnClass = isFeatured
               aria-label={t("저장", "Save")}
               data-no-flip="true"
             >
-              <BookmarkIcon class={`bookmark-icon ${iconClass}`} />
+              <BookmarkIcon class="bookmark-icon h-4 w-4" />
               <BookmarkIcon
-                class={`bookmark-check-icon text-primary hidden ${iconClass}`}
+                class="bookmark-check-icon text-primary hidden h-4 w-4"
                 fill="currentColor"
               />
             </button>
@@ -158,14 +135,14 @@ const detailBtnClass = isFeatured
               aria-label={t("공유", "Share")}
               data-no-flip="true"
             >
-              <Share2Icon size={iconSize} />
+              <Share2Icon size={16} />
             </button>
           </div>
         </div>
         <div class="mt-6 flex justify-center">
           <a
             href={getLocalizedUrl(`/gags/${gag.data.slug}`, lang)}
-            class={`bg-primary text-primary-foreground hover:bg-primary/90 inline-block transition-colors ${detailBtnClass}`}
+            class="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-md px-4 py-2 text-sm font-medium transition-colors"
             data-no-flip="true"
           >
             {t("자세히 보기", "View Details")}
@@ -183,7 +160,7 @@ const detailBtnClass = isFeatured
   initGagInteractions();
 
   // 플립 카드 상호작용
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const initCardFlip = () => {
       const cards = document.querySelectorAll("[data-gag-slug]");
 
@@ -212,10 +189,6 @@ const detailBtnClass = isFeatured
       });
     };
 
-    // 첫 로드 시 초기화
     initCardFlip();
-
-    // Astro View Transitions 사용 시 재초기화
-    document.addEventListener("astro:after-swap", initCardFlip);
   });
 </script>
