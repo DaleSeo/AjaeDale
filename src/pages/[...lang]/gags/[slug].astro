@@ -117,11 +117,13 @@ const t = useTranslations(lang);
 
         // 랜덤 개그 페이지로 이동
         // 한국어: /gags/slug, 영어: /en/gags/slug
-        if (currentLang === "ko") {
-          window.location.href = `/gags/${randomGag.slug}`;
-        } else {
-          window.location.href = `/${currentLang}/gags/${randomGag.slug}`;
-        }
+        const targetUrl =
+          currentLang === "ko"
+            ? `/gags/${randomGag.slug}`
+            : `/${currentLang}/gags/${randomGag.slug}`;
+
+        // Astro View Transitions 사용
+        window.location.href = targetUrl;
       } catch (error) {
         console.error("Failed to load random gag:", error);
       }

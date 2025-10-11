@@ -148,9 +148,6 @@ const randomAnswerImage =
           data-answer={gag.data.description}
           title={t("클릭하여 답변 보기", "Click to reveal answer")}
         >
-          <span class="answer-label text-muted-foreground">
-            {t("정답:", "Answer:")}
-          </span>
           <span class="answer-content text-muted-foreground font-mono tracking-wider">
             {gag.data.description.replace(/[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g, "●")}
           </span>
@@ -182,11 +179,16 @@ const randomAnswerImage =
   import { initGagInteractions } from "../scripts/gagInteractions";
   import { initAnswerReveal } from "../scripts/answerReveal";
 
-  // 개그 상호작용 초기화 (북마크, 공유 등)
-  initGagInteractions();
-
-  // 정답 공개 기능
+  // Astro View Transitions 이벤트 사용
   document.addEventListener("astro:page-load", () => {
-    initAnswerReveal();
+    // 개그 상호작용 초기화 (북마크, 공유 등)
+    initGagInteractions();
+
+    // 정답 공개 기능
+    initAnswerReveal(document, {
+      typingSpeed: 60,
+      showCursor: true,
+      completionAnimation: true,
+    });
   });
 </script>

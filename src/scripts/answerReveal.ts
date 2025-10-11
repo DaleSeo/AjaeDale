@@ -35,7 +35,6 @@ export function initAnswerReveal(
     const answerText = card.querySelector(
       ".answer-text",
     ) as HTMLParagraphElement;
-    const answerLabel = card.querySelector(".answer-label") as HTMLSpanElement;
     const answerContent = card.querySelector(
       ".answer-content",
     ) as HTMLSpanElement;
@@ -48,22 +47,25 @@ export function initAnswerReveal(
       return;
     }
 
-    // 중복 초기화 방지
-    if (answerText.hasAttribute("data-initialized")) {
+    // 이미 공개된 답변은 재초기화하지 않음
+    if (answerText.style.pointerEvents === "none") {
       return;
     }
-    answerText.setAttribute("data-initialized", "true");
 
-    // 답변 텍스트 클릭 시 답변 공개
-    answerText.addEventListener("click", async () => {
-      const fullAnswer = answerText.getAttribute("data-answer");
+    // 기존 이벤트 리스너 제거를 위해 클론 생성
+    const newAnswerText = answerText.cloneNode(true) as HTMLParagraphElement;
+    answerText.parentNode?.replaceChild(newAnswerText, answerText);
+
+    // 새로운 요소에 이벤트 리스너 추가
+    newAnswerText.addEventListener("click", async () => {
+      const fullAnswer = newAnswerText.getAttribute("data-answer");
       if (!fullAnswer) {
         return;
       }
 
       // 클릭 이벤트 제거 (한 번만 실행)
-      answerText.style.cursor = "default";
-      answerText.style.pointerEvents = "none";
+      newAnswerText.style.cursor = "default";
+      newAnswerText.style.pointerEvents = "none";
 
       // 아이콘 전환: question → answer
       if (questionIcon && answerIcon) {
@@ -72,15 +74,14 @@ export function initAnswerReveal(
       }
 
       // 타이핑 효과 준비
-      answerContent.textContent = "";
-      answerContent.classList.remove("text-muted-foreground");
-      answerContent.classList.add("text-primary");
+      const newAnswerContent = newAnswerText.querySelector(
+        ".answer-content",
+      ) as HTMLSpanElement;
+      if (!newAnswerContent) return;
 
-      // 레이블 색상도 변경
-      if (answerLabel) {
-        answerLabel.classList.remove("text-muted-foreground");
-        answerLabel.classList.add("text-primary");
-      }
+      newAnswerContent.textContent = "";
+      newAnswerContent.classList.remove("text-muted-foreground");
+      newAnswerContent.classList.add("text-primary");
 
       // 커서 효과 (옵션)
       let cursor: HTMLSpanElement | null = null;
@@ -89,7 +90,7 @@ export function initAnswerReveal(
         cursor.className = "typing-cursor";
         cursor.textContent = "|";
         cursor.style.animation = "blink 0.7s infinite";
-        answerContent.appendChild(cursor);
+        newAnswerContent.appendChild(cursor);
       }
 
       // 타이핑 효과로 답변 표시
@@ -98,7 +99,7 @@ export function initAnswerReveal(
         if (cursor) {
           cursor.before(fullAnswer[i]);
         } else {
-          answerContent.textContent = fullAnswer.substring(0, i + 1);
+          newAnswerContent.textContent = fullAnswer.substring(0, i + 1);
         }
       }
 
@@ -109,9 +110,9 @@ export function initAnswerReveal(
 
       // 완료 애니메이션 (옵션)
       if (completionAnimation) {
-        answerText.style.transform = "scale(1.02)";
+        newAnswerText.style.transform = "scale(1.02)";
         setTimeout(() => {
-          answerText.style.transform = "scale(1)";
+          newAnswerText.style.transform = "scale(1)";
         }, 200);
       }
     });
