@@ -6,9 +6,10 @@ export interface Props {
   description?: string;
   lang?: Lang;
   alternateUrl?: string;
+  image?: string;
 }
 
-const { title, description, lang = "ko", alternateUrl } = Astro.props;
+const { title, description, lang = "ko", alternateUrl, image } = Astro.props;
 
 const defaultTitle = lang === "ko" ? "아재달레" : "AjaeDale";
 const defaultDescription =
@@ -21,6 +22,11 @@ const finalDescription = description || defaultDescription;
 
 // Get current URL without query params or hash
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
+
+// Use custom image or default og-image
+const ogImageUrl = image
+  ? new URL(image, Astro.url.origin).href
+  : new URL("/og-image.png", Astro.url.origin).href;
 
 // Convert relative alternateUrl to absolute URL
 const absoluteAlternateUrl = alternateUrl
@@ -67,16 +73,10 @@ const absoluteAlternateUrl = alternateUrl
     />
   )
 }
-<meta
-  property="og:image"
-  content={new URL("/og-image.png", Astro.url.origin).href}
-/>
+<meta property="og:image" content={ogImageUrl} />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={finalTitle} />
 <meta name="twitter:description" content={finalDescription} />
-<meta
-  name="twitter:image"
-  content={new URL("/og-image.png", Astro.url.origin).href}
-/>
+<meta name="twitter:image" content={ogImageUrl} />

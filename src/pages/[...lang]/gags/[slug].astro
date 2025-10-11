@@ -44,9 +44,12 @@ const { gag, recommendedGags }: Props = Astro.props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
+
+// 동적 og-image URL 생성
+const ogImageUrl = `/api/og-image/${gag.data.slug}.png`;
 ---
 
-<Layout title={gag.data.title} currentPage="gag" lang={lang}>
+<Layout title={gag.data.title} currentPage="gag" lang={lang} image={ogImageUrl}>
   <!-- 헤더 섹션 -->
   <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
     <div class="container mx-auto max-w-2xl">

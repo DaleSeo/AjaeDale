@@ -37,7 +37,6 @@ const description = t(
   <!-- 헤더 섹션 -->
   <section
     class="from-primary/5 to-background bg-gradient-to-b px-4 pt-12 pb-8"
-    data-pagefind-ignore
   >
     <div class="container mx-auto max-w-4xl">
       <Heading title={`🔍 ${title}`} subtitle={description} />
@@ -45,7 +44,7 @@ const description = t(
   </section>
 
   <!-- 검색 섹션 -->
-  <section class="px-4 pt-6 pb-8" data-pagefind-ignore>
+  <section class="px-4 pt-6 pb-8">
     <div class="container mx-auto max-w-4xl">
       <!-- 검색 입력 -->
       <div class="mb-8">
@@ -211,16 +210,18 @@ const description = t(
           const title = data.content || data.meta.title || "제목 없음";
           const cleanTitle = title.replace(/<[^>]*>/g, "").trim();
 
-          // excerpt 추출 (있는 경우)
-          const excerpt = data.excerpt || "";
-          const cleanExcerpt = excerpt.replace(/<[^>]*>/g, "").trim();
+          // description을 마스킹 (ListCard처럼)
+          const description = data.meta.description || "";
+          const maskedDescription = description
+            ? description.replace(/[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g, "●")
+            : "";
 
           return `
             <a href="${data.url}" class="block p-6 bg-card border border-border rounded-lg hover:border-primary/50 hover:shadow-md transition-all duration-200 group">
               <h3 class="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                 ${cleanTitle}
               </h3>
-              ${cleanExcerpt ? `<p class="text-sm text-muted-foreground line-clamp-2">${cleanExcerpt}</p>` : ""}
+              ${maskedDescription ? `<p class="text-muted-foreground font-mono text-sm tracking-wider opacity-50">${maskedDescription}</p>` : ""}
             </a>
           `;
         }),
