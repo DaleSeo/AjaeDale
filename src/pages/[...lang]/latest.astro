@@ -44,7 +44,9 @@ const displayGags = sortedGags.slice(0, 12);
   lang={lang}
 >
   <!-- 헤더 섹션 -->
-  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
+  <section
+    class="from-primary/5 to-background bg-gradient-to-b px-4 pt-12 pb-8"
+  >
     <div class="container mx-auto max-w-4xl">
       <Heading
         title={`🌟 ${t("최신 개그", "Latest Puns")}`}
@@ -54,7 +56,7 @@ const displayGags = sortedGags.slice(0, 12);
   </section>
 
   <!-- 최신 개그 섹션 -->
-  <section class="px-4 py-8">
+  <section class="px-4 pt-6 pb-8">
     <div class="container mx-auto max-w-6xl">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {displayGags.map((gag: GagEntry) => <ListCard gag={gag} lang={lang} />)}

@@ -21,7 +21,9 @@ const t = useTranslations(lang);
 
 <Layout title={t("저장한 개그", "Saved Puns")} currentPage="saved" lang={lang}>
   <!-- 헤더 섹션 -->
-  <section class="from-primary/5 to-background bg-gradient-to-b px-4 py-12">
+  <section
+    class="from-primary/5 to-background bg-gradient-to-b px-4 pt-12 pb-8"
+  >
     <div class="container mx-auto max-w-4xl">
       <Heading
         title={`🔖 ${t("저장한 개그", "Saved Puns")}`}
@@ -31,7 +33,7 @@ const t = useTranslations(lang);
   </section>
 
   <!-- 저장된 개그 섹션 -->
-  <section class="px-4 py-8">
+  <section class="px-4 pt-6 pb-8">
     <div class="container mx-auto max-w-6xl">
       <div class="mb-6 flex justify-end">
         <button
