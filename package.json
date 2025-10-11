@@ -19,6 +19,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "^3.6.0",
+    "@google-analytics/data": "^5.2.0",
     "@lhci/cli": "^0.15.1",
     "@tailwindcss/vite": "4.1.13",
     "astro": "5.14.1",
