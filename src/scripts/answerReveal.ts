@@ -35,6 +35,9 @@ export function initAnswerReveal(
     const answerText = card.querySelector(
       ".answer-text",
     ) as HTMLParagraphElement;
+    const answerTrigger = card.querySelector(
+      ".answer-trigger",
+    ) as HTMLDivElement;
     const answerContent = card.querySelector(
       ".answer-content",
     ) as HTMLSpanElement;
@@ -47,74 +50,101 @@ export function initAnswerReveal(
       return;
     }
 
-    // 이미 공개된 답변은 재초기화하지 않음
-    if (answerText.style.pointerEvents === "none") {
-      return;
-    }
+    // 정답 공개 여부 상태
+    let isRevealed = false;
+    let isAnimating = false;
 
-    // 기존 이벤트 리스너 제거를 위해 클론 생성
-    const newAnswerText = answerText.cloneNode(true) as HTMLParagraphElement;
-    answerText.parentNode?.replaceChild(newAnswerText, answerText);
+    // 정답 공개/숨김 토글 함수
+    const toggleAnswer = async () => {
+      // 애니메이션 중이면 무시
+      if (isAnimating) {
+        return;
+      }
 
-    // 새로운 요소에 이벤트 리스너 추가
-    newAnswerText.addEventListener("click", async () => {
-      const fullAnswer = newAnswerText.getAttribute("data-answer");
+      const fullAnswer = answerText.getAttribute("data-answer");
       if (!fullAnswer) {
         return;
       }
 
-      // 클릭 이벤트 제거 (한 번만 실행)
-      newAnswerText.style.cursor = "default";
-      newAnswerText.style.pointerEvents = "none";
+      if (isRevealed) {
+        // 정답 숨기기
+        isAnimating = true;
 
-      // 아이콘 전환: question → answer
-      if (questionIcon && answerIcon) {
-        questionIcon.style.opacity = "0";
-        answerIcon.style.opacity = "1";
-      }
-
-      // 타이핑 효과 준비
-      const newAnswerContent = newAnswerText.querySelector(
-        ".answer-content",
-      ) as HTMLSpanElement;
-      if (!newAnswerContent) return;
-
-      newAnswerContent.textContent = "";
-      newAnswerContent.classList.remove("text-muted-foreground");
-      newAnswerContent.classList.add("text-primary");
-
-      // 커서 효과 (옵션)
-      let cursor: HTMLSpanElement | null = null;
-      if (showCursor) {
-        cursor = document.createElement("span");
-        cursor.className = "typing-cursor";
-        cursor.textContent = "|";
-        cursor.style.animation = "blink 0.7s infinite";
-        newAnswerContent.appendChild(cursor);
-      }
-
-      // 타이핑 효과로 답변 표시
-      for (let i = 0; i < fullAnswer.length; i++) {
-        await new Promise((resolve) => setTimeout(resolve, typingSpeed));
-        if (cursor) {
-          cursor.before(fullAnswer[i]);
-        } else {
-          newAnswerContent.textContent = fullAnswer.substring(0, i + 1);
+        // 아이콘 전환: answer → question
+        if (questionIcon && answerIcon) {
+          answerIcon.style.opacity = "0";
+          questionIcon.style.opacity = "1";
         }
-      }
 
-      // 커서 제거
-      if (cursor) {
-        cursor.remove();
-      }
+        // 마스킹된 텍스트로 복원
+        answerContent.classList.remove("text-primary");
+        answerContent.classList.add("text-muted-foreground");
+        answerContent.textContent = fullAnswer.replace(
+          /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
+          "●",
+        );
 
-      // 완료 애니메이션 (옵션)
-      if (completionAnimation) {
-        newAnswerText.style.transform = "scale(1.02)";
-        setTimeout(() => {
-          newAnswerText.style.transform = "scale(1)";
-        }, 200);
+        isRevealed = false;
+        isAnimating = false;
+      } else {
+        // 정답 공개
+        isAnimating = true;
+
+        // 아이콘 전환: question → answer
+        if (questionIcon && answerIcon) {
+          questionIcon.style.opacity = "0";
+          answerIcon.style.opacity = "1";
+        }
+
+        // 타이핑 효과 준비
+        answerContent.textContent = "";
+        answerContent.classList.remove("text-muted-foreground");
+        answerContent.classList.add("text-primary");
+
+        // 커서 효과 (옵션)
+        let cursor: HTMLSpanElement | null = null;
+        if (showCursor) {
+          cursor = document.createElement("span");
+          cursor.className = "typing-cursor";
+          cursor.textContent = "|";
+          cursor.style.animation = "blink 0.7s infinite";
+          answerContent.appendChild(cursor);
+        }
+
+        // 타이핑 효과로 답변 표시
+        for (let i = 0; i < fullAnswer.length; i++) {
+          await new Promise((resolve) => setTimeout(resolve, typingSpeed));
+          if (cursor) {
+            cursor.before(fullAnswer[i]);
+          } else {
+            answerContent.textContent = fullAnswer.substring(0, i + 1);
+          }
+        }
+
+        // 커서 제거
+        if (cursor) {
+          cursor.remove();
+        }
+
+        // 완료 애니메이션 (옵션)
+        if (completionAnimation) {
+          answerText.style.transform = "scale(1.02)";
+          setTimeout(() => {
+            answerText.style.transform = "scale(1)";
+          }, 200);
+        }
+
+        isRevealed = true;
+        isAnimating = false;
       }
-    });
+    };
+
+    // 정답 텍스트 클릭 시 정답 토글
+    answerText.addEventListener("click", toggleAnswer);
+
+    // 이미지 클릭 시 정답 토글
+    if (answerTrigger) {
+      answerTrigger.addEventListener("click", toggleAnswer);
+    }
   });
 }

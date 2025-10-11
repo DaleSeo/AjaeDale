@@ -1,5 +1,5 @@
 ---
-import logo from "../assets/logo.png";
+import logoUrl from "../assets/logo.png?url";
 import MenuIcon from "../icons/Menu.astro";
 import XIcon from "../icons/X.astro";
 import Star from "../icons/Star.astro";
@@ -48,7 +48,7 @@ const getMobileNavStyle = (isActive: boolean) => {
     <div class="flex items-center justify-between gap-6">
       <a href={getLocalizedUrl("/", lang)} class="flex items-center gap-2">
         <img
-          src={logo.src}
+          src={logoUrl}
           alt={t("아재달레", "AjaeDale")}
           width={40}
           height={40}

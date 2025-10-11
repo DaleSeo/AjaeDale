@@ -40,8 +40,8 @@ Astro SSG와 로컬 Content Collections를 사용한 순수 정적 사이트로 
 
 ## 코드 품질
 
-- **코드 수정 후 포맷팅 필수**: 모든 코드 수정 후 반드시 `bun format` 실행
-- 포맷팅은 Prettier를 사용하여 일관된 코드 스타일 유지
+- 코드 수정 후 품질 검사 필수: 모든 코드 수정 후 반드시 `bun check` 실행
+- 포맷팅이 깨진 경우 `bun format` 실행
 
 ## 스타일링 규칙
 

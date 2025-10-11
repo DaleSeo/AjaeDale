@@ -121,7 +121,10 @@ const randomAnswerImage =
 
   <!-- 아이콘 전환 (질문 → 정답) -->
   <div class="mb-6 flex justify-center">
-    <div class="relative h-48 w-48 md:h-64 md:w-64">
+    <div
+      class="answer-trigger relative h-48 w-48 cursor-pointer transition-transform hover:scale-105 md:h-64 md:w-64"
+      title={t("클릭하여 답변 보기", "Click to reveal answer")}
+    >
       <Image
         src={randomQuestionImage}
         alt="Question"
