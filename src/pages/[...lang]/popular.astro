@@ -5,6 +5,7 @@ import Heading from "../../components/Heading.astro";
 import ListCard from "../../components/ListCard.astro";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
+import { getPageViewsMap } from "../../utils/analyticsApi";
 import {
   getStaticPathsLocales,
   normalizeLang,
@@ -30,6 +31,9 @@ const allGags = await getCollection("gags", ({ data }: GagEntry) => {
 
 // GitHub Discussions에서 likes 데이터를 가져와서 개그에 추가
 const gagsWithLikesData = await enrichGagsWithLikes(allGags);
+
+// Google Analytics에서 페이지 조회수 데이터 가져오기
+const pageViewsMap = await getPageViewsMap();
 
 // likes 수에 따라 정렬
 const popularGags = sortGagsByPopularity(gagsWithLikesData);
@@ -86,7 +90,11 @@ const displayGags = popularGags.slice(0, 12);
                       <div class="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-yellow-400/30 to-orange-400/30 opacity-50 blur transition-opacity group-hover:opacity-75" />
                     )}
                     <div class="relative">
-                      <ListCard gag={gag} lang={lang} />
+                      <ListCard
+                        gag={gag}
+                        lang={lang}
+                        pageViews={pageViewsMap.get(gag.data.slug) || 0}
+                      />
                     </div>
                   </div>
                 </div>
@@ -105,7 +113,11 @@ const displayGags = popularGags.slice(0, 12);
                 <div class="absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-500 text-sm font-bold text-white">
                   {index + 4}
                 </div>
-                <ListCard gag={gag} lang={lang} />
+                <ListCard
+                  gag={gag}
+                  lang={lang}
+                  pageViews={pageViewsMap.get(gag.data.slug) || 0}
+                />
               </div>
             ))}
           </div>

@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Heading from "../../components/Heading.astro";
 import ListCard from "../../components/ListCard.astro";
+import { getPageViewsMap } from "../../utils/analyticsApi";
 import {
   getStaticPathsLocales,
   normalizeLang,
@@ -25,6 +26,9 @@ const t = useTranslations(lang);
 const allGags = await getCollection("gags", ({ data }: GagEntry) => {
   return data.published === true;
 });
+
+// Google Analytics에서 페이지 조회수 데이터 가져오기
+const pageViewsMap = await getPageViewsMap();
 
 // 최신순으로 정렬 (createdAt 기준)
 const sortedGags = allGags.sort((a: GagEntry, b: GagEntry) => {
@@ -59,7 +63,15 @@ const displayGags = sortedGags.slice(0, 12);
   <section class="px-4 pt-6 pb-8">
     <div class="container mx-auto max-w-6xl">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {displayGags.map((gag: GagEntry) => <ListCard gag={gag} lang={lang} />)}
+        {
+          displayGags.map((gag: GagEntry) => (
+            <ListCard
+              gag={gag}
+              lang={lang}
+              pageViews={pageViewsMap.get(gag.data.slug) || 0}
+            />
+          ))
+        }
       </div>
     </div>
   </section>

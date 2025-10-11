@@ -64,3 +64,12 @@ Astro SSG와 로컬 Content Collections를 사용한 순수 정적 사이트로 
 - **절대 git commit 실행 금지** - 커밋 메시지는 제안만 하고 사용자가 직접 실행
 - **절대 git push 실행 금지** - 원격 저장소 업데이트는 사용자가 직접 실행
 - **파괴적 git 명령어 금지** - reset --hard, push --force 등 절대 실행 금지
+
+## 환경 변수 관리
+
+이 프로젝트는 mise로 환경 변수를 관리합니다.
+따라서 로컬 환경에서는 `.env` 대신에 `.mise.local.toml`에 환경 변수를 저장합니다.
+
+## 배포
+
+GitHub Actions에 정적 사이트로 배포

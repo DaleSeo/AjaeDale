@@ -3,7 +3,9 @@ name: Deployment 🚢
 on:
   push:
     branches: [main]
-
+  schedule:
+    # 매일 오전 9시 (KST) 실행
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -36,6 +38,8 @@ jobs:
         run: bun run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+          GOOGLE_ANALYTICS_CREDENTIALS_JSON: ${{ secrets.GOOGLE_ANALYTICS_CREDENTIALS_JSON }}
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3

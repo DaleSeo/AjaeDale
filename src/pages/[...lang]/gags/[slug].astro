@@ -11,6 +11,7 @@ import {
   useTranslations,
 } from "../../../utils/i18n";
 import { getRecommendedGags } from "../../../utils/recommendGags";
+import { getPageViewsMap } from "../../../utils/analyticsApi";
 
 type GagEntry = CollectionEntry<"gags">;
 
@@ -19,16 +20,21 @@ export async function getStaticPaths() {
     return data.published === true;
   });
 
+  // 페이지 조회수 데이터 가져오기
+  const pageViewsMap = await getPageViewsMap();
+
   const paths = [];
   for (const lang of getStaticPathsLocales()) {
     for (const gag of allGags) {
       const recommendedGags = getRecommendedGags(gag, allGags, 6);
+      const pageViews = pageViewsMap.get(gag.data.slug) || 0;
+
       paths.push({
         params: {
           lang,
           slug: gag.data.slug,
         },
-        props: { gag, recommendedGags },
+        props: { gag, recommendedGags, pageViews },
       });
     }
   }
@@ -38,9 +44,10 @@ export async function getStaticPaths() {
 interface Props {
   gag: GagEntry;
   recommendedGags: GagEntry[];
+  pageViews: number;
 }
 
-const { gag, recommendedGags }: Props = Astro.props;
+const { gag, recommendedGags, pageViews }: Props = Astro.props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
@@ -62,7 +69,7 @@ const ogImageUrl = `/api/og-image/${gag.data.slug}.png`;
         )}
       />
 
-      <DetailCard gag={gag} lang={lang} />
+      <DetailCard gag={gag} lang={lang} pageViews={pageViews} />
     </div>
   </section>
 

@@ -1,5 +1,5 @@
 # Temp
-spec/
+temp/
 best-ui/
 
 # Dependencies
@@ -16,6 +16,9 @@ bun-debug.log*
 .env.production
 .env.development
 .mise.local.toml
+
+# Google Analytics credentials
+*-credentials.json
 
 # Build output
 dist/
