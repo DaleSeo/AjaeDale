@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import FeaturedCard from "../../components/FeaturedCard.astro";
+import DetailCard from "../../components/DetailCard.astro";
 import Heading from "../../components/Heading.astro";
 import {
   getStaticPathsLocales,
@@ -73,7 +73,7 @@ const t = useTranslations(lang);
               "Take your daily dose of humor for all-day joy!",
             )}
           />
-          <FeaturedCard gag={todaysGag} lang={lang} />
+          <DetailCard gag={todaysGag} lang={lang} featured />
         </div>
 
         <div class="mx-auto mt-12 mb-16 w-full max-w-2xl">
@@ -85,7 +85,7 @@ const t = useTranslations(lang);
               "Meet your destined pun!",
             )}
           />
-          <FeaturedCard gag={randomGag} lang={lang} />
+          <DetailCard gag={randomGag} lang={lang} featured />
         </div>
       </div>
     </div>
