@@ -143,3 +143,15 @@
 .hover-lift:hover {
   transform: translateY(-2px);
 }
+
+/* Typing cursor animation */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}

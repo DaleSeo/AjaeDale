@@ -121,14 +121,14 @@ const randomAnswerImage =
       <Image
         src={randomQuestionImage}
         alt="Question"
-        class="question-icon absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
+        class="question-icon absolute inset-0 h-full w-full rounded-full object-contain transition-opacity duration-500"
       />
       {
         gag.data.description && (
           <Image
             src={randomAnswerImage}
             alt="Answer"
-            class="answer-icon absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500"
+            class="answer-icon absolute inset-0 h-full w-full rounded-full object-contain opacity-0 transition-opacity duration-500"
           />
         )
       }
@@ -168,79 +168,13 @@ const randomAnswerImage =
 
 <script>
   import { initGagInteractions } from "../scripts/gagInteractions";
+  import { initAnswerReveal } from "../scripts/answerReveal";
 
   // 개그 상호작용 초기화 (북마크, 공유 등)
   initGagInteractions();
 
   // 정답 공개 기능
   document.addEventListener("astro:page-load", () => {
-    const initAnswerReveal = () => {
-      const cards = document.querySelectorAll("[data-gag-slug]");
-
-      cards.forEach((card) => {
-        const answerText = card.querySelector(
-          ".answer-text",
-        ) as HTMLParagraphElement;
-        const answerLabel = card.querySelector(
-          ".answer-label",
-        ) as HTMLSpanElement;
-        const answerContent = card.querySelector(
-          ".answer-content",
-        ) as HTMLSpanElement;
-        const questionIcon = card.querySelector(
-          ".question-icon",
-        ) as HTMLImageElement;
-        const answerIcon = card.querySelector(
-          ".answer-icon",
-        ) as HTMLImageElement;
-
-        if (!answerText || !answerContent) {
-          return;
-        }
-
-        // 중복 방지
-        if (answerText.hasAttribute("data-initialized")) {
-          return;
-        }
-        answerText.setAttribute("data-initialized", "true");
-
-        // 답변 텍스트 클릭 시 답변 공개
-        answerText.addEventListener("click", async () => {
-          const fullAnswer = answerText.getAttribute("data-answer");
-          if (!fullAnswer) {
-            return;
-          }
-
-          // 클릭 이벤트 제거 (한 번만 실행)
-          answerText.style.cursor = "default";
-          answerText.style.pointerEvents = "none";
-
-          // 아이콘 전환: question → answer
-          if (questionIcon && answerIcon) {
-            questionIcon.style.opacity = "0";
-            answerIcon.style.opacity = "1";
-          }
-
-          // 타이핑 효과
-          answerContent.textContent = "";
-          answerContent.classList.remove("text-muted-foreground");
-          answerContent.classList.add("text-primary");
-
-          // 레이블 색상도 변경
-          if (answerLabel) {
-            answerLabel.classList.remove("text-muted-foreground");
-            answerLabel.classList.add("text-primary");
-          }
-
-          // 타이핑 효과로 답변 표시
-          for (let i = 0; i < fullAnswer.length; i++) {
-            await new Promise((resolve) => setTimeout(resolve, 50));
-            answerContent.textContent = fullAnswer.substring(0, i + 1);
-          }
-        });
-      });
-    };
-
     initAnswerReveal();
   });
 </script>

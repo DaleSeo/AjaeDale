@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import Card from "./Card.astro";
+import ListCard from "./ListCard.astro";
 import type { Lang } from "../utils/i18n";
 import { useTranslations } from "../utils/i18n";
 
@@ -24,7 +24,7 @@ if (gags.length === 0) {
       {t("이런 개그는 어때요?", "You might also like")}
     </h2>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {gags.map((gag) => <Card gag={gag} lang={lang} />)}
+      {gags.map((gag) => <ListCard gag={gag} lang={lang} />)}
     </div>
   </div>
 </section>

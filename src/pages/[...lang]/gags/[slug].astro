@@ -1,38 +1,13 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
-import Q01 from "../../../assets/Q01.png";
-import Q02 from "../../../assets/Q02.png";
-import Q03 from "../../../assets/Q03.png";
-import Q04 from "../../../assets/Q04.png";
-import Q05 from "../../../assets/Q05.png";
-import Q06 from "../../../assets/Q06.png";
-import Q07 from "../../../assets/Q07.png";
-import Q08 from "../../../assets/Q08.png";
-import Q09 from "../../../assets/Q09.png";
-import Q10 from "../../../assets/Q10.png";
-import A01 from "../../../assets/A01.png";
-import A02 from "../../../assets/A02.png";
-import A03 from "../../../assets/A03.png";
-import A04 from "../../../assets/A04.png";
-import A05 from "../../../assets/A05.png";
-import A06 from "../../../assets/A06.png";
-import A07 from "../../../assets/A07.png";
-import A08 from "../../../assets/A08.png";
-import A09 from "../../../assets/A09.png";
-import A10 from "../../../assets/A10.png";
-import A11 from "../../../assets/A11.png";
-import A12 from "../../../assets/A12.png";
 import Layout from "../../../layouts/Layout.astro";
 import Heading from "../../../components/Heading.astro";
 import Recommendation from "../../../components/Recommendation.astro";
 import Giscus from "../../../components/Giscus.astro";
-import BookmarkIcon from "../../../icons/Bookmark.astro";
-import Share2Icon from "../../../icons/Share2.astro";
+import DetailCard from "../../../components/DetailCard.astro";
 import {
   getStaticPathsLocales,
   normalizeLang,
-  getLocalizedUrl,
   useTranslations,
 } from "../../../utils/i18n";
 import { getRecommendedGags } from "../../../utils/recommendGags";
@@ -69,27 +44,6 @@ const { gag, recommendedGags }: Props = Astro.props;
 const { lang: langParam } = Astro.params;
 const lang = normalizeLang(langParam);
 const t = useTranslations(lang);
-
-// 랜덤 질문/답변 이미지 선택
-const questionImages = [Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10];
-const answerImages = [
-  A01,
-  A02,
-  A03,
-  A04,
-  A05,
-  A06,
-  A07,
-  A08,
-  A09,
-  A10,
-  A11,
-  A12,
-];
-const randomQuestionImage =
-  questionImages[Math.floor(Math.random() * questionImages.length)];
-const randomAnswerImage =
-  answerImages[Math.floor(Math.random() * answerImages.length)];
 ---
 
 <Layout title={gag.data.title} currentPage="gag" lang={lang}>
@@ -105,126 +59,7 @@ const randomAnswerImage =
         )}
       />
 
-      <!-- 카드 래퍼 -->
-      <div
-        class="border-border bg-card rounded-lg border-2 p-6 shadow-lg md:p-8"
-      >
-        <!-- 상단 바: 태그(좌측), 저장/공유 버튼(우측) -->
-        <div class="mb-6 flex items-start justify-between gap-2">
-          <!-- 태그 (좌측 상단) -->
-          {
-            gag.data.tags && gag.data.tags.length > 0 ? (
-              <div class="flex min-w-0 flex-1 flex-wrap gap-2">
-                {gag.data.tags.map((tag: string) => (
-                  <a
-                    href={getLocalizedUrl(`/tags/${tag}`, lang)}
-                    class="bg-primary/10 text-primary hover:bg-primary/20 inline-block rounded-full px-3 py-1 text-sm font-medium transition-colors"
-                  >
-                    #{tag}
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <div />
-            )
-          }
-
-          <!-- 저장/공유 버튼 (우측 상단) -->
-          <div
-            class="flex flex-shrink-0 items-center gap-2"
-            data-gag-slug={gag.data.slug}
-          >
-            <button
-              class="save-btn hover:bg-accent rounded-md p-2 transition-colors"
-              data-gag={JSON.stringify({
-                slug: gag.data.slug,
-                title: gag.data.title,
-                description: gag.data.description,
-                tags: gag.data.tags,
-              })}
-              aria-label={t("저장", "Save")}
-            >
-              <BookmarkIcon class="bookmark-icon h-5 w-5" />
-              <BookmarkIcon
-                class="bookmark-check-icon text-primary hidden h-5 w-5"
-                fill="currentColor"
-              />
-            </button>
-            <button
-              class="share-btn hover:bg-accent rounded-md p-2 transition-colors"
-              data-content={`${gag.data.title}${gag.data.description ? " - " + gag.data.description : ""}`}
-              data-slug={gag.data.slug}
-              aria-label={t("공유", "Share")}
-            >
-              <Share2Icon size={20} />
-            </button>
-          </div>
-        </div>
-
-        <!-- 메인 콘텐츠 (중앙 정렬) -->
-        <div class="text-center">
-          <!-- 질문 제목 -->
-          <h1
-            class="text-foreground mb-6 text-center text-3xl font-bold"
-            data-pagefind-body
-          >
-            {t("질문:", "Question:")}
-            {gag.data.title}
-          </h1>
-
-          <!-- 아이콘 전환 (질문 → 정답) -->
-          <div class="mb-6 flex justify-center">
-            <div class="relative h-48 w-48 md:h-64 md:w-64">
-              <Image
-                src={randomQuestionImage}
-                alt="Question"
-                class="question-icon absolute inset-0 h-full w-full object-contain transition-opacity duration-500"
-              />
-              {
-                gag.data.description && (
-                  <Image
-                    src={randomAnswerImage}
-                    alt="Answer"
-                    class="answer-icon absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500"
-                  />
-                )
-              }
-            </div>
-          </div>
-
-          <!-- 정답 (클릭하면 표시) -->
-          {
-            gag.data.description && (
-              <div class="mb-6">
-                <p
-                  class="answer-text text-foreground cursor-pointer text-center text-3xl font-bold transition-all hover:scale-105"
-                  data-answer={gag.data.description}
-                  title={t("클릭하여 답변 보기", "Click to reveal answer")}
-                >
-                  <span class="answer-label text-muted-foreground">
-                    {t("정답:", "Answer:")}
-                  </span>
-                  <span class="answer-content text-muted-foreground font-mono tracking-wider">
-                    {gag.data.description.replace(
-                      /[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/g,
-                      "●",
-                    )}
-                  </span>
-                </p>
-              </div>
-            )
-          }
-
-          <!-- 랜덤 개그 보기 버튼 -->
-          <div class="mt-8 flex justify-center">
-            <button
-              class="random-gag-btn bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-12 py-3 text-center text-base font-medium transition-colors sm:px-16"
-            >
-              {t("다른 개그 보기", "Random Gag")}
-            </button>
-          </div>
-        </div>
-      </div>
+      <DetailCard gag={gag} lang={lang} />
     </div>
   </section>
 
@@ -239,85 +74,7 @@ const randomAnswerImage =
 
 <script>
   import { initGagInteractions } from "../../../scripts/gagInteractions";
-
-  // 답변 공개 기능
-  function initAnswerReveal() {
-    const answerText = document.querySelector(
-      ".answer-text",
-    ) as HTMLParagraphElement;
-    const answerLabel = document.querySelector(
-      ".answer-label",
-    ) as HTMLSpanElement;
-    const answerContent = document.querySelector(
-      ".answer-content",
-    ) as HTMLSpanElement;
-    const questionIcon = document.querySelector(
-      ".question-icon",
-    ) as HTMLImageElement;
-    const answerIcon = document.querySelector(
-      ".answer-icon",
-    ) as HTMLImageElement;
-
-    if (!answerText || !answerContent) {
-      console.log("Answer reveal elements not found");
-      return;
-    }
-
-    console.log("Answer reveal initialized");
-
-    // 답변 텍스트 클릭 시 답변 공개
-    answerText.addEventListener("click", async () => {
-      console.log("Answer text clicked");
-      const fullAnswer = answerText.getAttribute("data-answer");
-      if (!fullAnswer) {
-        console.log("No answer data found");
-        return;
-      }
-
-      // 클릭 이벤트 제거 (한 번만 실행)
-      answerText.style.cursor = "default";
-      answerText.style.pointerEvents = "none";
-
-      // 아이콘 전환: question → answer
-      if (questionIcon && answerIcon) {
-        questionIcon.style.opacity = "0";
-        answerIcon.style.opacity = "1";
-      }
-
-      // 타이핑 효과
-      answerContent.textContent = "";
-      answerContent.classList.remove("text-muted-foreground");
-      answerContent.classList.add("text-primary");
-
-      // 레이블 색상도 변경
-      if (answerLabel) {
-        answerLabel.classList.remove("text-muted-foreground");
-        answerLabel.classList.add("text-primary");
-      }
-
-      // 커서 깜빡임 효과 추가
-      const cursor = document.createElement("span");
-      cursor.className = "typing-cursor";
-      cursor.textContent = "|";
-      cursor.style.animation = "blink 0.7s infinite";
-      answerContent.appendChild(cursor);
-
-      // 한 글자씩 타이핑
-      for (let i = 0; i < fullAnswer.length; i++) {
-        await new Promise((resolve) => setTimeout(resolve, 60));
-        cursor.before(fullAnswer[i]);
-      }
-
-      // 커서 제거
-      cursor.remove();
-
-      // 완료 애니메이션
-      answerText.style.transform = "scale(1.02)";
-      setTimeout(() => {
-        answerText.style.transform = "scale(1)";
-      }, 200);
-    });
-  }
+  import { initAnswerReveal } from "../../../scripts/answerReveal";
 
   // 랜덤 개그 보기 기능
   function initRandomGag() {
@@ -373,35 +130,15 @@ const randomAnswerImage =
 
   // 페이지 초기화 함수
   function init() {
-    console.log("Page initialized");
     initGagInteractions();
-    initAnswerReveal();
+    initAnswerReveal(document, {
+      typingSpeed: 60,
+      showCursor: true,
+      completionAnimation: true,
+    });
     initRandomGag();
   }
 
   // Astro View Transitions 이벤트 사용
   document.addEventListener("astro:page-load", init);
 </script>
-
-<style>
-  .answer-text {
-    transition: transform 0.2s ease;
-  }
-
-  .reveal-answer-btn {
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  @keyframes blink {
-    0%,
-    50% {
-      opacity: 1;
-    }
-    51%,
-    100% {
-      opacity: 0;
-    }
-  }
-</style>

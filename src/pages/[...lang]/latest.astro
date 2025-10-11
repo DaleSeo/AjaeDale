@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Heading from "../../components/Heading.astro";
-import Card from "../../components/Card.astro";
+import ListCard from "../../components/ListCard.astro";
 import {
   getStaticPathsLocales,
   normalizeLang,
@@ -57,7 +57,7 @@ const displayGags = sortedGags.slice(0, 12);
   <section class="px-4 py-8">
     <div class="container mx-auto max-w-6xl">
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {displayGags.map((gag: GagEntry) => <Card gag={gag} lang={lang} />)}
+        {displayGags.map((gag: GagEntry) => <ListCard gag={gag} lang={lang} />)}
       </div>
     </div>
   </section>

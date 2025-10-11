@@ -2,7 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Heading from "../../components/Heading.astro";
-import Card from "../../components/Card.astro";
+import ListCard from "../../components/ListCard.astro";
 import { sortGagsByPopularity } from "../../utils/popularityUtils";
 import { enrichGagsWithLikes } from "../../utils/discussionsApi";
 import {
@@ -84,7 +84,7 @@ const displayGags = popularGags.slice(0, 12);
                       <div class="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-yellow-400/30 to-orange-400/30 opacity-50 blur transition-opacity group-hover:opacity-75" />
                     )}
                     <div class="relative">
-                      <Card gag={gag} lang={lang} />
+                      <ListCard gag={gag} lang={lang} />
                     </div>
                   </div>
                 </div>
@@ -103,7 +103,7 @@ const displayGags = popularGags.slice(0, 12);
                 <div class="absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-500 text-sm font-bold text-white">
                   {index + 4}
                 </div>
-                <Card gag={gag} lang={lang} />
+                <ListCard gag={gag} lang={lang} />
               </div>
             ))}
           </div>

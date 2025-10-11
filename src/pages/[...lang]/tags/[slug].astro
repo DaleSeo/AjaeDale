@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
-import Card from "../../../components/Card.astro";
+import ListCard from "../../../components/ListCard.astro";
 import { tagToSlug } from "../../../utils/tagUtils";
 import {
   getStaticPathsLocales,
@@ -82,7 +82,7 @@ const pageDescription = t(
 
     <!-- 개그 목록 -->
     <section class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {gags.map((gag: GagEntry) => <Card gag={gag} lang={lang} />)}
+      {gags.map((gag: GagEntry) => <ListCard gag={gag} lang={lang} />)}
     </section>
   </div>
 </Layout>
